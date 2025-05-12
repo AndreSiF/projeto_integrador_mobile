@@ -20,61 +20,124 @@ class AppDatabase {
     return openDatabase(
       path,
       version: 1,
+      onOpen: (db) async {
+        await db.execute("PRAGMA foreign_keys = ON");
+      },
       onCreate: (db, version) async {
-        await db.execute('PRAGMA foreign_keys = ON');
-        
         await db.execute('''
           CREATE TABLE pes_fis(
             id_fis INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome text NOT NULL,
-            cpf text NOT NULL,
-            telefone integer NOT NULL,
-            email text NOT NULL,
-            rgp int NOT NULL,
-            uf text NOT NULL,
-            municipio text NOT NULL,
-            endereco text NOT NULL,
+            nome TEXT NOT NULL,
+            cpf TEXT NOT NULL,
+            telefone INTEGER NOT NULL,
+            email TEXT NOT NULL,
+            rgp INT NOT NULL,
+            uf TEXT NOT NULL,
+            municipio TEXT NOT NULL,
+            endereco TEXT NOT NULL
           )
         ''');
         await db.execute('''
           CREATE TABLE pes_jur(
             id_jur INTEGER PRIMARY KEY AUTOINCREMENT,
-            razao_social text NOT NULL,
-            cnpj text NOT NULL,
-            cnae text NOT NULL,
-            uf text NOT NULL,
-            municipio text NOT NULL,
-            endereco text NOT NULL,
-            nome_resp text NOT NULL,
-            cpf_rest text NOT NULL,
-            rgp text NOT NULL,
-            telefone integer NOT NULL,
-            email text NOT NULL,
+            razao_social TEXT NOT NULL,
+            cnpj TEXT NOT NULL,
+            cnae TEXT NOT NULL,
+            uf TEXT NOT NULL,
+            municipio TEXT NOT NULL,
+            endereco TEXT NOT NULL,
+            nome_resp TEXT NOT NULL,
+            cpf_rest TEXT NOT NULL,
+            rgp TEXT NOT NULL,
+            telefone INTEGER NOT NULL,
+            email TEXT NOT NULL
           )
         ''');
         await db.execute('''
           CREATE TABLE form(
             id_form INTEGER PRIMARY KEY AUTOINCREMENT,
             id_pessoa INTEGER NOT NULL,
-            endereco_empre text NOT NULL,
-            municipio_empre text NOT NULL,
-            UF text NOT NULL,
-            latitude double NOT NULL,
-            longitude double NOT NULL,
-            pronaf text,
-            licenca_amb text,
-            outorga text,
-            ctf text,
-            car text,
-            oesa text,
-            assistencia_tec text,
-            viveiro_rev boolean,
-            area_viveiro double,
-            area_tanque_rede double,
-            tipo_sistema_fechado text,
-            area_sistema_fechado double,
-            area_raceway double,
-            area_prod_jovem double,
+            endereco_empre TEXT NOT NULL,
+            municipio_empre TEXT NOT NULL,
+            UF TEXT NOT NULL,
+            latitude REAL NOT NULL,
+            longitude REAL NOT NULL,
+            pronaf TEXT,
+            licenca_amb TEXT,
+            outorga TEXT,
+            ctf TEXT,
+            car TEXT,
+            oesa TEXT,
+            assistencia_tec TEXT,
+            viveiro_rev BLOB,
+            area_viveiro REAL,
+            area_tanque_rede REAL,
+            tipo_sistema_fechado TEXT,
+            area_sistema_fechado REAL,
+            area_raceway REAL,
+            area_prod_jovem REAL
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE aquisicao_jovem(
+            id_aquis_jov INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_form INTEGER NOT NULL,
+            origem TEXT NOT NULL,
+            especie TEXT NOT NULL,
+            milheiros INTEGER NOT NULL
+            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE forma_jovem(
+            id_forma_jov INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_form INTEGER NOT NULL,
+            especie TEXT NOT NULL,
+            milheiros INT NOT NULL,
+            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE producao(
+            id_ INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_form INTEGER NOT NULL,
+            tipo_prod TEXT NOT NULL,
+            especie_prod TEXT NOT NULL,
+            kg_prod REAL NOT NULL,
+            unidades INTEGER NOT NULL,
+            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE producao_especie_orn(
+            id_prod_orn INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_form INTEGER NOT NULL,
+            uf_origem TEXT NOT NULL,
+            unidade TEXT NOT NULL,
+            quantidade INTEGER NOT NULL,
+            alimento_vivo BLOB,
+            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE comercio_especie(
+            id_com_esp INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_form INTEGER NOT NULL,
+            uf_origem TEXT NOT NULL,
+            especie TEXT NOT NULL,
+            prod_comercial_kg REAL NOT NULL,
+            preco_medio REAL NOT NULL,
+            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE aquisicao_racao(
+            id_aqui_rac INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_form INTEGER NOT NULL,
+            uf_origem TEXT NOT NULL,
+            unidade TEXT NOT NULL,
+            quantidade INTEGER NOT NULL,
+            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
           )
         ''');
       },
