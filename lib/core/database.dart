@@ -47,7 +47,7 @@ class AppDatabase {
             municipio TEXT NOT NULL,
             endereco TEXT NOT NULL,
             nome_resp TEXT NOT NULL,
-            cpf_rest TEXT NOT NULL,
+            cpf_resp TEXT NOT NULL,
             rgp TEXT NOT NULL,
             telefone INTEGER NOT NULL,
             email TEXT NOT NULL
