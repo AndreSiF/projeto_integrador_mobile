@@ -55,7 +55,9 @@ class _CnpjPageState extends State<CnpjPage> {
           centerTitle: false,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => IdentificacaoAquicultorPage())
+            ),
           ),
           actions: [
             IconButton(
