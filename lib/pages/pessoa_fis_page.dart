@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/ident_aqui_page.dart';
+import 'package:projeto_integrador_mobile/pages/ident_empre_page.dart';
 
 class CpfPage extends StatefulWidget {
   const CpfPage({super.key});
@@ -33,7 +34,7 @@ class _CpfPageState extends State<CpfPage> {
         municipio: _municipioController.text,
       );
 
-      //Navigator.push(context, MaterialPageRoute(builder: (_) => page(pessoa: pessoa)),);
+      Navigator.push(context, MaterialPageRoute(builder: (_) => IdentEmprePage(pessoa: pessoa)),);
     }
   }
 

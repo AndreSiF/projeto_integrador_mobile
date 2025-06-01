@@ -1,8 +1,8 @@
-class Form {
+class Formulario {
   final int? idForm;
   final int? idPessoa;
 
-  // Informações legais da empresa
+  // Identificação do Empreendimento
   final String? enderecoEmpre;
   final String? municipioEmpre;
   final String? ufEmpre;
@@ -13,9 +13,10 @@ class Form {
   final int? outorga;
   final int? ctf;
   final int? car;
+  final int? oesa;
   final int? atendimentosAno;
 
-  // Informações da produção aquícola
+  // Sistema de cultivo e Produção
   final String? tipoViveiro;
   final double? areaViveiro;
   final double? areaTaqueRede;
@@ -31,6 +32,8 @@ class Form {
   final String? especieOrnamental;
   final double? pesoOrnamental;
   final int? unidadesOrnamental;
+
+  // Informações comerciais
   final String? ufAquisicaoJov;
   final String? especieAquiJov;
   final String? milheirosAquiJov;
@@ -41,9 +44,9 @@ class Form {
   final String? especieComercial;
   final double? prodComercial;
   final int? quantidadeComercial;
-  final double precoMedio;
+  final double? precoMedio;
 
-  Form({
+  Formulario({
     this.idForm,
     this.idPessoa,
     this.enderecoEmpre,
@@ -56,6 +59,7 @@ class Form {
     this.outorga,
     this.ctf,
     this.car,
+    this.oesa,
     this.atendimentosAno,
     this.tipoViveiro,
     this.areaViveiro,
@@ -82,11 +86,11 @@ class Form {
     this.especieComercial,
     this.prodComercial,
     this.quantidadeComercial,
-    required this.precoMedio,
+    this.precoMedio,
   });
 
-  factory Form.fromMap(Map<String, dynamic> map) {
-    return Form(
+  factory Formulario.fromMap(Map<String, dynamic> map) {
+    return Formulario(
       idForm: map['id_form'],
       idPessoa: map['id_pessoa'],
       enderecoEmpre: map['endereco_empre'],
@@ -99,6 +103,7 @@ class Form {
       outorga: map['outorga'],
       ctf: map['ctf'],
       car: map['car'],
+      oesa: map['oesa'],
       atendimentosAno: map['atendimentos_ano'],
       tipoViveiro: map['tipo_viveiro'],
       areaViveiro: map['area_viveiro'],
@@ -143,6 +148,7 @@ class Form {
       'outorga': outorga,
       'ctf': ctf,
       'car': car,
+      'oesa': oesa,
       'atendimentos_ano': atendimentosAno,
       'tipo_viveiro': tipoViveiro,
       'area_viveiro': areaViveiro,

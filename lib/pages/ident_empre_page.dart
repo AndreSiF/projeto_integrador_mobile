@@ -1,44 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/ident_aqui_page.dart';
-import 'package:projeto_integrador_mobile/pages/ident_empre_page.dart';
+import 'package:projeto_integrador_mobile/pages/pessoa_fis_page.dart';
+import 'package:projeto_integrador_mobile/pages/pessoa_jur_page.dart';
+import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
 
-class CnpjPage extends StatefulWidget {
+class IdentEmprePage extends StatefulWidget {
+  final Pessoa pessoa;
+  const IdentEmprePage({super.key, required this.pessoa});
+
   @override
-  _CnpjPageState createState() => _CnpjPageState();
+  _IdentEmprePageState createState() => _IdentEmprePageState();
 }
 
-class _CnpjPageState extends State<CnpjPage> {
+class _IdentEmprePageState extends State<IdentEmprePage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _razaoController = TextEditingController();
-  final TextEditingController _cnpjController = TextEditingController();
-  final TextEditingController _cnaeController = TextEditingController();
-  final TextEditingController _enderecoController = TextEditingController();
-  final TextEditingController _ufController = TextEditingController();
-  final TextEditingController _municipioController = TextEditingController();
-  final TextEditingController _respController = TextEditingController();
-  final TextEditingController _cpfRespController = TextEditingController();
-  final TextEditingController _telefoneRespController = TextEditingController();
-  final TextEditingController _rgpRespController = TextEditingController();
-  final TextEditingController _emailRespController = TextEditingController();
+  final TextEditingController _enderecoEmpreController = TextEditingController();
+  final TextEditingController _municipioEmpreController = TextEditingController();
+  final TextEditingController _ufEmpreController = TextEditingController();
+  final TextEditingController _latitudeController = TextEditingController();
+  final TextEditingController _longitudeController = TextEditingController();
+  final TextEditingController _dapController = TextEditingController();
+  final TextEditingController _cadAmbientalController = TextEditingController();
+  final TextEditingController _numOutorgaController = TextEditingController();
+  final TextEditingController _ctfController = TextEditingController();
+  final TextEditingController _carController = TextEditingController();
+  final TextEditingController _oesaController = TextEditingController();
+  final TextEditingController _atendAnoController = TextEditingController();
 
   void _proximo() {
     if (_formKey.currentState!.validate()) {
-      final pessoa = Pessoa(
-        razaoSocial: _razaoController.text,
-        cnpj: _cnpjController.text,
-        cnae: _cnaeController.text,
-        telefone: int.parse(_telefoneRespController.text),
-        email: _emailRespController.text,
-        rgp: int.parse(_rgpRespController.text),
-        endereco: _enderecoController.text,
-        uf: _ufController.text,
-        municipio: _municipioController.text,
-        nome: _respController.text,
-        cpf: _cpfRespController.text
+      final formulario = Formulario(
+        enderecoEmpre: _enderecoEmpreController.text,
+        municipioEmpre: _municipioEmpreController.text,
+        ufEmpre: _ufEmpreController.text,
+        latitude: double.parse(_latitudeController.text),
+        longitude: double.parse(_longitudeController.text),
+        dap: int.parse(_dapController.text),
+        cadAmbiental: int.parse(_cadAmbientalController.text),
+        outorga: int.parse(_numOutorgaController.text),
+        ctf: int.parse(_ctfController.text),
+        car: int.parse(_carController.text),
+        oesa: int.parse(_oesaController.text),
+        atendimentosAno: int.parse(_atendAnoController.text),
       );
 
-      Navigator.push(context, MaterialPageRoute(builder: (_) => IdentEmprePage(pessoa: pessoa)),);
+      //Navigator.push(context, MaterialPageRoute(builder: (_) => page(pessoa: widget.pessoa, formulario: formulario)),);
     }
   }
 
@@ -50,15 +58,20 @@ class _CnpjPageState extends State<CnpjPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(
-            'Pessoa Jurídica',
+            'Identificação do\nEmpreendimento',
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: false,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => IdentificacaoAquicultorPage())
-            ),
+            onPressed: () {
+              if (widget.pessoa.razaoSocial != null) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CnpjPage()));
+              }
+              else{
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CpfPage()));
+              }
+            }
           ),
           actions: [
             IconButton(
@@ -74,82 +87,11 @@ class _CnpjPageState extends State<CnpjPage> {
               key: _formKey,
               child: Column(
                 children: [
+                  StepIndicator(currentStep: 0),
                   const SizedBox(height: 8),
-                  // Campo de razão social
+                  // Campo do endereço do empreendimento
                   TextFormField(
-                    controller: _razaoController,
-                    decoration: InputDecoration(
-                      labelText: 'Razão Social',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo de CNPJ
-                  TextFormField(
-                    controller: _cnpjController,
-                    decoration: InputDecoration(
-                      labelText: 'CNPJ',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo de CNAE
-                  TextFormField(
-                    controller: _cnaeController,
-                    decoration: InputDecoration(
-                      labelText: 'Código CNAE principal',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  //Campo de endereço
-                  TextFormField(
-                    controller: _enderecoController,
+                    controller: _enderecoEmpreController,
                     decoration: InputDecoration(
                       labelText: 'Endereço',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
@@ -171,9 +113,9 @@ class _CnpjPageState extends State<CnpjPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo de município
+                  // Campo do municipio do empreendimento
                   TextFormField(
-                    controller: _municipioController,
+                    controller: _municipioEmpreController,
                     decoration: InputDecoration(
                       labelText: 'Município',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
@@ -190,12 +132,14 @@ class _CnpjPageState extends State<CnpjPage> {
                       ),
                       labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
                     ),
+                    validator: (value) =>
+                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
                   ),
                   SizedBox(height: 16),
 
-                  // Campo de UF
+                  // Campo do estado do empreendimento
                   TextFormField(
-                    controller: _ufController,
+                    controller: _ufEmpreController,
                     decoration: InputDecoration(
                       labelText: 'UF',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
@@ -217,11 +161,81 @@ class _CnpjPageState extends State<CnpjPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do nome do responsável legal
+                  //Campo da latitude do empreendimento
                   TextFormField(
-                    controller: _respController,
+                    controller: _latitudeController,
                     decoration: InputDecoration(
-                      labelText: 'Responsável Legal',
+                      labelText: 'Latitude',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
+                    ),
+                    validator: (value) =>
+                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
+                  ),
+                  SizedBox(height: 16),
+
+                  // Campo da longitude do empreendimento
+                  TextFormField(
+                    controller: _longitudeController,
+                    decoration: InputDecoration(
+                      labelText: 'Longitude',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+
+                  // Campo do número do cadastro DAP do empreendimento
+                  TextFormField(
+                    controller: _dapController,
+                    decoration: InputDecoration(
+                      labelText: 'N⁰ DAP',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
+                    ),
+                    validator: (value) =>
+                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
+                  ),
+                  SizedBox(height: 16),
+
+                  // Campo do número do cadastro ambiental do empreedimento
+                  TextFormField(
+                    controller: _cadAmbientalController,
+                    decoration: InputDecoration(
+                      labelText: 'N⁰ do Cadastro',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -241,11 +255,11 @@ class _CnpjPageState extends State<CnpjPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do CPF do responsável legal
+                  // Campo do número da outorga do empreendimento
                   TextFormField(
-                    controller: _cpfRespController,
+                    controller: _numOutorgaController,
                     decoration: InputDecoration(
-                      labelText: 'CPF',
+                      labelText: 'N⁰ da Outorga',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -265,11 +279,11 @@ class _CnpjPageState extends State<CnpjPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do RGP do responsável legal
+                  // Campo do cadastro do CTF do empreendimento
                   TextFormField(
-                    controller: _rgpRespController,
+                    controller: _ctfController,
                     decoration: InputDecoration(
-                      labelText: 'RGP',
+                      labelText: 'N⁰ do Cadastro',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -289,11 +303,11 @@ class _CnpjPageState extends State<CnpjPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do telefone do responsável legal
+                  // Campo do número do cadastro do CAR da empresa
                   TextFormField(
-                    controller: _telefoneRespController,
+                    controller: _carController,
                     decoration: InputDecoration(
-                      labelText: 'Telefone',
+                      labelText: 'N⁰ do Cadastro',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -313,11 +327,35 @@ class _CnpjPageState extends State<CnpjPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do email do responsável legal
+                  // Campo do número do cadastro da OESA do empreendimento
                   TextFormField(
-                    controller: _emailRespController,
+                    controller: _oesaController,
                     decoration: InputDecoration(
-                      labelText: 'E-mail',
+                      labelText: 'N⁰ do Cadastro',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
+                    ),
+                    validator: (value) =>
+                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
+                  ),
+                  SizedBox(height: 16),
+
+                  // Campo do número de atendimentos por ano do técnico do empreedimento.
+                  TextFormField(
+                    controller: _atendAnoController,
+                    decoration: InputDecoration(
+                      labelText: 'N⁰ de atendimentos no ano',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -342,9 +380,14 @@ class _CnpjPageState extends State<CnpjPage> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () => Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => IdentificacaoAquicultorPage())
-                          ),
+                          onPressed: () {
+                            if (widget.pessoa.razaoSocial != null) {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => CnpjPage()));
+                            }
+                            else{
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => CpfPage()));
+                            }
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: Color(0xFF0D47A1)),
                             shape: RoundedRectangleBorder(
