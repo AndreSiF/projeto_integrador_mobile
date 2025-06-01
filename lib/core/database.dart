@@ -25,8 +25,13 @@ class AppDatabase {
       },
       onCreate: (db, version) async {
         await db.execute('''
+<<<<<<< Updated upstream
           CREATE TABLE pessoa(
             id_fis INTEGER PRIMARY KEY AUTOINCREMENT,
+=======
+          CREATE TABLE pessoa (
+            id_pessoa INTEGER PRIMARY KEY AUTOINCREMENT,
+>>>>>>> Stashed changes
             nome TEXT,
             cpf TEXT,
             telefone INTEGER,
@@ -43,6 +48,7 @@ class AppDatabase {
         await db.execute('''
           CREATE TABLE form(
             id_form INTEGER PRIMARY KEY AUTOINCREMENT,
+<<<<<<< Updated upstream
             id_pessoa INTEGER NOT NULL,
             endereco_empre TEXT NOT NULL,
             municipio_empre TEXT NOT NULL,
@@ -57,6 +63,22 @@ class AppDatabase {
             oesa TEXT,
             assistencia_tec TEXT,
             viveiro_rev BLOB,
+=======
+            id_pessoa INTEGER,
+            endereco_empre TEXT,
+            municipio_empre TEXT,
+            uf_empre TEXT,
+            latitude REAL,
+            longitude REAL,
+            dap INTEGER,
+            cad_ambiental INTEGER,
+            outorga INTEGER,
+            ctf INTEGER,
+            car INTEGER,
+            oesa INTEGER,
+            atendimentos_ano INTEGER,
+            tipo_viveiro TEXT,
+>>>>>>> Stashed changes
             area_viveiro REAL,
             area_tanque_rede REAL,
             tipo_sistema_fechado TEXT,

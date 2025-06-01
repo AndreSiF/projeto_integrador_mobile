@@ -64,9 +64,7 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
               SizedBox(height: 32),
               Padding(padding: EdgeInsets.only(top: 100)),
               ElevatedButton(
-                onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => CpfPage())
-                  ),
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CpfPage())),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF0D47A1),
                   shape: RoundedRectangleBorder(
@@ -78,9 +76,13 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               ElevatedButton(
+<<<<<<< Updated upstream
                 onPressed: () => Navigator.push(
                   context, MaterialPageRoute(builder: (context) => CpfPage())
                   ),
+=======
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CnpjPage())),
+>>>>>>> Stashed changes
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF0D47A1),
                   shape: RoundedRectangleBorder(

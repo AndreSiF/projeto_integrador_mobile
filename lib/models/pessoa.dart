@@ -1,5 +1,5 @@
 class Pessoa{
-  final int? idFis;
+  final int? idPessoa;
   final String? nome;
   final String? cpf;
   final int? telefone;
@@ -13,7 +13,7 @@ class Pessoa{
   final String? cnae;
 
   Pessoa({
-    this.idFis,
+    this.idPessoa,
     this.nome,
     this.cpf,
     this.telefone,
@@ -29,7 +29,7 @@ class Pessoa{
 
   Map<String, dynamic> toMap() {
       return {
-        'id_fis' : idFis,
+        'id_pessoa' : idPessoa,
         'nome' : nome,
         'cpf' : cpf,
         'telefone' : telefone,
@@ -46,7 +46,7 @@ class Pessoa{
 
     factory Pessoa.fromMap(Map<String, dynamic> map){
       return Pessoa(
-        idFis : map['id_fis'],
+        idPessoa : map['id_pessoa'],
         nome: map['nome'], 
         cpf: map['cpf'], 
         telefone: map['telefone'], 
@@ -60,5 +60,24 @@ class Pessoa{
         cnae: map['cnae']
         );
     }
+
+  @override
+  String toString() {
+    return '''
+Pessoa{
+  idFis: $idPessoa,
+  nome: $nome,
+  cpf: $cpf,
+  telefone: $telefone,
+  email: $email,
+  rgp: $rgp,
+  uf: $uf,
+  municipio: $municipio,
+  endereco: $endereco,
+  razaoSocial: $razaoSocial,
+  cnpj: $cnpj,
+  cnae: $cnae
+}''';
+  }
 
 }
