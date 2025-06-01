@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_integrador_mobile/pages/pessoa_fis_page.dart';
 
 class IdentificacaoAquicultorPage extends StatelessWidget {
   const IdentificacaoAquicultorPage({super.key});
@@ -12,20 +13,20 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.close, color: Colors.black),
           onPressed: () {
-            // não possui nenhuma página...
+            print('Botão de fechar pressionado');
           },
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.search, color: Colors.black),
             onPressed: () {
-              // lógica de busca
+              print('Botão de busca pressionado');
             },
           ),
           IconButton(
             icon: Icon(Icons.account_circle_outlined, color: Colors.black),
             onPressed: () {
-              // não possui uma lógica de perfil
+              print('Botão de perfil pressionado');
             },
           ),
         ],
@@ -64,7 +65,7 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
               Padding(padding: EdgeInsets.only(top: 100)),
               ElevatedButton(
                 onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const IdentificacaoAquicultorPage())
+                  context, MaterialPageRoute(builder: (context) => CpfPage())
                   ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF0D47A1),
@@ -78,7 +79,7 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const IdentificacaoAquicultorPage())
+                  context, MaterialPageRoute(builder: (context) => CpfPage())
                   ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF0D47A1),
