@@ -25,32 +25,19 @@ class AppDatabase {
       },
       onCreate: (db, version) async {
         await db.execute('''
-          CREATE TABLE pes_fis(
+          CREATE TABLE pessoa(
             id_fis INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT NOT NULL,
-            cpf TEXT NOT NULL,
-            telefone INTEGER NOT NULL,
-            email TEXT NOT NULL,
-            rgp INT NOT NULL,
-            uf TEXT NOT NULL,
-            municipio TEXT NOT NULL,
-            endereco TEXT NOT NULL
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE pes_jur(
-            id_jur INTEGER PRIMARY KEY AUTOINCREMENT,
-            razao_social TEXT NOT NULL,
-            cnpj TEXT NOT NULL,
-            cnae TEXT NOT NULL,
-            uf TEXT NOT NULL,
-            municipio TEXT NOT NULL,
-            endereco TEXT NOT NULL,
-            nome_resp TEXT NOT NULL,
-            cpf_resp TEXT NOT NULL,
-            rgp TEXT NOT NULL,
-            telefone INTEGER NOT NULL,
-            email TEXT NOT NULL
+            nome TEXT,
+            cpf TEXT,
+            telefone INTEGER,
+            email TEXT,
+            rgp INT,
+            uf TEXT,
+            municipio TEXT,
+            endereco TEXT,
+            razao_social TEXT,
+            cnpj TEXT,
+            cnae TEXT
           )
         ''');
         await db.execute('''
@@ -75,69 +62,27 @@ class AppDatabase {
             tipo_sistema_fechado TEXT,
             area_sistema_fechado REAL,
             area_raceway REAL,
-            area_prod_jovem REAL
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE aquisicao_jovem(
-            id_aquis_jov INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_form INTEGER NOT NULL,
-            origem TEXT NOT NULL,
-            especie TEXT NOT NULL,
-            milheiros INTEGER NOT NULL
-            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE forma_jovem(
-            id_forma_jov INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_form INTEGER NOT NULL,
-            especie TEXT NOT NULL,
-            milheiros INT NOT NULL,
-            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE producao(
-            id_ INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_form INTEGER NOT NULL,
+            area_prod_jovem REAL,
+            origem_aqui_jovem TEXT NOT NULL,
+            especie_aqui_jovem TEXT NOT NULL,
+            milheiros_aqui_jovem INTEGER NOT NULL,
+            especie_forma_jovem TEXT NOT NULL,
+            milheiros_forma_jovem INT NOT NULL,
             tipo_prod TEXT NOT NULL,
             especie_prod TEXT NOT NULL,
             kg_prod REAL NOT NULL,
             unidades INTEGER NOT NULL,
-            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE producao_especie_orn(
-            id_prod_orn INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_form INTEGER NOT NULL,
-            uf_origem TEXT NOT NULL,
-            unidade TEXT NOT NULL,
-            quantidade INTEGER NOT NULL,
-            alimento_vivo BLOB,
-            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE comercio_especie(
-            id_com_esp INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_form INTEGER NOT NULL,
-            uf_origem TEXT NOT NULL,
-            especie TEXT NOT NULL,
-            prod_comercial_kg REAL NOT NULL,
-            preco_medio REAL NOT NULL,
-            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
-          )
-        ''');
-        await db.execute('''
-          CREATE TABLE aquisicao_racao(
-            id_aqui_rac INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_form INTEGER NOT NULL,
-            uf_origem TEXT NOT NULL,
-            unidade TEXT NOT NULL,
-            quantidade INTEGER NOT NULL,
-            FOREIGN KEY (id_form) REFERENCES form(id_form) ON DELETE CASCADE
+            uf_origem_prod_esp_orn TEXT NOT NULL,
+            unidade_prod_esp_orn TEXT NOT NULL,
+            quantidade_prod_esp_orn INTEGER NOT NULL,
+            alimento_vivo_prod_esp_orn BLOB,
+            uf_origem_com_esp TEXT NOT NULL,
+            especie_com_esp TEXT NOT NULL,
+            prod_comercial_kg_com_esp REAL NOT NULL,
+            preco_medio_com_esp REAL NOT NULL,
+            uf_origem_aqui_rac TEXT NOT NULL,
+            unidade_aqui_rac TEXT NOT NULL,
+            quantidade_aqui_rac INTEGER NOT NULL
           )
         ''');
       },
