@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/pages/pessoa_fis_page.dart';
+import 'package:projeto_integrador_mobile/pages/pessoa_jur_page.dart';
 
 class IdentificacaoAquicultorPage extends StatelessWidget {
   const IdentificacaoAquicultorPage({super.key});
@@ -79,7 +80,7 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => CpfPage())
+                  context, MaterialPageRoute(builder: (context) => CnpjPage())
                   ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF0D47A1),

@@ -3,6 +3,8 @@ import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/ident_aqui_page.dart';
 
 class CpfPage extends StatefulWidget {
+  const CpfPage({super.key});
+
   @override
   _CpfPageState createState() => _CpfPageState();
 }
@@ -49,12 +51,14 @@ class _CpfPageState extends State<CpfPage> {
         centerTitle: false,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => IdentificacaoAquicultorPage())
+          ),
         ),
         actions: [
           IconButton(
             icon: Icon(Icons.info_outline, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {print('Botão de informações pressionado');},
           ),
         ],
       ),
