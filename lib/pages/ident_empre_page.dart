@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
-import 'package:projeto_integrador_mobile/pages/ident_aqui_page.dart';
+import 'package:projeto_integrador_mobile/pages/cultivo_producao.dart';
 import 'package:projeto_integrador_mobile/pages/pessoa_fis_page.dart';
 import 'package:projeto_integrador_mobile/pages/pessoa_jur_page.dart';
 import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
@@ -46,7 +46,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
         atendimentosAno: int.parse(_atendAnoController.text),
       );
 
-      //Navigator.push(context, MaterialPageRoute(builder: (_) => page(pessoa: widget.pessoa, formulario: formulario)),);
+      Navigator.push(context, MaterialPageRoute(builder: (_) => CultivoProducao(pessoa: widget.pessoa, formulario: formulario)),);
     }
   }
 
@@ -88,7 +88,9 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
               child: Column(
                 children: [
                   StepIndicator(currentStep: 0),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 24),
+                  const Text('Empreendimento', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
                   // Campo do endereço do empreendimento
                   TextFormField(
                     controller: _enderecoEmpreController,
@@ -161,6 +163,9 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   ),
                   SizedBox(height: 16),
 
+                  const Text('Coordenadas Geográficas', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
+
                   //Campo da latitude do empreendimento
                   TextFormField(
                     controller: _latitudeController,
@@ -207,6 +212,9 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   ),
                   SizedBox(height: 16),
 
+                  const Text('Possui Documento de Aptidão ao PRONAF-DAP', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
+
                   // Campo do número do cadastro DAP do empreendimento
                   TextFormField(
                     controller: _dapController,
@@ -230,6 +238,9 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                     value == null || value.isEmpty ? 'Campo obrigatório' : null,
                   ),
                   SizedBox(height: 16),
+
+                  const Text('Possui Licença Ambiental', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
 
                   // Campo do número do cadastro ambiental do empreedimento
                   TextFormField(
@@ -255,6 +266,9 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   ),
                   SizedBox(height: 16),
 
+                  const Text("Possui Outorga de uso d'água", style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
+
                   // Campo do número da outorga do empreendimento
                   TextFormField(
                     controller: _numOutorgaController,
@@ -278,6 +292,9 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                     value == null || value.isEmpty ? 'Campo obrigatório' : null,
                   ),
                   SizedBox(height: 16),
+
+                  const Text('Possui Cadastro Técnico Federal - CTF', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
 
                   // Campo do cadastro do CTF do empreendimento
                   TextFormField(
@@ -303,6 +320,9 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   ),
                   SizedBox(height: 16),
 
+                  const Text('Possui Cadastro Ambiental Rural - CAR', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
+
                   // Campo do número do cadastro do CAR da empresa
                   TextFormField(
                     controller: _carController,
@@ -327,6 +347,9 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   ),
                   SizedBox(height: 16),
 
+                  const Text('Possui Cadastro na OESA', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
+
                   // Campo do número do cadastro da OESA do empreendimento
                   TextFormField(
                     controller: _oesaController,
@@ -350,6 +373,9 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                     value == null || value.isEmpty ? 'Campo obrigatório' : null,
                   ),
                   SizedBox(height: 16),
+
+                  const Text('Possui Assistência Técnica', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
 
                   // Campo do número de atendimentos por ano do técnico do empreedimento.
                   TextFormField(
