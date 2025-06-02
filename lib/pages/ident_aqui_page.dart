@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:projeto_integrador_mobile/pages/listar_pessoas_formularios_page.dart';
 import 'package:projeto_integrador_mobile/pages/pessoa_fis_page.dart';
+import 'package:projeto_integrador_mobile/pages/pessoa_jur_page.dart';
 
 class IdentificacaoAquicultorPage extends StatelessWidget {
   const IdentificacaoAquicultorPage({super.key});
@@ -13,7 +16,7 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.close, color: Colors.black),
           onPressed: () {
-            print('Botão de fechar pressionado');
+            SystemNavigator.pop();
           },
         ),
         actions: [
@@ -76,13 +79,7 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               ElevatedButton(
-<<<<<<< Updated upstream
-                onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => CpfPage())
-                  ),
-=======
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => CnpjPage())),
->>>>>>> Stashed changes
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF0D47A1),
                   shape: RoundedRectangleBorder(
@@ -95,9 +92,7 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
               SizedBox(height: 24),
               Center(
                 child: TextButton(
-                  onPressed: () {
-                    // voltar para o início
-                  },
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListaPessoasComFormulariosPage())),
                   child: Text(
                     'Voltar para o início',
                     style: TextStyle(color: Color(0xFF0D47A1)),

@@ -91,46 +91,46 @@ class Formulario {
 
   factory Formulario.fromMap(Map<String, dynamic> map) {
     return Formulario(
-      idForm: map['id_form'],
-      idPessoa: map['id_pessoa'],
-      enderecoEmpre: map['endereco_empre'],
-      municipioEmpre: map['municipio_empre'],
-      ufEmpre: map['uf_empre'],
-      latitude: map['latitude'],
-      longitude: map['longitude'],
-      dap: map['dap'],
-      cadAmbiental: map['cad_ambiental'],
-      outorga: map['outorga'],
-      ctf: map['ctf'],
-      car: map['car'],
-      oesa: map['oesa'],
-      atendimentosAno: map['atendimentos_ano'],
-      tipoViveiro: map['tipo_viveiro'],
-      areaViveiro: map['area_viveiro'],
-      areaTaqueRede: map['area_taque_rede'],
-      tipoSistemaFechado: map['tipo_sistema_fechado'],
-      areaSistemaFechado: map['area_sistema_fechado'],
-      areaRaceway: map['area_raceway'],
-      especieProducao: map['especie_producao'],
-      pesoProducao: map['peso_producao'],
-      unidadesProducao: map['unidades_producao'],
-      areaJovemProducao: map['area_jovem_producao'],
-      especieAreaJov: map['especie_area_jov'],
-      milheirosAreaJov: map['milheiros_area_jov'],
-      especieOrnamental: map['especie_ornamental'],
-      pesoOrnamental: map['peso_ornamental'],
-      unidadesOrnamental: map['unidades_ornamental'],
-      ufAquisicaoJov: map['uf_aquisicao_jov'],
-      especieAquiJov: map['especie_aqui_jov'],
-      milheirosAquiJov: map['milheiros_aqui_jov'],
-      origemRacao: map['origem_racao'],
-      unidadesRacao: map['unidades_racao'],
-      quantidadeRacao: map['quantidade_racao'],
-      ufOrigemComercialEspecie: map['uf_origem_comercial_especie'],
-      especieComercial: map['especie_comercial'],
-      prodComercial: map['prod_comercial'],
-      quantidadeComercial: map['quantidade_comercial'],
-      precoMedio: map['preco_medio'],
+      idForm: _parseInt(map['id_form']),
+      idPessoa: _parseInt(map['id_pessoa']),
+      enderecoEmpre: map['endereco_empre'] is String ? map['endereco_empre'] : null,
+      municipioEmpre: map['municipio_empre'] is String ? map['municipio_empre'] : null,
+      ufEmpre: map['uf_empre'] is String ? map['uf_empre'] : null,
+      latitude: map['latitude'] is double ? map['latitude'] : _parseDouble(map['latitude']),
+      longitude: map['longitude'] is double ? map['longitude'] : _parseDouble(map['longitude']),
+      dap: _parseInt(map['dap']),
+      cadAmbiental: _parseInt(map['cad_ambiental']),
+      outorga: _parseInt(map['outorga']),
+      ctf: _parseInt(map['ctf']),
+      car: _parseInt(map['car']),
+      oesa: _parseInt(map['oesa']),
+      atendimentosAno: _parseInt(map['atendimentos_ano']),
+      tipoViveiro: map['tipo_viveiro'] is String ? map['tipo_viveiro'] : null,
+      areaViveiro: map['area_viveiro'] is double ? map['area_viveiro'] : _parseDouble(map['area_viveiro']),
+      areaTaqueRede: map['area_taque_rede'] is double ? map['area_taque_rede'] : _parseDouble(map['area_taque_rede']),
+      tipoSistemaFechado: map['tipo_sistema_fechado'] is String ? map['tipo_sistema_fechado'] : null,
+      areaSistemaFechado: map['area_sistema_fechado'] is double ? map['area_sistema_fechado'] : _parseDouble(map['area_sistema_fechado']),
+      areaRaceway: map['area_raceway'] is double ? map['area_raceway'] : _parseDouble(map['area_raceway']),
+      especieProducao: map['especie_producao'] is String ? map['especie_producao'] : null,
+      pesoProducao: map['peso_producao'] is double ? map['peso_producao'] : _parseDouble(map['peso_producao']),
+      unidadesProducao: _parseInt(map['unidades_producao']),
+      areaJovemProducao: map['area_jovem_producao'] is double ? map['area_jovem_producao'] : _parseDouble(map['area_jovem_producao']),
+      especieAreaJov: map['especie_area_jov'] is String ? map['especie_area_jov'] : null,
+      milheirosAreaJov: map['milheiros_area_jov'] is String ? map['milheiros_area_jov'] : null,
+      especieOrnamental: map['especie_ornamental'] is String ? map['especie_ornamental'] : null,
+      pesoOrnamental: map['peso_ornamental'] is double ? map['peso_ornamental'] : _parseDouble(map['peso_ornamental']),
+      unidadesOrnamental: _parseInt(map['unidades_ornamental']),
+      ufAquisicaoJov: map['uf_aquisicao_jov'] is String ? map['uf_aquisicao_jov'] : null,
+      especieAquiJov: map['especie_aqui_jov'] is String ? map['especie_aqui_jov'] : null,
+      milheirosAquiJov: map['milheiros_aqui_jov'] is String ? map['milheiros_aqui_jov'] : null,
+      origemRacao: map['origem_racao'] is String ? map['origem_racao'] : null,
+      unidadesRacao: _parseInt(map['unidades_racao']),
+      quantidadeRacao: map['quantidade_racao'] is double ? map['quantidade_racao'] : _parseDouble(map['quantidade_racao']),
+      ufOrigemComercialEspecie: map['uf_origem_comercial_especie'] is String ? map['uf_origem_comercial_especie'] : null,
+      especieComercial: map['especie_comercial'] is String ? map['especie_comercial'] : null,
+      prodComercial: map['prod_comercial'] is double ? map['prod_comercial'] : _parseDouble(map['prod_comercial']),
+      quantidadeComercial: _parseInt(map['quantidade_comercial']),
+      precoMedio: map['preco_medio'] is double ? map['preco_medio'] : _parseDouble(map['preco_medio']),
     );
   }
 
@@ -267,48 +267,27 @@ class Formulario {
 
   @override
   String toString() {
-    return '''
-      Formulario{
-      idForm: $idForm,
-      idPessoa: $idPessoa,
-      enderecoEmpre: $enderecoEmpre,
-      municipioEmpre: $municipioEmpre,
-      ufEmpre: $ufEmpre,
-      latitude: $latitude,
-      longitude: $longitude,
-      dap: $dap,
-      cadAmbiental: $cadAmbiental,
-      outorga: $outorga,
-      ctf: $ctf,
-      car: $car,
-      oesa: $oesa,
-      atendimentosAno: $atendimentosAno,
-      tipoViveiro: $tipoViveiro,
-      areaViveiro: $areaViveiro,
-      areaTaqueRede: $areaTaqueRede,
-      tipoSistemaFechado: $tipoSistemaFechado,
-      areaSistemaFechado: $areaSistemaFechado,
-      areaRaceway: $areaRaceway,
-      especieProducao: $especieProducao,
-      pesoProducao: $pesoProducao,
-      unidadesProducao: $unidadesProducao,
-      areaJovemProducao: $areaJovemProducao,
-      especieAreaJov: $especieAreaJov,
-      milheirosAreaJov: $milheirosAreaJov,
-      especieOrnamental: $especieOrnamental,
-      pesoOrnamental: $pesoOrnamental,
-      unidadesOrnamental: $unidadesOrnamental,
-      ufAquisicaoJov: $ufAquisicaoJov,
-      especieAquiJov: $especieAquiJov,
-      milheirosAquiJov: $milheirosAquiJov,
-      origemRacao: $origemRacao,
-      unidadesRacao: $unidadesRacao,
-      quantidadeRacao: $quantidadeRacao,
-      ufOrigemComercialEspecie: $ufOrigemComercialEspecie,
-      especieComercial: $especieComercial,
-      prodComercial: $prodComercial,
-      quantidadeComercial: $quantidadeComercial,
-      precoMedio: $precoMedio
-    }''';
+    return 'Formulario{idForm: $idForm, enderecoEmpre: $enderecoEmpre, precoMedio: $precoMedio}';
   }
 }
+
+
+int? _parseInt(dynamic value) {
+  if (value is int) {
+    return value;
+  }
+  else if (value is String) {
+    return value.isNotEmpty ? int.tryParse(value) : null;
+  }
+  return null;
+}
+
+double? _parseDouble(dynamic value) {
+  if (value is double) {
+    return value;
+  }
+  else if (value is String) {
+    return value.isNotEmpty ? double.tryParse(value) : null;
+  }
+  return null;
+  }

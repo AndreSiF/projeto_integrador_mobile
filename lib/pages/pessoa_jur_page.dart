@@ -1,93 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador_mobile/dao/formulario_dao.dart';
-import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
-import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
-import 'package:projeto_integrador_mobile/pages/cultivo_producao.dart';
-import 'package:projeto_integrador_mobile/pages/formulario_completo_page.dart';
-import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
-import 'package:projeto_integrador_mobile/service/cadastro_service.dart';
+import 'package:projeto_integrador_mobile/pages/ident_aqui_page.dart';
+import 'package:projeto_integrador_mobile/pages/ident_empre_page.dart';
 
-class InformacoesComerciaisPage extends StatefulWidget {
-  final Pessoa pessoa;
-  final Formulario formulario;
-  const InformacoesComerciaisPage({super.key, required this.pessoa, required this.formulario});
-
+class CnpjPage extends StatefulWidget {
   @override
-  _InformacoesComerciaisPageState createState() => _InformacoesComerciaisPageState();
+  _CnpjPageState createState() => _CnpjPageState();
 }
 
-class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
+class _CnpjPageState extends State<CnpjPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _ufAquiJovController = TextEditingController();
-  final TextEditingController _especieAquiJovController = TextEditingController();
-  final TextEditingController _milheirosAquiJovController = TextEditingController();
-  final TextEditingController _ufOrigemRacaoController = TextEditingController();
-  final TextEditingController _unidadesRacaoController = TextEditingController();
-  final TextEditingController _quantidadeRacaoController = TextEditingController();
-  final TextEditingController _ufOrigemComercEspecieController = TextEditingController();
-  final TextEditingController _especieComercialController = TextEditingController();
-  final TextEditingController _prodComercialController = TextEditingController();
-  final TextEditingController _quantidadeComercialController = TextEditingController();
-  final TextEditingController _precoMedioController = TextEditingController();
-
-  void _cadastrar() async {
-
-  }
+  final TextEditingController _razaoController = TextEditingController();
+  final TextEditingController _cnpjController = TextEditingController();
+  final TextEditingController _cnaeController = TextEditingController();
+  final TextEditingController _enderecoController = TextEditingController();
+  final TextEditingController _ufController = TextEditingController();
+  final TextEditingController _municipioController = TextEditingController();
+  final TextEditingController _respController = TextEditingController();
+  final TextEditingController _cpfRespController = TextEditingController();
+  final TextEditingController _telefoneRespController = TextEditingController();
+  final TextEditingController _rgpRespController = TextEditingController();
+  final TextEditingController _emailRespController = TextEditingController();
 
   void _proximo() {
     if (_formKey.currentState!.validate()) {
-      final formulario = Formulario(
-        enderecoEmpre: widget.formulario.enderecoEmpre,
-        municipioEmpre: widget.formulario.municipioEmpre,
-        ufEmpre: widget.formulario.ufEmpre,
-        latitude: widget.formulario.latitude,
-        longitude: widget.formulario.longitude,
-        dap: widget.formulario.dap,
-        cadAmbiental: widget.formulario.cadAmbiental,
-        outorga: widget.formulario.outorga,
-        ctf: widget.formulario.ctf,
-        car: widget.formulario.car,
-        oesa: widget.formulario.oesa,
-        atendimentosAno: widget.formulario.atendimentosAno,
-        tipoViveiro: widget.formulario.tipoViveiro,
-        areaViveiro: widget.formulario.areaViveiro,
-        areaTaqueRede: widget.formulario.areaTaqueRede,
-        tipoSistemaFechado: widget.formulario.tipoSistemaFechado,
-        areaSistemaFechado: widget.formulario.areaSistemaFechado,
-        areaRaceway: widget.formulario.areaRaceway,
-        especieProducao: widget.formulario.especieProducao,
-        pesoProducao: widget.formulario.pesoProducao,
-        unidadesProducao: widget.formulario.unidadesProducao,
-        areaJovemProducao: widget.formulario.areaJovemProducao,
-        especieAreaJov: widget.formulario.especieAreaJov,
-        milheirosAreaJov: widget.formulario.milheirosAreaJov,
-        especieOrnamental: widget.formulario.especieOrnamental,
-        pesoOrnamental: widget.formulario.pesoOrnamental,
-        unidadesOrnamental: widget.formulario.unidadesOrnamental,
-        ufAquisicaoJov: _ufAquiJovController.text,
-        especieAquiJov: _especieAquiJovController.text,
-        milheirosAquiJov: _milheirosAquiJovController.text,
-        origemRacao: _ufOrigemRacaoController.text,
-        unidadesRacao: int.parse(_unidadesRacaoController.text),
-        quantidadeRacao: double.parse(_quantidadeRacaoController.text),
-        ufOrigemComercialEspecie: _ufOrigemComercEspecieController.text,
-        especieComercial: _especieComercialController.text,
-        prodComercial: double.parse(_prodComercialController.text),
-        quantidadeComercial: int.parse(_quantidadeComercialController.text),
-        precoMedio: double.parse(_precoMedioController.text),
+      final pessoa = Pessoa(
+        razaoSocial: _razaoController.text,
+        cnpj: _cnpjController.text,
+        cnae: _cnaeController.text,
+        telefone: int.parse(_telefoneRespController.text),
+        email: _emailRespController.text,
+        rgp: int.parse(_rgpRespController.text),
+        endereco: _enderecoController.text,
+        uf: _ufController.text,
+        municipio: _municipioController.text,
+        nome: _respController.text,
+        cpf: _cpfRespController.text
       );
-      try{
-        final CadastroService _cadastroService = CadastroService();
-        _cadastroService.cadastrarPessoaComFormulario(widget.pessoa, formulario);
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Cadastro realizado com sucesso!')),);
-      } catch(e){
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Cadastro falhou!')),);
-      }
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioCompletoPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (_) => IdentEmprePage(pessoa: pessoa)),);
     }
   }
 
@@ -99,14 +50,14 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(
-            'Informações Comerciais',
+            'Pessoa Jurídica',
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: false,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CultivoProducaoPage(pessoa: widget.pessoa, formulario: widget.formulario))
+                context, MaterialPageRoute(builder: (context) => IdentificacaoAquicultorPage())
             ),
           ),
           actions: [
@@ -123,17 +74,12 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
               key: _formKey,
               child: Column(
                 children: [
-                  StepIndicator(currentStep: 2),
-                  const SizedBox(height: 24),
-                  const Text('ENGORDA', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  const Text('Aquisição de formas jovens', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  // Campo do estado de origem do fornecedor de formas jovens
+                  const SizedBox(height: 8),
+                  // Campo de razão social
                   TextFormField(
-                    controller: _ufAquiJovController,
+                    controller: _razaoController,
                     decoration: InputDecoration(
-                      labelText: 'Estado de origem do fornecedor',
+                      labelText: 'Razão Social',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -153,11 +99,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo da espécie forma jovem adiquirida
+                  // Campo de CNPJ
                   TextFormField(
-                    controller: _especieAquiJovController,
+                    controller: _cnpjController,
                     decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
+                      labelText: 'CNPJ',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -177,11 +123,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo dos milheiros de forma jovem
+                  // Campo de CNAE
                   TextFormField(
-                    controller: _milheirosAquiJovController,
+                    controller: _cnaeController,
                     decoration: InputDecoration(
-                      labelText: 'Milheiros',
+                      labelText: 'Código CNAE principal',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -201,14 +147,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Aquisição de ração', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-
-                  //Campo do estado de origem do fornecedor de ração
+                  //Campo de endereço
                   TextFormField(
-                    controller: _ufOrigemRacaoController,
+                    controller: _enderecoController,
                     decoration: InputDecoration(
-                      labelText: 'Estado de origem do fornecedor',
+                      labelText: 'Endereço',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -228,11 +171,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo das unidades de ração adquirida
+                  // Campo de município
                   TextFormField(
-                    controller: _unidadesRacaoController,
+                    controller: _municipioController,
                     decoration: InputDecoration(
-                      labelText: 'Unidades digitadas',
+                      labelText: 'Município',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -250,11 +193,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo da quantidade de ração adquirida
+                  // Campo de UF
                   TextFormField(
-                    controller: _quantidadeRacaoController,
+                    controller: _ufController,
                     decoration: InputDecoration(
-                      labelText: 'Quantidade digitada',
+                      labelText: 'UF',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -274,14 +217,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Comercialização por espécie', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-
-                  // Campo do estado de origem do fornecedor de comercialização por espécie
+                  // Campo do nome do responsável legal
                   TextFormField(
-                    controller: _ufOrigemComercEspecieController,
+                    controller: _respController,
                     decoration: InputDecoration(
-                      labelText: 'Estado de origem do fornecedor',
+                      labelText: 'Responsável Legal',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -301,11 +241,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do nome da espécie fornecida
+                  // Campo do CPF do responsável legal
                   TextFormField(
-                    controller: _especieComercialController,
+                    controller: _cpfRespController,
                     decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
+                      labelText: 'CPF',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -325,33 +265,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo da produção em quilos da espécie comercializada
+                  // Campo do RGP do responsável legal
                   TextFormField(
-                    controller: _prodComercialController,
+                    controller: _rgpRespController,
                     decoration: InputDecoration(
-                      labelText: 'Produção comercializada (kg)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo da quantidade de animais da espécie comercializada
-                  TextFormField(
-                    controller: _quantidadeComercialController,
-                    decoration: InputDecoration(
-                      labelText: 'Quantidade digitada',
+                      labelText: 'RGP',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -371,11 +289,35 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do preço médio da espécie comercializada
+                  // Campo do telefone do responsável legal
                   TextFormField(
-                    controller: _precoMedioController,
+                    controller: _telefoneRespController,
                     decoration: InputDecoration(
-                      labelText: 'Preço Médio',
+                      labelText: 'Telefone',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
+                    ),
+                    validator: (value) =>
+                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
+                  ),
+                  SizedBox(height: 16),
+
+                  // Campo do email do responsável legal
+                  TextFormField(
+                    controller: _emailRespController,
+                    decoration: InputDecoration(
+                      labelText: 'E-mail',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -401,7 +343,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () => Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => CultivoProducaoPage(pessoa: widget.pessoa, formulario: widget.formulario,))
+                              context, MaterialPageRoute(builder: (context) => IdentificacaoAquicultorPage())
                           ),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: Color(0xFF0D47A1)),
@@ -421,7 +363,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                         child: ElevatedButton(
                           onPressed: _proximo,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF4CAF50),
+                            backgroundColor: Color(0xFF0D47A1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
