@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador_mobile/dao/formulario_dao.dart';
-import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/cultivo_producao.dart';
@@ -31,9 +29,6 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
   final TextEditingController _quantidadeComercialController = TextEditingController();
   final TextEditingController _precoMedioController = TextEditingController();
 
-  void _cadastrar() async {
-
-  }
 
   void _proximo() {
     if (_formKey.currentState!.validate()) {

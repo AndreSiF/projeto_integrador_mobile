@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador_mobile/dao/formulario_dao.dart';
-import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
-import 'package:projeto_integrador_mobile/models/form.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/pessoa_form.dart';
 import 'package:projeto_integrador_mobile/service/formulario_service.dart';
-import 'package:projeto_integrador_mobile/service/pessoa_service.dart';
 
 class ListaPessoasComFormulariosPage extends StatefulWidget {
   const ListaPessoasComFormulariosPage({super.key});
@@ -14,23 +10,21 @@ class ListaPessoasComFormulariosPage extends StatefulWidget {
 }
 
 class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormulariosPage> {
-  final PessoaService _pessoaService = PessoaService();
   final FormService _formService = FormService();
-  late Future<List<Pessoa>> _pessoas;
-  late Future<List<Formulario>> _formularios;
+  late Future<List<PessoaComFormulario>> _pessoaComFormularios;
 
   @override
   void initState() {
     super.initState();
-    _formularios = FormService().getForms();
+    _pessoaComFormularios = _formService.getPessoaComFormularios();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Formulários')),
-      body: FutureBuilder<List<Formulario>>(
-        future: _formularios,
+      appBar: AppBar(title: const Text('Pessoas com Formulários')),
+      body: FutureBuilder<List<PessoaComFormulario>>(
+        future: _pessoaComFormularios,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -39,15 +33,18 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
             return Center(child: Text('Erro: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('Nenhum formulário encontrado.'));
+            return const Center(child: Text('Nenhum dado encontrado.'));
           }
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
-              final formulario = snapshot.data![index];
+              final item = snapshot.data![index];
+              final pessoa = item.pessoa;
+              final formulario = item.formulario;
+
               return ListTile(
-                title: Text(formulario.enderecoEmpre.toString()),
-                subtitle: Text(formulario.precoMedio.toString()),
+                title: Text('Nome da pessoa: ${pessoa.nome} - Endereço da Empresa: ${formulario.enderecoEmpre}'),
+                subtitle: Text('Preço Médio: ${formulario.precoMedio}'),
               );
             },
           );

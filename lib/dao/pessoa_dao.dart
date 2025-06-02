@@ -14,12 +14,4 @@ class PessoaDao {
     final List<Map<String, dynamic>> maps = await db.query(table);
     return maps.map((map) => Pessoa.fromMap(map)).toList();
   }
-
-  // Future<List<Map<String, dynamic>>> getPessoasComFormularios() async {
-  //   final db = await AppDatabase().database;
-  //   return await db.rawQuery('''
-  //   SELECT * FROM pessoa
-  //   INNER JOIN form ON pessoa.id_pessoa = form.id_pessoa
-  // ''');
-  // }
 }
