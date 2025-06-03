@@ -1,36 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
-import 'package:projeto_integrador_mobile/pages/ident_empre_page.dart';
-import 'package:projeto_integrador_mobile/pages/info_comerciais_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/cultivo_producao.dart';
+import 'package:projeto_integrador_mobile/pages/form/formulario_completo_page.dart';
 import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
+import 'package:projeto_integrador_mobile/service/cadastro_service.dart';
 
-class CultivoProducaoPage extends StatefulWidget {
+class InformacoesComerciaisPage extends StatefulWidget {
   final Pessoa pessoa;
   final Formulario formulario;
-  const CultivoProducaoPage({super.key, required this.pessoa, required this.formulario});
+  const InformacoesComerciaisPage({super.key, required this.pessoa, required this.formulario});
 
   @override
-  _CultivoProducaoPageState createState() => _CultivoProducaoPageState();
+  _InformacoesComerciaisPageState createState() => _InformacoesComerciaisPageState();
 }
 
-class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
+class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _tipoViveiroController = TextEditingController();
-  final TextEditingController _areaViveiroController = TextEditingController();
-  final TextEditingController _areaTanqueRedeController = TextEditingController();
-  final TextEditingController _tipoSisFechadoController = TextEditingController();
-  final TextEditingController _areaSisFechadoController = TextEditingController();
-  final TextEditingController _areaRacewayController = TextEditingController();
-  final TextEditingController _especieProdController = TextEditingController();
-  final TextEditingController _pesoProdController = TextEditingController();
-  final TextEditingController _unidadeProdController = TextEditingController();
-  final TextEditingController _areaJovProdController = TextEditingController();
-  final TextEditingController _especieAreaJovController = TextEditingController();
-  final TextEditingController _milheirosAreaJovController = TextEditingController();
-  final TextEditingController _especieOrnController = TextEditingController();
-  final TextEditingController _pesoOrnController = TextEditingController();
-  final TextEditingController _unidadesOrnController = TextEditingController();
+  final TextEditingController _ufAquiJovController = TextEditingController();
+  final TextEditingController _especieAquiJovController = TextEditingController();
+  final TextEditingController _milheirosAquiJovController = TextEditingController();
+  final TextEditingController _ufOrigemRacaoController = TextEditingController();
+  final TextEditingController _unidadesRacaoController = TextEditingController();
+  final TextEditingController _quantidadeRacaoController = TextEditingController();
+  final TextEditingController _ufOrigemComercEspecieController = TextEditingController();
+  final TextEditingController _especieComercialController = TextEditingController();
+  final TextEditingController _prodComercialController = TextEditingController();
+  final TextEditingController _quantidadeComercialController = TextEditingController();
+  final TextEditingController _precoMedioController = TextEditingController();
+
 
   void _proximo() {
     if (_formKey.currentState!.validate()) {
@@ -47,24 +45,44 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
         car: widget.formulario.car,
         oesa: widget.formulario.oesa,
         atendimentosAno: widget.formulario.atendimentosAno,
-        tipoViveiro: _tipoViveiroController.text,
-        areaViveiro: double.parse(_areaViveiroController.text),
-        areaTaqueRede: double.parse(_areaTanqueRedeController.text),
-        tipoSistemaFechado: _tipoSisFechadoController.text,
-        areaSistemaFechado: double.parse(_areaSisFechadoController.text),
-        areaRaceway: double.parse(_areaRacewayController.text),
-        especieProducao: _especieProdController.text,
-        pesoProducao: double.parse(_pesoProdController.text),
-        unidadesProducao: int.parse(_unidadeProdController.text),
-        areaJovemProducao: double.parse(_areaJovProdController.text),
-        especieAreaJov: _especieAreaJovController.text,
-        milheirosAreaJov: _milheirosAreaJovController.text,
-        especieOrnamental: _especieOrnController.text,
-        pesoOrnamental: double.parse(_pesoOrnController.text),
-        unidadesOrnamental: int.parse(_unidadesOrnController.text),
+        tipoViveiro: widget.formulario.tipoViveiro,
+        areaViveiro: widget.formulario.areaViveiro,
+        areaTaqueRede: widget.formulario.areaTaqueRede,
+        tipoSistemaFechado: widget.formulario.tipoSistemaFechado,
+        areaSistemaFechado: widget.formulario.areaSistemaFechado,
+        areaRaceway: widget.formulario.areaRaceway,
+        especieProducao: widget.formulario.especieProducao,
+        pesoProducao: widget.formulario.pesoProducao,
+        unidadesProducao: widget.formulario.unidadesProducao,
+        areaJovemProducao: widget.formulario.areaJovemProducao,
+        especieAreaJov: widget.formulario.especieAreaJov,
+        milheirosAreaJov: widget.formulario.milheirosAreaJov,
+        especieOrnamental: widget.formulario.especieOrnamental,
+        pesoOrnamental: widget.formulario.pesoOrnamental,
+        unidadesOrnamental: widget.formulario.unidadesOrnamental,
+        ufAquisicaoJov: _ufAquiJovController.text,
+        especieAquiJov: _especieAquiJovController.text,
+        milheirosAquiJov: _milheirosAquiJovController.text,
+        origemRacao: _ufOrigemRacaoController.text,
+        unidadesRacao: int.parse(_unidadesRacaoController.text),
+        quantidadeRacao: double.parse(_quantidadeRacaoController.text),
+        ufOrigemComercialEspecie: _ufOrigemComercEspecieController.text,
+        especieComercial: _especieComercialController.text,
+        prodComercial: double.parse(_prodComercialController.text),
+        quantidadeComercial: int.parse(_quantidadeComercialController.text),
+        precoMedio: double.parse(_precoMedioController.text),
       );
+      try{
+        final CadastroService _cadastroService = CadastroService();
+        _cadastroService.cadastrarPessoaComFormulario(widget.pessoa, formulario);
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Cadastro realizado com sucesso!')),);
+      } catch(e){
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Cadastro falhou!')),);
+      }
 
-      Navigator.push(context, MaterialPageRoute(builder: (_) => InformacoesComerciaisPage(pessoa: widget.pessoa, formulario: formulario)),);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => FormularioCompletoPage()));
     }
   }
 
@@ -76,14 +94,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(
-            'Sistema de Cultivo e\nProdução',
+            'Informações Comerciais',
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: false,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => IdentEmprePage(pessoa: widget.pessoa))
+                context, MaterialPageRoute(builder: (context) => CultivoProducaoPage(pessoa: widget.pessoa, formulario: widget.formulario))
             ),
           ),
           actions: [
@@ -100,17 +118,17 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
               key: _formKey,
               child: Column(
                 children: [
-                  StepIndicator(currentStep: 1),
+                  StepIndicator(currentStep: 2),
                   const SizedBox(height: 24),
                   const Text('ENGORDA', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-                  const Text('Modelo e produção', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('Aquisição de formas jovens', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-                  // Campo do tipo do viveiro da produção
+                  // Campo do estado de origem do fornecedor de formas jovens
                   TextFormField(
-                    controller: _tipoViveiroController,
+                    controller: _ufAquiJovController,
                     decoration: InputDecoration(
-                      labelText: 'Tipo',
+                      labelText: 'Estado de origem do fornecedor',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -130,11 +148,11 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo da área total do viveiro
+                  // Campo da espécie forma jovem adiquirida
                   TextFormField(
-                    controller: _areaViveiroController,
+                    controller: _especieAquiJovController,
                     decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
+                      labelText: 'Espécie digitada',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -154,14 +172,11 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Tanque Rede', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-
-                  // Campo da área total do tanque rede
+                  // Campo dos milheiros de forma jovem
                   TextFormField(
-                    controller: _areaTanqueRedeController,
+                    controller: _milheirosAquiJovController,
                     decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
+                      labelText: 'Milheiros',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -181,14 +196,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Sistema Fechado', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('Aquisição de ração', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
 
-                  //Campo do tipo de sistema fechado
+                  //Campo do estado de origem do fornecedor de ração
                   TextFormField(
-                    controller: _tipoSisFechadoController,
+                    controller: _ufOrigemRacaoController,
                     decoration: InputDecoration(
-                      labelText: 'Tipo',
+                      labelText: 'Estado de origem do fornecedor',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -208,11 +223,11 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo da área do sistema fechado
+                  // Campo das unidades de ração adquirida
                   TextFormField(
-                    controller: _areaSisFechadoController,
+                    controller: _unidadesRacaoController,
                     decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
+                      labelText: 'Unidades digitadas',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -230,14 +245,11 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Raceway', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-
-                  // Campo da área do raceway
+                  // Campo da quantidade de ração adquirida
                   TextFormField(
-                    controller: _areaRacewayController,
+                    controller: _quantidadeRacaoController,
                     decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
+                      labelText: 'Quantidade digitada',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -257,12 +269,36 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Produção', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('Comercialização por espécie', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
 
-                  // Campo do nome da espécie produzida
+                  // Campo do estado de origem do fornecedor de comercialização por espécie
                   TextFormField(
-                    controller: _especieProdController,
+                    controller: _ufOrigemComercEspecieController,
+                    decoration: InputDecoration(
+                      labelText: 'Estado de origem do fornecedor',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
+                    ),
+                    validator: (value) =>
+                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
+                  ),
+                  SizedBox(height: 16),
+
+                  // Campo do nome da espécie fornecida
+                  TextFormField(
+                    controller: _especieComercialController,
                     decoration: InputDecoration(
                       labelText: 'Espécie digitada',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
@@ -284,11 +320,33 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do peso da espécie produzida
+                  // Campo da produção em quilos da espécie comercializada
                   TextFormField(
-                    controller: _pesoProdController,
+                    controller: _prodComercialController,
                     decoration: InputDecoration(
-                      labelText: 'Produção (kg) digitada',
+                      labelText: 'Produção comercializada (kg)',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+
+                  // Campo da quantidade de animais da espécie comercializada
+                  TextFormField(
+                    controller: _quantidadeComercialController,
+                    decoration: InputDecoration(
+                      labelText: 'Quantidade digitada',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -308,36 +366,11 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo da quantidade de espécies produzidas em unidades
+                  // Campo do preço médio da espécie comercializada
                   TextFormField(
-                    controller: _unidadeProdController,
+                    controller: _precoMedioController,
                     decoration: InputDecoration(
-                      labelText: 'Unidades (se anfíbio ou réptil)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-
-                  const Text('Forma Jovem', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-
-                  // Campo da área de produção jovem
-                  TextFormField(
-                    controller: _areaJovProdController,
-                    decoration: InputDecoration(
-                      labelText: 'Área Total de Produção (m³)',
+                      labelText: 'Preço Médio',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -354,127 +387,6 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                     ),
                     validator: (value) =>
                     value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do nome da espécie na área de produção jovem
-                  TextFormField(
-                    controller: _especieAreaJovController,
-                    decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo dos milheiros da produção de forma jovem
-                  TextFormField(
-                    controller: _milheirosAreaJovController,
-                    decoration: InputDecoration(
-                      labelText: 'Milheiros digitados',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  const Text('Ornamental', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-
-                  // Campo do nome da espécie ornamental produzida
-                  TextFormField(
-                    controller: _especieOrnController,
-                    decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do peso da espécie ornamental produzida
-                  TextFormField(
-                    controller: _pesoOrnController,
-                    decoration: InputDecoration(
-                      labelText: 'Produção (kg) digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo da quantidade de espécies ornamentais produzidas
-                  TextFormField(
-                    controller: _unidadesOrnController,
-                    decoration: InputDecoration(
-                      labelText: 'Unidades (se anfíbio ou réptil)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
                   ),
                   SizedBox(height: 16),
 
@@ -484,7 +396,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () => Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => IdentEmprePage(pessoa: widget.pessoa))
+                              context, MaterialPageRoute(builder: (context) => CultivoProducaoPage(pessoa: widget.pessoa, formulario: widget.formulario,))
                           ),
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: Color(0xFF0D47A1)),
@@ -504,13 +416,13 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                         child: ElevatedButton(
                           onPressed: _proximo,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF0D47A1),
+                            backgroundColor: Color(0xFF4CAF50),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),
                             minimumSize: Size(double.infinity, 50),
                           ),
-                          child: Text('Próximo', style: TextStyle(color: Colors.white),),
+                          child: Text('Salvar', style: TextStyle(color: Colors.white),),
                         ),
                       ),
                     ],

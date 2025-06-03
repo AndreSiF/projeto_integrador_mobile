@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/pessoa_form.dart';
+import 'package:projeto_integrador_mobile/pages/form/visualizar_form.dart';
 import 'package:projeto_integrador_mobile/service/formulario_service.dart';
 
 class ListaPessoasComFormulariosPage extends StatefulWidget {
@@ -43,9 +44,15 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
               final formulario = item.formulario;
 
               return ListTile(
-                title: Text('Nome da pessoa: ${pessoa.nome} - Endereço da Empresa: ${formulario.enderecoEmpre}'),
-                subtitle: Text('Preço Médio: ${formulario.precoMedio}'),
+                title: Text('Proprietário: ${pessoa.nome} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
+                subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
+                 onTap: () {
+                  print('Indo para página ${pessoa.nome}');
+                   Navigator.push(context, MaterialPageRoute(builder: (context)
+                     => VisualizarFormPage(dados: item),),);
+                 },
               );
+
             },
           );
         },

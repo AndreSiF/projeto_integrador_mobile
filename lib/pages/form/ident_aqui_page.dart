@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:projeto_integrador_mobile/pages/listar_pessoas_formularios_page.dart';
-import 'package:projeto_integrador_mobile/pages/pessoa_fis_page.dart';
-import 'package:projeto_integrador_mobile/pages/pessoa_jur_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/listar_pessoas_formularios_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
 
 class IdentificacaoAquicultorPage extends StatelessWidget {
   const IdentificacaoAquicultorPage({super.key});

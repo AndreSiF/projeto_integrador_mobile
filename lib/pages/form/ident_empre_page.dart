@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
-import 'package:projeto_integrador_mobile/pages/cultivo_producao.dart';
-import 'package:projeto_integrador_mobile/pages/pessoa_fis_page.dart';
-import 'package:projeto_integrador_mobile/pages/pessoa_jur_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/cultivo_producao.dart';
+import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
 import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
 
 class IdentEmprePage extends StatefulWidget {
