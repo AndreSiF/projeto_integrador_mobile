@@ -43,16 +43,26 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
               final pessoa = item.pessoa;
               final formulario = item.formulario;
 
-              return ListTile(
-                title: Text('Proprietário: ${pessoa.nome} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
-                subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
-                 onTap: () {
-                  print('Indo para página ${pessoa.nome}');
-                   Navigator.push(context, MaterialPageRoute(builder: (context)
-                     => VisualizarFormPage(dados: item),),);
-                 },
-              );
-
+              if(pessoa.cpf!.isNotEmpty){
+                return ListTile(
+                  title: Text('Proprietário: ${pessoa.nome} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
+                  subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)
+                    => VisualizarFormPage(dados: item),),);
+                  },
+                );
+              }
+              else{
+                return ListTile(
+                  title: Text('Razão Social: ${pessoa.razaoSocial} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
+                  subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)
+                    => VisualizarFormPage(dados: item),),);
+                  },
+                );
+              }
             },
           );
         },

@@ -19,6 +19,8 @@ class VisualizarFormPage extends StatefulWidget {
 
 class _VisualizarFormPageState extends State<VisualizarFormPage> {
   bool _editando = false;
+  late Pessoa pessoa;
+  late Formulario formulario;
 
   // Pessoa
   late TextEditingController _nomeController;
@@ -79,8 +81,8 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
   @override
   void initState() {
     super.initState();
-    final pessoa = widget.dados.pessoa;
-    final formulario = widget.dados.formulario;
+    pessoa = widget.dados.pessoa;
+    formulario = widget.dados.formulario;
 
     // Pessoa
     _nomeController = TextEditingController(text: pessoa.nome ?? '');
@@ -140,7 +142,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
 
   void _salvarAlteracoes() async {
     final pessoaAtualizada = Pessoa(
-      idPessoa: widget.dados.pessoa.idPessoa,
+      idPessoa: pessoa.idPessoa,
       nome: _nomeController.text,
       cpf: _cpfController.text,
       telefone: int.tryParse(_telefoneController.text),
@@ -155,7 +157,8 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
     );
 
     final formularioAtualizado = Formulario(
-      idForm: widget.dados.formulario.idForm,
+      idForm: formulario.idForm,
+      idPessoa: formulario.idPessoa,
       enderecoEmpre: _enderecoEmpreController.text,
       municipioEmpre: _municipioEmpreController.text,
       ufEmpre: _ufEmpreController.text,
@@ -213,8 +216,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final p = widget.dados.pessoa;
-    final f = widget.dados.formulario;
+
 
     return Scaffold(
       appBar: AppBar(
@@ -235,113 +237,113 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
           children: [
             // Dados da Pessoa
             const Text('Dados do Indivíduo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Nome', valor: p.nome, controller: _nomeController, editando: _editando),
-            Campo(label: 'CPF', valor: p.cpf, controller: _cpfController, editando: _editando),
-            Campo(label: 'Telefone', valor: p.telefone?.toString(), controller: _telefoneController, editando: _editando),
-            Campo(label: 'Email', valor: p.email, controller: _emailController, editando: _editando),
-            Campo(label: 'RGP', valor: p.rgp?.toString(), controller: _rgpController, editando: _editando),
-            Campo(label: 'UF', valor: p.uf, controller: _ufController, editando: _editando),
-            Campo(label: 'Município', valor: p.municipio, controller: _municipioController, editando: _editando),
-            Campo(label: 'Endereço', valor: p.endereco, controller: _enderecoController, editando: _editando),
-            Campo(label: 'Razão Social', valor: p.razaoSocial, controller: _razaoSocialController, editando: _editando),
-            Campo(label: 'CNPJ', valor: p.cnpj, controller: _cnpjController, editando: _editando),
-            Campo(label: 'CNAE', valor: p.cnae, controller: _cnaeController, editando: _editando),
+            Campo(label: 'Nome', valor: pessoa.nome, controller: _nomeController, editando: _editando),
+            Campo(label: 'CPF', valor: pessoa.cpf, controller: _cpfController, editando: _editando),
+            Campo(label: 'Telefone', valor: pessoa.telefone?.toString(), controller: _telefoneController, editando: _editando),
+            Campo(label: 'Email', valor: pessoa.email, controller: _emailController, editando: _editando),
+            Campo(label: 'RGP', valor: pessoa.rgp?.toString(), controller: _rgpController, editando: _editando),
+            Campo(label: 'UF', valor: pessoa.uf, controller: _ufController, editando: _editando),
+            Campo(label: 'Município', valor: pessoa.municipio, controller: _municipioController, editando: _editando),
+            Campo(label: 'Endereço', valor: pessoa.endereco, controller: _enderecoController, editando: _editando),
+            Campo(label: 'Razão Social', valor: pessoa.razaoSocial, controller: _razaoSocialController, editando: _editando),
+            Campo(label: 'CNPJ', valor: pessoa.cnpj, controller: _cnpjController, editando: _editando),
+            Campo(label: 'CNAE', valor: pessoa.cnae, controller: _cnaeController, editando: _editando),
 
             // Dados da Fazenda
             const SizedBox(height: 24),
             const Text('Empreendimento', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Endereço', valor: f.enderecoEmpre, controller: _enderecoEmpreController, editando: _editando),
-            Campo(label: 'Município', valor: f.municipioEmpre, controller: _municipioEmpreController, editando: _editando),
-            Campo(label: 'UF', valor: f.ufEmpre, controller: _ufEmpreController, editando: _editando),
+            Campo(label: 'Endereço', valor: formulario.enderecoEmpre, controller: _enderecoEmpreController, editando: _editando),
+            Campo(label: 'Município', valor: formulario.municipioEmpre, controller: _municipioEmpreController, editando: _editando),
+            Campo(label: 'UF', valor: formulario.ufEmpre, controller: _ufEmpreController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Coordenadas Geográficas', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Latitude', valor: f.latitude?.toString(), controller: _latitudeController, editando: _editando),
-            Campo(label: 'Longitude', valor: f.longitude?.toString(), controller: _longitudeController, editando: _editando),
+            Campo(label: 'Latitude', valor: formulario.latitude?.toString(), controller: _latitudeController, editando: _editando),
+            Campo(label: 'Longitude', valor: formulario.longitude?.toString(), controller: _longitudeController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número do DAP', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'N° DAP', valor: f.dap?.toString(), controller: _dapController, editando: _editando),
+            Campo(label: 'N° DAP', valor: formulario.dap?.toString(), controller: _dapController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Possui Licença Ambiental', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'N° do Cadastro', valor: f.cadAmbiental?.toString(), controller: _cadAmbientalController, editando: _editando),
+            Campo(label: 'N° do Cadastro', valor: formulario.cadAmbiental?.toString(), controller: _cadAmbientalController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número da Outorga', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'N° da Outorga', valor: f.outorga?.toString(), controller: _outorgaController, editando: _editando),
+            Campo(label: 'N° da Outorga', valor: formulario.outorga?.toString(), controller: _outorgaController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número do Cadastro Técnico Federal', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'CTF', valor: f.ctf?.toString(), controller: _ctfController, editando: _editando),
+            Campo(label: 'CTF', valor: formulario.ctf?.toString(), controller: _ctfController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número do Cadastro Ambiental Rural', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'CAR', valor: f.car?.toString(), controller: _carController, editando: _editando),
+            Campo(label: 'CAR', valor: formulario.car?.toString(), controller: _carController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número do cadastro na OESA', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'OESA', valor: f.oesa?.toString(), controller: _oesaController, editando: _editando),
+            Campo(label: 'OESA', valor: formulario.oesa?.toString(), controller: _oesaController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Antedimentos Técnicos por Ano', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Atendimentos no Ano', valor: f.atendimentosAno?.toString(), controller: _atendimentosAnoController, editando: _editando),
+            Campo(label: 'Atendimentos no Ano', valor: formulario.atendimentosAno?.toString(), controller: _atendimentosAnoController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Viveiro', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Tipo Viveiro', valor: f.tipoViveiro, controller: _tipoViveiroController, editando: _editando),
-            Campo(label: 'Área Viveiro', valor: f.areaViveiro?.toString(), controller: _areaViveiroController, editando: _editando),
+            Campo(label: 'Tipo Viveiro', valor: formulario.tipoViveiro, controller: _tipoViveiroController, editando: _editando),
+            Campo(label: 'Área Viveiro', valor: formulario.areaViveiro?.toString(), controller: _areaViveiroController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Tanque rede', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Área Taque Rede', valor: f.areaTaqueRede?.toString(), controller: _areaTaqueRedeController, editando: _editando),
+            Campo(label: 'Área Taque Rede', valor: formulario.areaTaqueRede?.toString(), controller: _areaTaqueRedeController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Sistema Fechado', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Tipo Sistema Fechado', valor: f.tipoSistemaFechado, controller: _tipoSistemaFechadoController, editando: _editando),
-            Campo(label: 'Área Sistema Fechado', valor: f.areaSistemaFechado?.toString(), controller: _areaSistemaFechadoController, editando: _editando),
+            Campo(label: 'Tipo Sistema Fechado', valor: formulario.tipoSistemaFechado, controller: _tipoSistemaFechadoController, editando: _editando),
+            Campo(label: 'Área Sistema Fechado', valor: formulario.areaSistemaFechado?.toString(), controller: _areaSistemaFechadoController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Raceway', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Área Raceway', valor: f.areaRaceway?.toString(), controller: _areaRacewayController, editando: _editando),
+            Campo(label: 'Área Raceway', valor: formulario.areaRaceway?.toString(), controller: _areaRacewayController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Produção', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Espécie', valor: f.especieProducao, controller: _especieProducaoController, editando: _editando),
-            Campo(label: 'Peso', valor: f.pesoProducao?.toString(), controller: _pesoProducaoController, editando: _editando),
-            Campo(label: 'Unidades', valor: f.unidadesProducao?.toString(), controller: _unidadesProducaoController, editando: _editando),
+            Campo(label: 'Espécie', valor: formulario.especieProducao, controller: _especieProducaoController, editando: _editando),
+            Campo(label: 'Peso', valor: formulario.pesoProducao?.toString(), controller: _pesoProducaoController, editando: _editando),
+            Campo(label: 'Unidades', valor: formulario.unidadesProducao?.toString(), controller: _unidadesProducaoController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Forma Jovem', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Área (m³)', valor: f.areaJovemProducao?.toString(), controller: _areaJovemProducaoController, editando: _editando),
-            Campo(label: 'Espécie', valor: f.especieAreaJov, controller: _especieAreaJovController, editando: _editando),
-            Campo(label: 'Milheiros', valor: f.milheirosAreaJov, controller: _milheirosAreaJovController, editando: _editando),
+            Campo(label: 'Área (m³)', valor: formulario.areaJovemProducao?.toString(), controller: _areaJovemProducaoController, editando: _editando),
+            Campo(label: 'Espécie', valor: formulario.especieAreaJov, controller: _especieAreaJovController, editando: _editando),
+            Campo(label: 'Milheiros', valor: formulario.milheirosAreaJov, controller: _milheirosAreaJovController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Ornamental', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Espécie', valor: f.especieOrnamental, controller: _especieOrnamentalController, editando: _editando),
-            Campo(label: 'Peso', valor: f.pesoOrnamental?.toString(), controller: _pesoOrnamentalController, editando: _editando),
-            Campo(label: 'Unidades', valor: f.unidadesOrnamental?.toString(), controller: _unidadesOrnamentalController, editando: _editando),
+            Campo(label: 'Espécie', valor: formulario.especieOrnamental, controller: _especieOrnamentalController, editando: _editando),
+            Campo(label: 'Peso', valor: formulario.pesoOrnamental?.toString(), controller: _pesoOrnamentalController, editando: _editando),
+            Campo(label: 'Unidades', valor: formulario.unidadesOrnamental?.toString(), controller: _unidadesOrnamentalController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Aquisição de Formas Jovem', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Estado de Origem do Fornecedor', valor: f.ufAquisicaoJov, controller: _ufAquisicaoJovController, editando: _editando),
-            Campo(label: 'Espécie', valor: f.especieAquiJov, controller: _especieAquiJovController, editando: _editando),
-            Campo(label: 'Milheiros', valor: f.milheirosAquiJov, controller: _milheirosAquiJovController, editando: _editando),
+            Campo(label: 'Estado de Origem do Fornecedor', valor: formulario.ufAquisicaoJov, controller: _ufAquisicaoJovController, editando: _editando),
+            Campo(label: 'Espécie', valor: formulario.especieAquiJov, controller: _especieAquiJovController, editando: _editando),
+            Campo(label: 'Milheiros', valor: formulario.milheirosAquiJov, controller: _milheirosAquiJovController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Aquisição de Ração', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Estado de Origem do Fornecedor', valor: f.origemRacao, controller: _origemRacaoController, editando: _editando),
-            Campo(label: 'Unidades', valor: f.unidadesRacao?.toString(), controller: _unidadesRacaoController, editando: _editando),
-            Campo(label: 'Quantidade', valor: f.quantidadeRacao?.toString(), controller: _quantidadeRacaoController, editando: _editando),
+            Campo(label: 'Estado de Origem do Fornecedor', valor: formulario.origemRacao, controller: _origemRacaoController, editando: _editando),
+            Campo(label: 'Unidades', valor: formulario.unidadesRacao?.toString(), controller: _unidadesRacaoController, editando: _editando),
+            Campo(label: 'Quantidade', valor: formulario.quantidadeRacao?.toString(), controller: _quantidadeRacaoController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Comercialização por Espécie', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Estado de Origem do fornecedor', valor: f.ufOrigemComercialEspecie, controller: _ufOrigemComercialEspecieController, editando: _editando),
-            Campo(label: 'Espécie', valor: f.especieComercial, controller: _especieComercialController, editando: _editando),
-            Campo(label: 'Produção', valor: f.prodComercial?.toString(), controller: _prodComercialController, editando: _editando),
-            Campo(label: 'Quantidade', valor: f.quantidadeComercial?.toString(), controller: _quantidadeComercialController, editando: _editando),
-            Campo(label: 'Preço Médio', valor: f.precoMedio?.toString(), controller: _precoMedioController, editando: _editando),
+            Campo(label: 'Estado de Origem do fornecedor', valor: formulario.ufOrigemComercialEspecie, controller: _ufOrigemComercialEspecieController, editando: _editando),
+            Campo(label: 'Espécie', valor: formulario.especieComercial, controller: _especieComercialController, editando: _editando),
+            Campo(label: 'Produção', valor: formulario.prodComercial?.toString(), controller: _prodComercialController, editando: _editando),
+            Campo(label: 'Quantidade', valor: formulario.quantidadeComercial?.toString(), controller: _quantidadeComercialController, editando: _editando),
+            Campo(label: 'Preço Médio', valor: formulario.precoMedio?.toString(), controller: _precoMedioController, editando: _editando),
 
             if (_editando)
               Padding(
