@@ -6,8 +6,6 @@ import 'package:projeto_integrador_mobile/pages/fields/campo_visualizacao.dart';
 import 'package:projeto_integrador_mobile/service/formulario_service.dart';
 import 'package:projeto_integrador_mobile/service/pessoa_service.dart';
 
-
-
 class VisualizarFormPage extends StatefulWidget {
   final PessoaComFormulario dados;
 
@@ -140,6 +138,51 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
     _precoMedioController = TextEditingController(text: formulario.precoMedio?.toString() ?? '');
   }
 
+  void _confirmarExclusao() async {
+    final confirmacao = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirmar exclusão'),
+        content: const Text('Tem certeza que deseja excluir este formulário?'),
+        actions: [
+          TextButton(
+            child: const Text('Cancelar'),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          TextButton(
+            child: const Text('Excluir'),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmacao == true) {
+      _excluirRegistro();
+    }
+  }
+
+  void _excluirRegistro() async {
+    final _formService = FormService();
+    final _pessoaService = PessoaService();
+
+    try {
+      await _formService.deletaForm(widget.dados.formulario.idForm!);
+      await _pessoaService.deletaPessoa(widget.dados.pessoa.idPessoa!);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Formulário excluído com sucesso.')),
+      );
+
+      Navigator.of(context).pop(); // Volta para a tela anterior
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao excluir: $e')),
+      );
+    }
+  }
+
+
   void _salvarAlteracoes() async {
     final pessoaAtualizada = Pessoa(
       idPessoa: pessoa.idPessoa,
@@ -216,21 +259,24 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Detalhes do Formulário'),
-          actions: [
+        title: const Text('Detalhes do Formulário'),
+        actions: [
           IconButton(
-          icon: Icon(_editando ? Icons.close : Icons.edit),
-      onPressed: () {
-            setState(() {
-          _editando = !_editando;
-        });
-      },
-    ),
-    ],),
+            icon: Icon(_editando ? Icons.close : Icons.edit),
+            onPressed: () {
+              setState(() {
+                _editando = !_editando;
+              });
+            },
+          ),
+          IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: _confirmarExclusao
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

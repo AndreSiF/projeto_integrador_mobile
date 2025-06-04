@@ -9,6 +9,11 @@ class PessoaDao {
     return db.insert(table, pessoa.toMap());
   }
 
+  Future<void> deletePessoa(int id) async {
+    final db = await AppDatabase().database;
+    await db.delete('pessoa', where: 'id_pessoa = ?', whereArgs: [id]);
+  }
+
   Future<void> atualizarPessoa(Pessoa pessoa) async {
     final db = await AppDatabase().database;
     await db.update(

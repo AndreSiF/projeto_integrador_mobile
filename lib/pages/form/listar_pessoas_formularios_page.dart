@@ -17,7 +17,13 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
   @override
   void initState() {
     super.initState();
-    _pessoaComFormularios = _formService.getPessoaComFormularios();
+    _carregarDados();
+  }
+
+  Future<void> _carregarDados() async {
+    setState(() {
+      _pessoaComFormularios = _formService.getPessoaComFormularios();
+    });
   }
 
   @override
@@ -36,34 +42,45 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Nenhum dado encontrado.'));
           }
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              final item = snapshot.data![index];
-              final pessoa = item.pessoa;
-              final formulario = item.formulario;
 
-              if(pessoa.cpf!.isNotEmpty){
-                return ListTile(
-                  title: Text('Proprietário: ${pessoa.nome} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
-                  subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)
-                    => VisualizarFormPage(dados: item),),);
-                  },
-                );
-              }
-              else{
-                return ListTile(
-                  title: Text('Razão Social: ${pessoa.razaoSocial} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
-                  subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)
-                    => VisualizarFormPage(dados: item),),);
-                  },
-                );
-              }
-            },
+          return RefreshIndicator(
+            onRefresh: _carregarDados,
+            child: ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                final item = snapshot.data![index];
+                final pessoa = item.pessoa;
+                final formulario = item.formulario;
+
+                if (pessoa.cpf!.isNotEmpty) {
+                  return ListTile(
+                    title: Text('Proprietário: ${pessoa.nome} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
+                    subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VisualizarFormPage(dados: item),
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return ListTile(
+                    title: Text('Razão Social: ${pessoa.razaoSocial} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
+                    subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VisualizarFormPage(dados: item),
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
+            ),
           );
         },
       ),

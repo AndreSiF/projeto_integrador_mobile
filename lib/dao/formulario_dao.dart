@@ -9,6 +9,11 @@ class FormDao {
     return db.insert(table, formulario.toMap());
   }
 
+  Future<void> deleteForm(int id) async {
+    final db = await AppDatabase().database;
+    await db.delete('form', where: 'id_form = ?', whereArgs: [id]);
+  }
+
   Future<List<Formulario>> getForms() async {
     final db = await AppDatabase().database;
     final result = await db.query(table);

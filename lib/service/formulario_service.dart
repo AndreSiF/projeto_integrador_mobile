@@ -11,6 +11,10 @@ class FormService {
     return await _formDao.getForms();
   }
 
+  Future<void> deletaForm(int id) async{
+    await _formDao.deleteForm(id);
+  }
+
   Future<void> updateForm(Formulario formulario) async{
     try{
       await _formDao.atualizarFormulario(formulario);

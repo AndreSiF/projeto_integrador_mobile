@@ -8,6 +8,10 @@ class PessoaService {
     return await _pessoaDao.getPessoas();
   }
 
+  Future<void> deletaPessoa(int id) async{
+    await _pessoaDao.deletePessoa(id);
+  }
+
   Future<void> updatePessoa(Pessoa pessoa) async{
     try{
       await _pessoaDao.atualizarPessoa(pessoa);
