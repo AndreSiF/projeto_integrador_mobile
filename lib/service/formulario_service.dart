@@ -11,6 +11,15 @@ class FormService {
     return await _formDao.getForms();
   }
 
+  Future<void> updateForm(Formulario formulario) async{
+    try{
+      await _formDao.atualizarFormulario(formulario);
+    }
+    catch(e){
+      rethrow;
+    }
+  }
+
   Future<List<PessoaComFormulario>> getPessoaComFormularios() async {
     final rawData = await _formDao.getPessoaComFormulariosRaw();
 

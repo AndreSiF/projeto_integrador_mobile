@@ -15,6 +15,16 @@ class FormDao {
     return result.map((map) => Formulario.fromMap(map)).toList();
   }
 
+  Future<void> atualizarFormulario(Formulario formulario) async {
+    final db = await AppDatabase().database;
+    await db.update(
+      'form',
+      formulario.toMap(),
+      where: 'id_form = ?',
+      whereArgs: [formulario.idForm],
+    );
+  }
+
   Future<List<Map<String, dynamic>>> getPessoaComFormulariosRaw() async {
     final db = await AppDatabase().database;
     return await db.rawQuery('''

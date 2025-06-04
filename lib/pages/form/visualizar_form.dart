@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_integrador_mobile/models/form.dart';
+import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/models/pessoa_form.dart';
 import 'package:projeto_integrador_mobile/pages/fields/campo_visualizacao.dart';
+import 'package:projeto_integrador_mobile/service/formulario_service.dart';
+import 'package:projeto_integrador_mobile/service/pessoa_service.dart';
 
 
 
@@ -16,6 +20,197 @@ class VisualizarFormPage extends StatefulWidget {
 class _VisualizarFormPageState extends State<VisualizarFormPage> {
   bool _editando = false;
 
+  // Pessoa
+  late TextEditingController _nomeController;
+  late TextEditingController _cpfController;
+  late TextEditingController _telefoneController;
+  late TextEditingController _emailController;
+  late TextEditingController _rgpController;
+  late TextEditingController _ufController;
+  late TextEditingController _municipioController;
+  late TextEditingController _enderecoController;
+  late TextEditingController _razaoSocialController;
+  late TextEditingController _cnpjController;
+  late TextEditingController _cnaeController;
+
+  // Formulario
+  late TextEditingController _enderecoEmpreController;
+  late TextEditingController _municipioEmpreController;
+  late TextEditingController _ufEmpreController;
+  late TextEditingController _latitudeController;
+  late TextEditingController _longitudeController;
+  late TextEditingController _dapController;
+  late TextEditingController _cadAmbientalController;
+  late TextEditingController _outorgaController;
+  late TextEditingController _ctfController;
+  late TextEditingController _carController;
+  late TextEditingController _oesaController;
+  late TextEditingController _atendimentosAnoController;
+
+  late TextEditingController _tipoViveiroController;
+  late TextEditingController _areaViveiroController;
+  late TextEditingController _areaTaqueRedeController;
+  late TextEditingController _tipoSistemaFechadoController;
+  late TextEditingController _areaSistemaFechadoController;
+  late TextEditingController _areaRacewayController;
+  late TextEditingController _especieProducaoController;
+  late TextEditingController _pesoProducaoController;
+  late TextEditingController _unidadesProducaoController;
+  late TextEditingController _areaJovemProducaoController;
+  late TextEditingController _especieAreaJovController;
+  late TextEditingController _milheirosAreaJovController;
+  late TextEditingController _especieOrnamentalController;
+  late TextEditingController _pesoOrnamentalController;
+  late TextEditingController _unidadesOrnamentalController;
+
+  late TextEditingController _ufAquisicaoJovController;
+  late TextEditingController _especieAquiJovController;
+  late TextEditingController _milheirosAquiJovController;
+  late TextEditingController _origemRacaoController;
+  late TextEditingController _unidadesRacaoController;
+  late TextEditingController _quantidadeRacaoController;
+  late TextEditingController _ufOrigemComercialEspecieController;
+  late TextEditingController _especieComercialController;
+  late TextEditingController _prodComercialController;
+  late TextEditingController _quantidadeComercialController;
+  late TextEditingController _precoMedioController;
+
+
+  @override
+  void initState() {
+    super.initState();
+    final pessoa = widget.dados.pessoa;
+    final formulario = widget.dados.formulario;
+
+    // Pessoa
+    _nomeController = TextEditingController(text: pessoa.nome ?? '');
+    _cpfController = TextEditingController(text: pessoa.cpf ?? '');
+    _telefoneController = TextEditingController(text: pessoa.telefone?.toString() ?? '');
+    _emailController = TextEditingController(text: pessoa.email ?? '');
+    _rgpController = TextEditingController(text: pessoa.rgp?.toString() ?? '');
+    _ufController = TextEditingController(text: pessoa.uf ?? '');
+    _municipioController = TextEditingController(text: pessoa.municipio ?? '');
+    _enderecoController = TextEditingController(text: pessoa.endereco ?? '');
+    _razaoSocialController = TextEditingController(text: pessoa.razaoSocial ?? '');
+    _cnpjController = TextEditingController(text: pessoa.cnpj ?? '');
+    _cnaeController = TextEditingController(text: pessoa.cnae ?? '');
+
+    // Formulario
+    _enderecoEmpreController = TextEditingController(text: formulario.enderecoEmpre ?? '');
+    _municipioEmpreController = TextEditingController(text: formulario.municipioEmpre ?? '');
+    _ufEmpreController = TextEditingController(text: formulario.ufEmpre ?? '');
+    _latitudeController = TextEditingController(text: formulario.latitude?.toString() ?? '');
+    _longitudeController = TextEditingController(text: formulario.longitude?.toString() ?? '');
+    _dapController = TextEditingController(text: formulario.dap?.toString() ?? '');
+    _cadAmbientalController = TextEditingController(text: formulario.cadAmbiental?.toString() ?? '');
+    _outorgaController = TextEditingController(text: formulario.outorga?.toString() ?? '');
+    _ctfController = TextEditingController(text: formulario.ctf?.toString() ?? '');
+    _carController = TextEditingController(text: formulario.car?.toString() ?? '');
+    _oesaController = TextEditingController(text: formulario.oesa?.toString() ?? '');
+    _atendimentosAnoController = TextEditingController(text: formulario.atendimentosAno?.toString() ?? '');
+
+    _tipoViveiroController = TextEditingController(text: formulario.tipoViveiro ?? '');
+    _areaViveiroController = TextEditingController(text: formulario.areaViveiro?.toString() ?? '');
+    _areaTaqueRedeController = TextEditingController(text: formulario.areaTaqueRede?.toString() ?? '');
+    _tipoSistemaFechadoController = TextEditingController(text: formulario.tipoSistemaFechado ?? '');
+    _areaSistemaFechadoController = TextEditingController(text: formulario.areaSistemaFechado?.toString() ?? '');
+    _areaRacewayController = TextEditingController(text: formulario.areaRaceway?.toString() ?? '');
+    _especieProducaoController = TextEditingController(text: formulario.especieProducao ?? '');
+    _pesoProducaoController = TextEditingController(text: formulario.pesoProducao?.toString() ?? '');
+    _unidadesProducaoController = TextEditingController(text: formulario.unidadesProducao?.toString() ?? '');
+    _areaJovemProducaoController = TextEditingController(text: formulario.areaJovemProducao?.toString() ?? '');
+    _especieAreaJovController = TextEditingController(text: formulario.especieAreaJov ?? '');
+    _milheirosAreaJovController = TextEditingController(text: formulario.milheirosAreaJov ?? '');
+    _especieOrnamentalController = TextEditingController(text: formulario.especieOrnamental ?? '');
+    _pesoOrnamentalController = TextEditingController(text: formulario.pesoOrnamental?.toString() ?? '');
+    _unidadesOrnamentalController = TextEditingController(text: formulario.unidadesOrnamental?.toString() ?? '');
+
+    _ufAquisicaoJovController = TextEditingController(text: formulario.ufAquisicaoJov ?? '');
+    _especieAquiJovController = TextEditingController(text: formulario.especieAquiJov ?? '');
+    _milheirosAquiJovController = TextEditingController(text: formulario.milheirosAquiJov ?? '');
+    _origemRacaoController = TextEditingController(text: formulario.origemRacao ?? '');
+    _unidadesRacaoController = TextEditingController(text: formulario.unidadesRacao?.toString() ?? '');
+    _quantidadeRacaoController = TextEditingController(text: formulario.quantidadeRacao?.toString() ?? '');
+    _ufOrigemComercialEspecieController = TextEditingController(text: formulario.ufOrigemComercialEspecie ?? '');
+    _especieComercialController = TextEditingController(text: formulario.especieComercial ?? '');
+    _prodComercialController = TextEditingController(text: formulario.prodComercial?.toString() ?? '');
+    _quantidadeComercialController = TextEditingController(text: formulario.quantidadeComercial?.toString() ?? '');
+    _precoMedioController = TextEditingController(text: formulario.precoMedio?.toString() ?? '');
+  }
+
+  void _salvarAlteracoes() async {
+    final pessoaAtualizada = Pessoa(
+      idPessoa: widget.dados.pessoa.idPessoa,
+      nome: _nomeController.text,
+      cpf: _cpfController.text,
+      telefone: int.tryParse(_telefoneController.text),
+      email: _emailController.text,
+      rgp: int.tryParse(_rgpController.text),
+      uf: _ufController.text,
+      municipio: _municipioController.text,
+      endereco: _enderecoController.text,
+      razaoSocial: _razaoSocialController.text,
+      cnpj: _cnpjController.text,
+      cnae: _cnaeController.text,
+    );
+
+    final formularioAtualizado = Formulario(
+      idForm: widget.dados.formulario.idForm,
+      enderecoEmpre: _enderecoEmpreController.text,
+      municipioEmpre: _municipioEmpreController.text,
+      ufEmpre: _ufEmpreController.text,
+      latitude: double.tryParse(_latitudeController.text),
+      longitude: double.tryParse(_longitudeController.text),
+      dap: int.tryParse(_dapController.text),
+      cadAmbiental: int.tryParse(_cadAmbientalController.text),
+      outorga: int.tryParse(_outorgaController.text),
+      ctf: int.tryParse(_ctfController.text),
+      car: int.tryParse(_carController.text),
+      oesa: int.tryParse(_oesaController.text),
+      atendimentosAno: int.tryParse(_atendimentosAnoController.text),
+      tipoViveiro: _tipoViveiroController.text,
+      areaViveiro: double.tryParse(_areaViveiroController.text),
+      areaTaqueRede: double.tryParse(_areaTaqueRedeController.text),
+      tipoSistemaFechado: _tipoSistemaFechadoController.text,
+      areaSistemaFechado: double.tryParse(_areaSistemaFechadoController.text),
+      areaRaceway: double.tryParse(_areaRacewayController.text),
+      especieProducao: _especieProducaoController.text,
+      pesoProducao: double.tryParse(_pesoProducaoController.text),
+      unidadesProducao: int.tryParse(_unidadesProducaoController.text),
+      areaJovemProducao: double.tryParse(_areaJovemProducaoController.text),
+      especieAreaJov: _especieAreaJovController.text,
+      milheirosAreaJov: _milheirosAreaJovController.text,
+      especieOrnamental: _especieOrnamentalController.text,
+      pesoOrnamental: double.tryParse(_pesoOrnamentalController.text),
+      unidadesOrnamental: int.tryParse(_unidadesOrnamentalController.text),
+      ufAquisicaoJov: _ufAquisicaoJovController.text,
+      especieAquiJov: _especieAquiJovController.text,
+      milheirosAquiJov: _milheirosAquiJovController.text,
+      origemRacao: _origemRacaoController.text,
+      unidadesRacao: int.tryParse(_unidadesRacaoController.text),
+      quantidadeRacao: double.tryParse(_quantidadeRacaoController.text),
+      ufOrigemComercialEspecie: _ufOrigemComercialEspecieController.text,
+      especieComercial: _especieComercialController.text,
+      prodComercial: double.tryParse(_prodComercialController.text),
+      quantidadeComercial: int.tryParse(_quantidadeComercialController.text),
+      precoMedio: double.tryParse(_precoMedioController.text),
+    );
+
+    final FormService _formService = FormService();
+    final PessoaService _pessoaService = PessoaService();
+
+    await _pessoaService.updatePessoa(pessoaAtualizada);
+    await _formService.updateForm(formularioAtualizado);
+
+    setState(() {
+      _editando = false;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Dados atualizados com sucesso')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final p = widget.dados.pessoa;
@@ -23,12 +218,12 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
 
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Detalhes'),
+          title: const Text('Detalhes do Formulário'),
           actions: [
           IconButton(
           icon: Icon(_editando ? Icons.close : Icons.edit),
       onPressed: () {
-        setState(() {
+            setState(() {
           _editando = !_editando;
         });
       },
@@ -40,113 +235,113 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
           children: [
             // Dados da Pessoa
             const Text('Dados do Indivíduo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Nome', valor: p.nome),
-            CampoDetalhe(label: 'CPF', valor: p.cpf),
-            CampoDetalhe(label: 'Telefone', valor: p.telefone?.toString()),
-            CampoDetalhe(label: 'Email', valor: p.email),
-            CampoDetalhe(label: 'RGP', valor: p.rgp?.toString()),
-            CampoDetalhe(label: 'UF', valor: p.uf),
-            CampoDetalhe(label: 'Município', valor: p.municipio),
-            CampoDetalhe(label: 'Endereço', valor: p.endereco),
-            CampoDetalhe(label: 'Razão Social', valor: p.razaoSocial),
-            CampoDetalhe(label: 'CNPJ', valor: p.cnpj),
-            CampoDetalhe(label: 'CNAE', valor: p.cnae),
+            Campo(label: 'Nome', valor: p.nome, controller: _nomeController, editando: _editando),
+            Campo(label: 'CPF', valor: p.cpf, controller: _cpfController, editando: _editando),
+            Campo(label: 'Telefone', valor: p.telefone?.toString(), controller: _telefoneController, editando: _editando),
+            Campo(label: 'Email', valor: p.email, controller: _emailController, editando: _editando),
+            Campo(label: 'RGP', valor: p.rgp?.toString(), controller: _rgpController, editando: _editando),
+            Campo(label: 'UF', valor: p.uf, controller: _ufController, editando: _editando),
+            Campo(label: 'Município', valor: p.municipio, controller: _municipioController, editando: _editando),
+            Campo(label: 'Endereço', valor: p.endereco, controller: _enderecoController, editando: _editando),
+            Campo(label: 'Razão Social', valor: p.razaoSocial, controller: _razaoSocialController, editando: _editando),
+            Campo(label: 'CNPJ', valor: p.cnpj, controller: _cnpjController, editando: _editando),
+            Campo(label: 'CNAE', valor: p.cnae, controller: _cnaeController, editando: _editando),
 
             // Dados da Fazenda
             const SizedBox(height: 24),
             const Text('Empreendimento', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Endereço', valor: f.enderecoEmpre),
-            CampoDetalhe(label: 'Município', valor: f.municipioEmpre),
-            CampoDetalhe(label: 'UF', valor: f.ufEmpre),
+            Campo(label: 'Endereço', valor: f.enderecoEmpre, controller: _enderecoEmpreController, editando: _editando),
+            Campo(label: 'Município', valor: f.municipioEmpre, controller: _municipioEmpreController, editando: _editando),
+            Campo(label: 'UF', valor: f.ufEmpre, controller: _ufEmpreController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Coordenadas Geográficas', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Latitude', valor: f.latitude?.toString()),
-            CampoDetalhe(label: 'Longitude', valor: f.longitude?.toString()),
+            Campo(label: 'Latitude', valor: f.latitude?.toString(), controller: _latitudeController, editando: _editando),
+            Campo(label: 'Longitude', valor: f.longitude?.toString(), controller: _longitudeController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número do DAP', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'N° DAP', valor: f.dap?.toString()),
+            Campo(label: 'N° DAP', valor: f.dap?.toString(), controller: _dapController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Possui Licença Ambiental', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'N° do Cadastro', valor: f.cadAmbiental?.toString()),
+            Campo(label: 'N° do Cadastro', valor: f.cadAmbiental?.toString(), controller: _cadAmbientalController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número da Outorga', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'N° da Outorga', valor: f.outorga?.toString()),
+            Campo(label: 'N° da Outorga', valor: f.outorga?.toString(), controller: _outorgaController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número do Cadastro Técnico Federal', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'CTF', valor: f.ctf?.toString()),
+            Campo(label: 'CTF', valor: f.ctf?.toString(), controller: _ctfController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número do Cadastro Ambiental Rural', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'CAR', valor: f.car?.toString()),
+            Campo(label: 'CAR', valor: f.car?.toString(), controller: _carController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Número do cadastro na OESA', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'OESA', valor: f.oesa?.toString()),
+            Campo(label: 'OESA', valor: f.oesa?.toString(), controller: _oesaController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Antedimentos Técnicos por Ano', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Atendimentos no Ano', valor: f.atendimentosAno?.toString()),
+            Campo(label: 'Atendimentos no Ano', valor: f.atendimentosAno?.toString(), controller: _atendimentosAnoController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Viveiro', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Tipo Viveiro', valor: f.tipoViveiro),
-            CampoDetalhe(label: 'Área Viveiro', valor: f.areaViveiro?.toString()),
+            Campo(label: 'Tipo Viveiro', valor: f.tipoViveiro, controller: _tipoViveiroController, editando: _editando),
+            Campo(label: 'Área Viveiro', valor: f.areaViveiro?.toString(), controller: _areaViveiroController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Tanque rede', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Área Taque Rede', valor: f.areaTaqueRede?.toString()),
+            Campo(label: 'Área Taque Rede', valor: f.areaTaqueRede?.toString(), controller: _areaTaqueRedeController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Sistema Fechado', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Tipo Sistema Fechado', valor: f.tipoSistemaFechado),
-            CampoDetalhe(label: 'Área Sistema Fechado', valor: f.areaSistemaFechado?.toString()),
+            Campo(label: 'Tipo Sistema Fechado', valor: f.tipoSistemaFechado, controller: _tipoSistemaFechadoController, editando: _editando),
+            Campo(label: 'Área Sistema Fechado', valor: f.areaSistemaFechado?.toString(), controller: _areaSistemaFechadoController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Raceway', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Área Raceway', valor: f.areaRaceway?.toString()),
+            Campo(label: 'Área Raceway', valor: f.areaRaceway?.toString(), controller: _areaRacewayController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Produção', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Espécie', valor: f.especieProducao),
-            CampoDetalhe(label: 'Peso', valor: f.pesoProducao?.toString()),
-            CampoDetalhe(label: 'Unidades', valor: f.unidadesProducao?.toString()),
+            Campo(label: 'Espécie', valor: f.especieProducao, controller: _especieProducaoController, editando: _editando),
+            Campo(label: 'Peso', valor: f.pesoProducao?.toString(), controller: _pesoProducaoController, editando: _editando),
+            Campo(label: 'Unidades', valor: f.unidadesProducao?.toString(), controller: _unidadesProducaoController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Forma Jovem', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Área (m³)', valor: f.areaJovemProducao?.toString()),
-            CampoDetalhe(label: 'Espécie', valor: f.especieAreaJov),
-            CampoDetalhe(label: 'Milheiros', valor: f.milheirosAreaJov),
+            Campo(label: 'Área (m³)', valor: f.areaJovemProducao?.toString(), controller: _areaJovemProducaoController, editando: _editando),
+            Campo(label: 'Espécie', valor: f.especieAreaJov, controller: _especieAreaJovController, editando: _editando),
+            Campo(label: 'Milheiros', valor: f.milheirosAreaJov, controller: _milheirosAreaJovController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Ornamental', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Espécie', valor: f.especieOrnamental),
-            CampoDetalhe(label: 'Peso', valor: f.pesoOrnamental?.toString()),
-            CampoDetalhe(label: 'Unidades', valor: f.unidadesOrnamental?.toString()),
+            Campo(label: 'Espécie', valor: f.especieOrnamental, controller: _especieOrnamentalController, editando: _editando),
+            Campo(label: 'Peso', valor: f.pesoOrnamental?.toString(), controller: _pesoOrnamentalController, editando: _editando),
+            Campo(label: 'Unidades', valor: f.unidadesOrnamental?.toString(), controller: _unidadesOrnamentalController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Aquisição de Formas Jovem', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Estado de Origem do Fornecedor', valor: f.ufAquisicaoJov),
-            CampoDetalhe(label: 'Espécie', valor: f.especieAquiJov),
-            CampoDetalhe(label: 'Milheiros', valor: f.milheirosAquiJov),
+            Campo(label: 'Estado de Origem do Fornecedor', valor: f.ufAquisicaoJov, controller: _ufAquisicaoJovController, editando: _editando),
+            Campo(label: 'Espécie', valor: f.especieAquiJov, controller: _especieAquiJovController, editando: _editando),
+            Campo(label: 'Milheiros', valor: f.milheirosAquiJov, controller: _milheirosAquiJovController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Aquisição de Ração', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Estado de Origem do Fornecedor', valor: f.origemRacao),
-            CampoDetalhe(label: 'Unidades', valor: f.unidadesRacao?.toString()),
-            CampoDetalhe(label: 'Quantidade', valor: f.quantidadeRacao?.toString()),
+            Campo(label: 'Estado de Origem do Fornecedor', valor: f.origemRacao, controller: _origemRacaoController, editando: _editando),
+            Campo(label: 'Unidades', valor: f.unidadesRacao?.toString(), controller: _unidadesRacaoController, editando: _editando),
+            Campo(label: 'Quantidade', valor: f.quantidadeRacao?.toString(), controller: _quantidadeRacaoController, editando: _editando),
 
             const SizedBox(height: 24),
             const Text('Comercialização por Espécie', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            CampoDetalhe(label: 'Estado de Origem do fornecedor', valor: f.ufOrigemComercialEspecie),
-            CampoDetalhe(label: 'Espécie', valor: f.especieComercial),
-            CampoDetalhe(label: 'Produção', valor: f.prodComercial?.toString()),
-            CampoDetalhe(label: 'Quantidade', valor: f.quantidadeComercial?.toString()),
-            CampoDetalhe(label: 'Preço Médio', valor: f.precoMedio?.toString()),
+            Campo(label: 'Estado de Origem do fornecedor', valor: f.ufOrigemComercialEspecie, controller: _ufOrigemComercialEspecieController, editando: _editando),
+            Campo(label: 'Espécie', valor: f.especieComercial, controller: _especieComercialController, editando: _editando),
+            Campo(label: 'Produção', valor: f.prodComercial?.toString(), controller: _prodComercialController, editando: _editando),
+            Campo(label: 'Quantidade', valor: f.quantidadeComercial?.toString(), controller: _quantidadeComercialController, editando: _editando),
+            Campo(label: 'Preço Médio', valor: f.precoMedio?.toString(), controller: _precoMedioController, editando: _editando),
 
             if (_editando)
               Padding(
@@ -178,7 +373,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
                     SizedBox(width: 16),
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: _salvarAlteracoes,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF4CAF50),
                           shape: RoundedRectangleBorder(

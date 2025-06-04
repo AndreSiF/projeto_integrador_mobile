@@ -9,6 +9,16 @@ class PessoaDao {
     return db.insert(table, pessoa.toMap());
   }
 
+  Future<void> atualizarPessoa(Pessoa pessoa) async {
+    final db = await AppDatabase().database;
+    await db.update(
+      'pessoa',
+      pessoa.toMap(),
+      where: 'id_pessoa = ?',
+      whereArgs: [pessoa.idPessoa],
+    );
+  }
+
   Future<List<Pessoa>> getPessoas() async {
     final db = await AppDatabase().database;
     final List<Map<String, dynamic>> maps = await db.query(table);

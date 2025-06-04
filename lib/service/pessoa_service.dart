@@ -7,4 +7,13 @@ class PessoaService {
   Future<List<Pessoa>> getPessoas() async {
     return await _pessoaDao.getPessoas();
   }
+
+  Future<void> updatePessoa(Pessoa pessoa) async{
+    try{
+      await _pessoaDao.atualizarPessoa(pessoa);
+    }
+    catch(e){
+      rethrow;
+    }
+  }
 }
