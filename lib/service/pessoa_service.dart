@@ -4,14 +4,17 @@ import 'package:projeto_integrador_mobile/models/pessoa.dart';
 class PessoaService {
   final PessoaDao _pessoaDao = PessoaDao();
 
+  // Função que retorna todas as pessoas
   Future<List<Pessoa>> getPessoas() async {
     return await _pessoaDao.getPessoas();
   }
 
+  // Função que deleta uma pessoa baseada em seu ID
   Future<void> deletaPessoa(int id) async{
     await _pessoaDao.deletePessoa(id);
   }
 
+  // Função que atualiza uma entrada da tabela pessoa
   Future<void> updatePessoa(Pessoa pessoa) async{
     try{
       await _pessoaDao.atualizarPessoa(pessoa);

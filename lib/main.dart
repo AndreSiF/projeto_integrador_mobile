@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, // Desativa a bandeirinha de DEBUG no topo da tela
       title: "Formulário Aquicultura",
       home: IdentificacaoAquicultorPage(),
     );

@@ -4,6 +4,7 @@ import 'package:projeto_integrador_mobile/pages/form/listar_pessoas_formularios_
 import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
 
+// Página de seleção entre pessoa física ou pessoa jurídica (Home)
 class IdentificacaoAquicultorPage extends StatelessWidget {
   const IdentificacaoAquicultorPage({super.key});
 
@@ -23,13 +24,13 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.search, color: Colors.black),
             onPressed: () {
-              print('Botão de busca pressionado');
+              print('Botão de busca pressionado'); // Não implementado
             },
           ),
           IconButton(
             icon: Icon(Icons.account_circle_outlined, color: Colors.black),
             onPressed: () {
-              print('Botão de perfil pressionado');
+              print('Botão de perfil pressionado'); // Não implementado
             },
           ),
         ],

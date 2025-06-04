@@ -6,6 +6,7 @@ import 'package:projeto_integrador_mobile/pages/form/formulario_completo_page.da
 import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
 import 'package:projeto_integrador_mobile/service/cadastro_service.dart';
 
+// Quarta página do formulário, preenche as informações comerciais do empreendimento
 class InformacoesComerciaisPage extends StatefulWidget {
   final Pessoa pessoa;
   final Formulario formulario;
@@ -29,7 +30,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
   final TextEditingController _quantidadeComercialController = TextEditingController();
   final TextEditingController _precoMedioController = TextEditingController();
 
-
+  // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(

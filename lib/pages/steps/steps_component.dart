@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+// Classe de componente usada para o sistema de passos no formulário
 class StepIndicator extends StatelessWidget {
-  final int currentStep; // índice da etapa atual (0, 1, 2...)
+  final int currentStep; // índice da etapa atual
 
   const StepIndicator({super.key, required this.currentStep});
 

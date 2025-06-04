@@ -3,7 +3,10 @@ import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 
+// Primeira página do formulário (pessoa jurídica) preenche as informações de uma pessoa jurídica
 class CnpjPage extends StatefulWidget {
+  const CnpjPage({super.key});
+
   @override
   _CnpjPageState createState() => _CnpjPageState();
 }
@@ -22,6 +25,7 @@ class _CnpjPageState extends State<CnpjPage> {
   final TextEditingController _rgpRespController = TextEditingController();
   final TextEditingController _emailRespController = TextEditingController();
 
+  // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final pessoa = Pessoa(

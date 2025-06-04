@@ -6,6 +6,7 @@ import 'package:projeto_integrador_mobile/pages/fields/campo_visualizacao.dart';
 import 'package:projeto_integrador_mobile/service/formulario_service.dart';
 import 'package:projeto_integrador_mobile/service/pessoa_service.dart';
 
+// Página que serve para visualizar um formulário específico
 class VisualizarFormPage extends StatefulWidget {
   final PessoaComFormulario dados;
 
@@ -138,6 +139,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
     _precoMedioController = TextEditingController(text: formulario.precoMedio?.toString() ?? '');
   }
 
+  // Cria uma caixa para confirmar a exclusão de uma entrada da tabela para o usuário
   void _confirmarExclusao() async {
     final confirmacao = await showDialog<bool>(
       context: context,
@@ -162,6 +164,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
     }
   }
 
+  // Exclui o formulário do banco de dados
   void _excluirRegistro() async {
     final _formService = FormService();
     final _pessoaService = PessoaService();
@@ -182,7 +185,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
     }
   }
 
-
+  // Salva alterações feitas em um formulário para o banco de dados
   void _salvarAlteracoes() async {
     final pessoaAtualizada = Pessoa(
       idPessoa: pessoa.idPessoa,
@@ -391,6 +394,8 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
             Campo(label: 'Quantidade', valor: formulario.quantidadeComercial?.toString(), controller: _quantidadeComercialController, editando: _editando),
             Campo(label: 'Preço Médio', valor: formulario.precoMedio?.toString(), controller: _precoMedioController, editando: _editando),
 
+            // Testa se o usuário pressionou o botão de editar, se pressionado ele cria
+            // os botões 'Cancelar' e 'Salvar' no final da página
             if (_editando)
               Padding(
                 padding: const EdgeInsets.only(top: 24.0),

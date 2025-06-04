@@ -5,6 +5,7 @@ import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/info_comerciais_page.dart';
 import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
 
+// Terceira página do formulário, serve para informações do cultivo e produção da fazenda
 class CultivoProducaoPage extends StatefulWidget {
   final Pessoa pessoa;
   final Formulario formulario;
@@ -32,6 +33,8 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
   final TextEditingController _pesoOrnController = TextEditingController();
   final TextEditingController _unidadesOrnController = TextEditingController();
 
+
+  // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
@@ -89,7 +92,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
           actions: [
             IconButton(
               icon: Icon(Icons.info_outline, color: Colors.black),
-              onPressed: () {print('Botão de informações pressionado');},
+              onPressed: () {print('Botão de informações pressionado');}, // Não implementado
             ),
           ],
         ),

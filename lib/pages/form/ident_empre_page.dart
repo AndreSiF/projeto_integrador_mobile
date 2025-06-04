@@ -6,6 +6,7 @@ import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
 import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
 
+// Segunda página do formulário, preenche as informações do empreendimento
 class IdentEmprePage extends StatefulWidget {
   final Pessoa pessoa;
   const IdentEmprePage({super.key, required this.pessoa});
@@ -29,6 +30,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
   final TextEditingController _oesaController = TextEditingController();
   final TextEditingController _atendAnoController = TextEditingController();
 
+  // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(

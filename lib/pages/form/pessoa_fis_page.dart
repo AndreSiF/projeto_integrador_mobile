@@ -3,6 +3,7 @@ import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 
+// Primeira página do formulário (pessoa física), preenche as informações de uma pessoa física
 class CpfPage extends StatefulWidget {
   const CpfPage({super.key});
 
@@ -21,6 +22,7 @@ class _CpfPageState extends State<CpfPage> {
   final TextEditingController _ufController = TextEditingController();
   final TextEditingController _municipioController = TextEditingController();
 
+  // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final pessoa = Pessoa(
