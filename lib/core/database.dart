@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+// Essa classe é receita de bolo, cria o banco de dados e inicia as tabelas
 class AppDatabase {
   static final AppDatabase _instance = AppDatabase._internal();
   static Database? _database;

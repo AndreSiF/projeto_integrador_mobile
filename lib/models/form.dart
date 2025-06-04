@@ -264,13 +264,7 @@ class Formulario {
       precoMedio: precoMedio ?? this.precoMedio,
     );
   }
-
-  @override
-  String toString() {
-    return 'Formulario{idForm: $idForm, enderecoEmpre: $enderecoEmpre, precoMedio: $precoMedio}';
-  }
 }
-
 
 int? _parseInt(dynamic value) {
   if (value is int) {

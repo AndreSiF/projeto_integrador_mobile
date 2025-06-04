@@ -7,6 +7,7 @@ class CadastroService{
   final PessoaDao _pessoaDao = PessoaDao();
   final FormDao _formDao = FormDao();
 
+  // Função que cadastra o formulário com a chave estrangeira gerada pela pessoa cadastrada
   Future<void> cadastrarPessoaComFormulario(Pessoa pessoa, Formulario formulario) async {
     int idPessoa = await _pessoaDao.insertPessoa(pessoa);
 

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/core/database.dart';
-import 'package:projeto_integrador_mobile/pages/ident_aqui_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, // Desativa a bandeirinha de DEBUG no topo da tela
       title: "Formulário Aquicultura",
       home: IdentificacaoAquicultorPage(),
     );

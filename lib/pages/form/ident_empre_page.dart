@@ -1,70 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
-import 'package:projeto_integrador_mobile/pages/ident_empre_page.dart';
-import 'package:projeto_integrador_mobile/pages/info_comerciais_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/cultivo_producao.dart';
+import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
 import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
 
-class CultivoProducaoPage extends StatefulWidget {
+// Segunda página do formulário, preenche as informações do empreendimento
+class IdentEmprePage extends StatefulWidget {
   final Pessoa pessoa;
-  final Formulario formulario;
-  const CultivoProducaoPage({super.key, required this.pessoa, required this.formulario});
+  const IdentEmprePage({super.key, required this.pessoa});
 
   @override
-  _CultivoProducaoPageState createState() => _CultivoProducaoPageState();
+  _IdentEmprePageState createState() => _IdentEmprePageState();
 }
 
-class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
+class _IdentEmprePageState extends State<IdentEmprePage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _tipoViveiroController = TextEditingController();
-  final TextEditingController _areaViveiroController = TextEditingController();
-  final TextEditingController _areaTanqueRedeController = TextEditingController();
-  final TextEditingController _tipoSisFechadoController = TextEditingController();
-  final TextEditingController _areaSisFechadoController = TextEditingController();
-  final TextEditingController _areaRacewayController = TextEditingController();
-  final TextEditingController _especieProdController = TextEditingController();
-  final TextEditingController _pesoProdController = TextEditingController();
-  final TextEditingController _unidadeProdController = TextEditingController();
-  final TextEditingController _areaJovProdController = TextEditingController();
-  final TextEditingController _especieAreaJovController = TextEditingController();
-  final TextEditingController _milheirosAreaJovController = TextEditingController();
-  final TextEditingController _especieOrnController = TextEditingController();
-  final TextEditingController _pesoOrnController = TextEditingController();
-  final TextEditingController _unidadesOrnController = TextEditingController();
+  final TextEditingController _enderecoEmpreController = TextEditingController();
+  final TextEditingController _municipioEmpreController = TextEditingController();
+  final TextEditingController _ufEmpreController = TextEditingController();
+  final TextEditingController _latitudeController = TextEditingController();
+  final TextEditingController _longitudeController = TextEditingController();
+  final TextEditingController _dapController = TextEditingController();
+  final TextEditingController _cadAmbientalController = TextEditingController();
+  final TextEditingController _numOutorgaController = TextEditingController();
+  final TextEditingController _ctfController = TextEditingController();
+  final TextEditingController _carController = TextEditingController();
+  final TextEditingController _oesaController = TextEditingController();
+  final TextEditingController _atendAnoController = TextEditingController();
 
+  // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
-        enderecoEmpre: widget.formulario.enderecoEmpre,
-        municipioEmpre: widget.formulario.municipioEmpre,
-        ufEmpre: widget.formulario.ufEmpre,
-        latitude: widget.formulario.latitude,
-        longitude: widget.formulario.longitude,
-        dap: widget.formulario.dap,
-        cadAmbiental: widget.formulario.cadAmbiental,
-        outorga: widget.formulario.outorga,
-        ctf: widget.formulario.ctf,
-        car: widget.formulario.car,
-        oesa: widget.formulario.oesa,
-        atendimentosAno: widget.formulario.atendimentosAno,
-        tipoViveiro: _tipoViveiroController.text,
-        areaViveiro: double.parse(_areaViveiroController.text),
-        areaTaqueRede: double.parse(_areaTanqueRedeController.text),
-        tipoSistemaFechado: _tipoSisFechadoController.text,
-        areaSistemaFechado: double.parse(_areaSisFechadoController.text),
-        areaRaceway: double.parse(_areaRacewayController.text),
-        especieProducao: _especieProdController.text,
-        pesoProducao: double.parse(_pesoProdController.text),
-        unidadesProducao: int.parse(_unidadeProdController.text),
-        areaJovemProducao: double.parse(_areaJovProdController.text),
-        especieAreaJov: _especieAreaJovController.text,
-        milheirosAreaJov: _milheirosAreaJovController.text,
-        especieOrnamental: _especieOrnController.text,
-        pesoOrnamental: double.parse(_pesoOrnController.text),
-        unidadesOrnamental: int.parse(_unidadesOrnController.text),
+        enderecoEmpre: _enderecoEmpreController.text,
+        municipioEmpre: _municipioEmpreController.text,
+        ufEmpre: _ufEmpreController.text,
+        latitude: double.parse(_latitudeController.text),
+        longitude: double.parse(_longitudeController.text),
+        dap: int.parse(_dapController.text),
+        cadAmbiental: int.parse(_cadAmbientalController.text),
+        outorga: int.parse(_numOutorgaController.text),
+        ctf: int.parse(_ctfController.text),
+        car: int.parse(_carController.text),
+        oesa: int.parse(_oesaController.text),
+        atendimentosAno: int.parse(_atendAnoController.text),
       );
 
-      Navigator.push(context, MaterialPageRoute(builder: (_) => InformacoesComerciaisPage(pessoa: widget.pessoa, formulario: formulario)),);
+      Navigator.push(context, MaterialPageRoute(builder: (_) => CultivoProducaoPage(pessoa: widget.pessoa, formulario: formulario)),);
     }
   }
 
@@ -76,15 +60,20 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(
-            'Sistema de Cultivo e\nProdução',
+            'Identificação do\nEmpreendimento',
             style: TextStyle(color: Colors.black),
           ),
           centerTitle: false,
           leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => IdentEmprePage(pessoa: widget.pessoa))
-            ),
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              if (widget.pessoa.razaoSocial != null) {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CnpjPage()));
+              }
+              else{
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CpfPage()));
+              }
+            }
           ),
           actions: [
             IconButton(
@@ -100,17 +89,15 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
               key: _formKey,
               child: Column(
                 children: [
-                  StepIndicator(currentStep: 1),
+                  StepIndicator(currentStep: 0),
                   const SizedBox(height: 24),
-                  const Text('ENGORDA', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('Empreendimento', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-                  const Text('Modelo e produção', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  // Campo do tipo do viveiro da produção
+                  // Campo do endereço do empreendimento
                   TextFormField(
-                    controller: _tipoViveiroController,
+                    controller: _enderecoEmpreController,
                     decoration: InputDecoration(
-                      labelText: 'Tipo',
+                      labelText: 'Endereço',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -130,11 +117,11 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo da área total do viveiro
+                  // Campo do municipio do empreendimento
                   TextFormField(
-                    controller: _areaViveiroController,
+                    controller: _municipioEmpreController,
                     decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
+                      labelText: 'Município',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -154,14 +141,11 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Tanque Rede', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-
-                  // Campo da área total do tanque rede
+                  // Campo do estado do empreendimento
                   TextFormField(
-                    controller: _areaTanqueRedeController,
+                    controller: _ufEmpreController,
                     decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
+                      labelText: 'UF',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -181,14 +165,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Sistema Fechado', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('Coordenadas Geográficas', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
 
-                  //Campo do tipo de sistema fechado
+                  //Campo da latitude do empreendimento
                   TextFormField(
-                    controller: _tipoSisFechadoController,
+                    controller: _latitudeController,
                     decoration: InputDecoration(
-                      labelText: 'Tipo',
+                      labelText: 'Latitude',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -208,11 +192,11 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo da área do sistema fechado
+                  // Campo da longitude do empreendimento
                   TextFormField(
-                    controller: _areaSisFechadoController,
+                    controller: _longitudeController,
                     decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
+                      labelText: 'Longitude',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -230,14 +214,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Raceway', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('Possui Documento de Aptidão ao PRONAF-DAP', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
 
-                  // Campo da área do raceway
+                  // Campo do número do cadastro DAP do empreendimento
                   TextFormField(
-                    controller: _areaRacewayController,
+                    controller: _dapController,
                     decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
+                      labelText: 'N⁰ DAP',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -257,14 +241,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  const Text('Produção', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('Possui Licença Ambiental', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
 
-                  // Campo do nome da espécie produzida
+                  // Campo do número do cadastro ambiental do empreedimento
                   TextFormField(
-                    controller: _especieProdController,
+                    controller: _cadAmbientalController,
                     decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
+                      labelText: 'N⁰ do Cadastro',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -284,60 +268,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do peso da espécie produzida
-                  TextFormField(
-                    controller: _pesoProdController,
-                    decoration: InputDecoration(
-                      labelText: 'Produção (kg) digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo da quantidade de espécies produzidas em unidades
-                  TextFormField(
-                    controller: _unidadeProdController,
-                    decoration: InputDecoration(
-                      labelText: 'Unidades (se anfíbio ou réptil)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-
-                  const Text('Forma Jovem', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text("Possui Outorga de uso d'água", style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
 
-                  // Campo da área de produção jovem
+                  // Campo do número da outorga do empreendimento
                   TextFormField(
-                    controller: _areaJovProdController,
+                    controller: _numOutorgaController,
                     decoration: InputDecoration(
-                      labelText: 'Área Total de Produção (m³)',
+                      labelText: 'N⁰ da Outorga',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -357,62 +295,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do nome da espécie na área de produção jovem
-                  TextFormField(
-                    controller: _especieAreaJovController,
-                    decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo dos milheiros da produção de forma jovem
-                  TextFormField(
-                    controller: _milheirosAreaJovController,
-                    decoration: InputDecoration(
-                      labelText: 'Milheiros digitados',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  const Text('Ornamental', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('Possui Cadastro Técnico Federal - CTF', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
 
-                  // Campo do nome da espécie ornamental produzida
+                  // Campo do cadastro do CTF do empreendimento
                   TextFormField(
-                    controller: _especieOrnController,
+                    controller: _ctfController,
                     decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
+                      labelText: 'N⁰ do Cadastro',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -432,11 +322,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo do peso da espécie ornamental produzida
+                  const Text('Possui Cadastro Ambiental Rural - CAR', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
+
+                  // Campo do número do cadastro do CAR da empresa
                   TextFormField(
-                    controller: _pesoOrnController,
+                    controller: _carController,
                     decoration: InputDecoration(
-                      labelText: 'Produção (kg) digitada',
+                      labelText: 'N⁰ do Cadastro',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -456,11 +349,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ),
                   SizedBox(height: 16),
 
-                  // Campo da quantidade de espécies ornamentais produzidas
+                  const Text('Possui Cadastro na OESA', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
+
+                  // Campo do número do cadastro da OESA do empreendimento
                   TextFormField(
-                    controller: _unidadesOrnController,
+                    controller: _oesaController,
                     decoration: InputDecoration(
-                      labelText: 'Unidades (se anfíbio ou réptil)',
+                      labelText: 'N⁰ do Cadastro',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       filled: true,
                       fillColor: Colors.white,
@@ -475,6 +371,35 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                       ),
                       labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
                     ),
+                    validator: (value) =>
+                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
+                  ),
+                  SizedBox(height: 16),
+
+                  const Text('Possui Assistência Técnica', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 16),
+
+                  // Campo do número de atendimentos por ano do técnico do empreedimento.
+                  TextFormField(
+                    controller: _atendAnoController,
+                    decoration: InputDecoration(
+                      labelText: 'N⁰ de atendimentos no ano',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      filled: true,
+                      fillColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
+                    ),
+                    validator: (value) =>
+                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
                   ),
                   SizedBox(height: 16),
 
@@ -483,9 +408,14 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () => Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => IdentEmprePage(pessoa: widget.pessoa))
-                          ),
+                          onPressed: () {
+                            if (widget.pessoa.razaoSocial != null) {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => CnpjPage()));
+                            }
+                            else{
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => CpfPage()));
+                            }
+                          },
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(color: Color(0xFF0D47A1)),
                             shape: RoundedRectangleBorder(
