@@ -55,7 +55,7 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
 
                 if (pessoa.cpf!.isNotEmpty) {
                   return ListTile(
-                    title: Text('Proprietário: ${pessoa.nome} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
+                    title: Text('Proprietário: ${pessoa.nome} - \nEndereço da fazenda: ${formulario.enderecoEmpre}'),
                     subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
                     onTap: () {
                       Navigator.push(
