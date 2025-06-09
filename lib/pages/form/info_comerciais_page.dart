@@ -3,7 +3,7 @@ import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/form/cultivo_producao.dart';
 import 'package:projeto_integrador_mobile/pages/form/formulario_completo_page.dart';
-import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/steps/steps_component.dart';
 import 'package:projeto_integrador_mobile/service/cadastro_service.dart';
 
 // Quarta página do formulário, preenche as informações comerciais do empreendimento

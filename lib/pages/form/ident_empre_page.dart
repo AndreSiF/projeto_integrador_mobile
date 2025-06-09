@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/form/cultivo_producao.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
-import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/steps/steps_component.dart';
 
 // Segunda página do formulário, preenche as informações do empreendimento
 class IdentEmprePage extends StatefulWidget {
@@ -91,317 +92,45 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                 children: [
                   StepIndicator(currentStep: 0),
                   const SizedBox(height: 24),
-                  const Text('Empreendimento', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const Text('Empreendimento', textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold,)),
                   const SizedBox(height: 16),
-                  // Campo do endereço do empreendimento
-                  TextFormField(
-                    controller: _enderecoEmpreController,
-                    decoration: InputDecoration(
-                      labelText: 'Endereço',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do municipio do empreendimento
-                  TextFormField(
-                    controller: _municipioEmpreController,
-                    decoration: InputDecoration(
-                      labelText: 'Município',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do estado do empreendimento
-                  TextFormField(
-                    controller: _ufEmpreController,
-                    decoration: InputDecoration(
-                      labelText: 'UF',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  CampoForm(label: "Endereço", value: "", controller: _enderecoEmpreController, required: true),
+                  CampoForm(label: "Município", value: "", controller: _municipioEmpreController, required: true),
+                  CampoForm(label: "UF", value: "", controller: _ufEmpreController, required: true),
 
                   const Text('Coordenadas Geográficas', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-
-                  //Campo da latitude do empreendimento
-                  TextFormField(
-                    controller: _latitudeController,
-                    decoration: InputDecoration(
-                      labelText: 'Latitude',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo da longitude do empreendimento
-                  TextFormField(
-                    controller: _longitudeController,
-                    decoration: InputDecoration(
-                      labelText: 'Longitude',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                  ),
-                  SizedBox(height: 16),
+                  CampoForm(label: "Latitude", value: "", controller: _latitudeController, required: true),
+                  CampoForm(label: "Longitude", value: "", controller: _longitudeController, required: true),
 
                   const Text('Possui Documento de Aptidão ao PRONAF-DAP', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-
-                  // Campo do número do cadastro DAP do empreendimento
-                  TextFormField(
-                    controller: _dapController,
-                    decoration: InputDecoration(
-                      labelText: 'N⁰ DAP',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  CampoForm(label: "N° DAP", value: "", controller: _dapController, required: false),
 
                   const Text('Possui Licença Ambiental', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-
-                  // Campo do número do cadastro ambiental do empreedimento
-                  TextFormField(
-                    controller: _cadAmbientalController,
-                    decoration: InputDecoration(
-                      labelText: 'N⁰ do Cadastro',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _cadAmbientalController, required: false),
 
                   const Text("Possui Outorga de uso d'água", style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-
-                  // Campo do número da outorga do empreendimento
-                  TextFormField(
-                    controller: _numOutorgaController,
-                    decoration: InputDecoration(
-                      labelText: 'N⁰ da Outorga',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  CampoForm(label: "N° da Outorga", value: "", controller: _numOutorgaController, required: false),
 
                   const Text('Possui Cadastro Técnico Federal - CTF', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-
-                  // Campo do cadastro do CTF do empreendimento
-                  TextFormField(
-                    controller: _ctfController,
-                    decoration: InputDecoration(
-                      labelText: 'N⁰ do Cadastro',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _ctfController, required: false),
 
                   const Text('Possui Cadastro Ambiental Rural - CAR', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-
-                  // Campo do número do cadastro do CAR da empresa
-                  TextFormField(
-                    controller: _carController,
-                    decoration: InputDecoration(
-                      labelText: 'N⁰ do Cadastro',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _carController, required: false),
 
                   const Text('Possui Cadastro na OESA', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-
-                  // Campo do número do cadastro da OESA do empreendimento
-                  TextFormField(
-                    controller: _oesaController,
-                    decoration: InputDecoration(
-                      labelText: 'N⁰ do Cadastro',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _oesaController, required: false),
 
                   const Text('Possui Assistência Técnica', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
+                  CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: false),
 
-                  // Campo do número de atendimentos por ano do técnico do empreedimento.
-                  TextFormField(
-                    controller: _atendAnoController,
-                    decoration: InputDecoration(
-                      labelText: 'N⁰ de atendimentos no ano',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
 
                   // Botão "Voltar"
                   Row(

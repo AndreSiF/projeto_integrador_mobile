@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
-import 'package:projeto_integrador_mobile/pages/fields/campo_form_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 
@@ -74,7 +74,7 @@ class _CpfPageState extends State<CpfPage> {
             child: Column(
               children: [
                 const SizedBox(height: 8),
-                // Campo de nome
+                // Informações do indivíduo
                 CampoForm(label: "Nome Completo", value: "", controller: _nomeController, required: true),
                 CampoForm(label: "CPF", value: "", controller: _cpfController, required: true),
                 CampoForm(label: "Telefone", value: "", controller: _telefoneController, required: true),
@@ -83,195 +83,6 @@ class _CpfPageState extends State<CpfPage> {
                 CampoForm(label: "Endereço", value: "", controller: _enderecoController, required: true),
                 CampoForm(label: "UF", value: "", controller: _ufController, required: true),
                 CampoForm(label: "Município", value: "", controller: _municipioController, required: true),
-
-                // TextFormField(
-                //   controller: _nomeController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Nome Completo',
-                //     floatingLabelBehavior: FloatingLabelBehavior.auto,
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                //   ),
-                //   validator: (value) =>
-                //   value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                // ),
-                //SizedBox(height: 16),
-
-                // Campo de CPF
-                // TextFormField(
-                //   controller: _cpfController,
-                //   decoration: InputDecoration(
-                //     labelText: 'CPF',
-                //     floatingLabelBehavior: FloatingLabelBehavior.auto,
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                //   ),
-                //   validator: (value) =>
-                //   value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                // ),
-                // SizedBox(height: 16),
-                //
-                // // Campo de telefone
-                // TextFormField(
-                //   controller: _telefoneController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Telefone',
-                //     floatingLabelBehavior: FloatingLabelBehavior.auto,
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                //   ),
-                //   validator: (value) =>
-                //   value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                // ),
-                // SizedBox(height: 16),
-                //
-                // //Campo de email
-                // TextFormField(
-                //   controller: _emailController,
-                //   decoration: InputDecoration(
-                //     labelText: 'E-mail',
-                //     floatingLabelBehavior: FloatingLabelBehavior.auto,
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                //   ),
-                //   validator: (value) =>
-                //   value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                // ),
-                // SizedBox(height: 16),
-                //
-                // // Campo de RGP
-                // TextFormField(
-                //   controller: _rgpController,
-                //   decoration: InputDecoration(
-                //     labelText: 'RGP',
-                //     floatingLabelBehavior: FloatingLabelBehavior.auto,
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                //   ),
-                // ),
-                // SizedBox(height: 16),
-                //
-                // // Campo de enredeço
-                // TextFormField(
-                //   controller: _enderecoController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Endereço',
-                //     floatingLabelBehavior: FloatingLabelBehavior.auto,
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                //   ),
-                //   validator: (value) =>
-                //   value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                // ),
-                // SizedBox(height: 16),
-                //
-                // // Campo de UF
-                // TextFormField(
-                //   controller: _ufController,
-                //   decoration: InputDecoration(
-                //     labelText: 'UF',
-                //     floatingLabelBehavior: FloatingLabelBehavior.auto,
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                //   ),
-                //   validator: (value) =>
-                //   value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                // ),
-                // SizedBox(height: 16),
-                //
-                // // Campo de município
-                // TextFormField(
-                //   controller: _municipioController,
-                //   decoration: InputDecoration(
-                //     labelText: 'Município',
-                //     floatingLabelBehavior: FloatingLabelBehavior.auto,
-                //     filled: true,
-                //     fillColor: Colors.white,
-                //     contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                //     enabledBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                //   ),
-                //   validator: (value) =>
-                //   value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                // ),
-                // SizedBox(height: 16),
 
                 // Botão "Voltar"
                 Row(

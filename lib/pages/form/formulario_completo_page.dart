@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
-import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/steps/steps_component.dart';
 
 // Página que mostra ao usuário que o objeto foi salvo
 class FormularioCompletoPage extends StatelessWidget {

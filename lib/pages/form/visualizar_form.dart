@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/models/pessoa_form.dart';
-import 'package:projeto_integrador_mobile/pages/fields/campo_visualizacao_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/fields/campo_visualizacao_component.dart';
 import 'package:projeto_integrador_mobile/service/formulario_service.dart';
 import 'package:projeto_integrador_mobile/service/pessoa_service.dart';
 
