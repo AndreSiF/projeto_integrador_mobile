@@ -53,18 +53,20 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
                 final pessoa = item.pessoa;
                 final formulario = item.formulario;
 
-                if (pessoa.cpf!.isNotEmpty) {
+                if ((pessoa.cnpj ?? '').isEmpty){
                   return ListTile(
                     title: Text('Proprietário: ${pessoa.nome} - \nEndereço da fazenda: ${formulario.enderecoEmpre}'),
                     subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
-                    onTap: () {
-                      Navigator.push(
+                    onTap: () async {
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => VisualizarFormPage(dados: item),
                         ),
                       );
+                      _carregarDados();
                     },
+
                   );
                 } else {
                   return ListTile(

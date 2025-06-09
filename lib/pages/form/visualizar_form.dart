@@ -139,6 +139,67 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
     _precoMedioController = TextEditingController(text: formulario.precoMedio?.toString() ?? '');
   }
 
+  // Restaura os valores originais dos campos quando o botão de cancelar edição é pressionado
+  void _restaurarCampos() {
+    final pessoa = widget.dados.pessoa;
+    final formulario = widget.dados.formulario;
+
+    // Pessoa
+    _nomeController.text = pessoa.nome ?? '';
+    _cpfController.text = pessoa.cpf ?? '';
+    _telefoneController.text = pessoa.telefone?.toString() ?? '';
+    _emailController.text = pessoa.email ?? '';
+    _rgpController.text = pessoa.rgp?.toString() ?? '';
+    _ufController.text = pessoa.uf ?? '';
+    _municipioController.text = pessoa.municipio ?? '';
+    _enderecoController.text = pessoa.endereco ?? '';
+    _razaoSocialController.text = pessoa.razaoSocial ?? '';
+    _cnpjController.text = pessoa.cnpj ?? '';
+    _cnaeController.text = pessoa.cnae ?? '';
+
+    // Formulário
+    _enderecoEmpreController.text = formulario.enderecoEmpre ?? '';
+    _municipioEmpreController.text = formulario.municipioEmpre ?? '';
+    _ufEmpreController.text = formulario.ufEmpre ?? '';
+    _latitudeController.text = formulario.latitude?.toString() ?? '';
+    _longitudeController.text = formulario.longitude?.toString() ?? '';
+    _dapController.text = formulario.dap.toString() ?? '';
+    _cadAmbientalController.text = formulario.cadAmbiental.toString() ?? '';
+    _outorgaController.text = formulario.outorga.toString() ?? '';
+    _ctfController.text = formulario.ctf.toString() ?? '';
+    _carController.text = formulario.car.toString() ?? '';
+    _oesaController.text = formulario.oesa.toString() ?? '';
+    _atendimentosAnoController.text = formulario.atendimentosAno?.toString() ?? '';
+
+    _tipoViveiroController.text = formulario.tipoViveiro ?? '';
+    _areaViveiroController.text = formulario.areaViveiro?.toString() ?? '';
+    _areaTaqueRedeController.text = formulario.areaTaqueRede?.toString() ?? '';
+    _tipoSistemaFechadoController.text = formulario.tipoSistemaFechado ?? '';
+    _areaSistemaFechadoController.text = formulario.areaSistemaFechado?.toString() ?? '';
+    _areaRacewayController.text = formulario.areaRaceway?.toString() ?? '';
+    _especieProducaoController.text = formulario.especieProducao ?? '';
+    _pesoProducaoController.text = formulario.pesoProducao?.toString() ?? '';
+    _unidadesProducaoController.text = formulario.unidadesProducao?.toString() ?? '';
+    _areaJovemProducaoController.text = formulario.areaJovemProducao?.toString() ?? '';
+    _especieAreaJovController.text = formulario.especieAreaJov ?? '';
+    _milheirosAreaJovController.text = formulario.milheirosAreaJov?.toString() ?? '';
+    _especieOrnamentalController.text = formulario.especieOrnamental ?? '';
+    _pesoOrnamentalController.text = formulario.pesoOrnamental?.toString() ?? '';
+    _unidadesOrnamentalController.text = formulario.unidadesOrnamental?.toString() ?? '';
+
+    _ufAquisicaoJovController.text = formulario.ufAquisicaoJov ?? '';
+    _especieAquiJovController.text = formulario.especieAquiJov ?? '';
+    _milheirosAquiJovController.text = formulario.milheirosAquiJov?.toString() ?? '';
+    _origemRacaoController.text = formulario.origemRacao ?? '';
+    _unidadesRacaoController.text = formulario.unidadesRacao?.toString() ?? '';
+    _quantidadeRacaoController.text = formulario.quantidadeRacao?.toString() ?? '';
+    _ufOrigemComercialEspecieController.text = formulario.ufOrigemComercialEspecie ?? '';
+    _especieComercialController.text = formulario.especieComercial ?? '';
+    _prodComercialController.text = formulario.prodComercial.toString() ?? '';
+    _quantidadeComercialController.text = formulario.quantidadeComercial?.toString() ?? '';
+    _precoMedioController.text = formulario.precoMedio?.toString() ?? '';
+  }
+
   // Cria uma caixa para confirmar a exclusão de uma entrada da tabela para o usuário
   void _confirmarExclusao() async {
     final confirmacao = await showDialog<bool>(
@@ -269,9 +330,17 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
           IconButton(
             icon: Icon(_editando ? Icons.close : Icons.edit),
             onPressed: () {
-              setState(() {
-                _editando = !_editando;
-              });
+              if(_editando){
+                _restaurarCampos();
+                setState(() {
+                  _editando = !_editando;
+                });
+              }
+              else{
+                setState(() {
+                  _editando = !_editando;
+                });
+              }
             },
           ),
           IconButton(
@@ -406,6 +475,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () {
+                          _restaurarCampos();
                           setState(() {
                             _editando = false;
                           });
