@@ -5,6 +5,7 @@ class CampoForm extends StatelessWidget{
   final String? value;
   final TextEditingController? controller;
   final bool required;
+  final bool enabled;
 
   const CampoForm({
     super.key,
@@ -12,17 +13,19 @@ class CampoForm extends StatelessWidget{
     required this.value,
     required this.controller,
     required this.required,
+    required this.enabled
   });
 
   @override
   Widget build(BuildContext context) {
-    if(required){
+    if(required && enabled){
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: TextFormField(
           controller: controller,
+          enabled: enabled,
           decoration: InputDecoration(
-            labelText: label,
+            labelText: enabled ? label : '...',
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             filled: true,
             fillColor: Colors.white,
@@ -47,14 +50,19 @@ class CampoForm extends StatelessWidget{
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: TextFormField(
           controller: controller,
+          enabled: enabled,
           decoration: InputDecoration(
-            labelText: label,
+            labelText: enabled ? label : '...',
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             filled: true,
             fillColor: Colors.white,
             contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Color(0xFF6F6A7E)),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0x806F6A7E)),
               borderRadius: BorderRadius.circular(12),
             ),
             focusedBorder: OutlineInputBorder(

@@ -74,15 +74,18 @@ class _CpfPageState extends State<CpfPage> {
             child: Column(
               children: [
                 const SizedBox(height: 8),
+
+
+
                 // Informações do indivíduo
-                CampoForm(label: "Nome Completo", value: "", controller: _nomeController, required: true),
-                CampoForm(label: "CPF", value: "", controller: _cpfController, required: true),
-                CampoForm(label: "Telefone", value: "", controller: _telefoneController, required: true),
-                CampoForm(label: "E-mail", value: "", controller: _emailController, required: true),
-                CampoForm(label: "RGP", value: "", controller: _rgpController, required: true),
-                CampoForm(label: "Endereço", value: "", controller: _enderecoController, required: true),
-                CampoForm(label: "UF", value: "", controller: _ufController, required: true),
-                CampoForm(label: "Município", value: "", controller: _municipioController, required: true),
+                CampoForm(label: "Nome Completo", value: "", controller: _nomeController, required: true, enabled: true),
+                CampoForm(label: "CPF", value: "", controller: _cpfController, required: true, enabled: true),
+                CampoForm(label: "Telefone", value: "", controller: _telefoneController, required: true, enabled: true),
+                CampoForm(label: "E-mail", value: "", controller: _emailController, required: true, enabled: true),
+                CampoForm(label: "RGP", value: "", controller: _rgpController, required: true, enabled: true),
+                CampoForm(label: "Endereço", value: "", controller: _enderecoController, required: true, enabled: true),
+                CampoForm(label: "UF", value: "", controller: _ufController, required: true, enabled: true),
+                CampoForm(label: "Município", value: "", controller: _municipioController, required: true, enabled: true),
 
                 // Botão "Voltar"
                 Row(

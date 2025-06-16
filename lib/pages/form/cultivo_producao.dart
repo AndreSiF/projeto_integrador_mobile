@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
-import 'package:projeto_integrador_mobile/pages/components/fields/campo_visualizacao_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/fields/switch_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/info_comerciais_page.dart';
 import 'package:projeto_integrador_mobile/pages/components/steps/steps_component.dart';
@@ -34,12 +34,17 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
   final TextEditingController _especieOrnController = TextEditingController();
   final TextEditingController _pesoOrnController = TextEditingController();
   final TextEditingController _unidadesOrnController = TextEditingController();
+  bool _hasViveiro = false;
+  bool _hasTanqueRede = false;
+  bool _hasSistemaFechado = false;
+  bool _hasRaceway = false;
 
 
   // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
+        // TODO: AJUSTAR OS CONTROLLERS
         enderecoEmpre: widget.formulario.enderecoEmpre,
         municipioEmpre: widget.formulario.municipioEmpre,
         ufEmpre: widget.formulario.ufEmpre,
@@ -53,20 +58,20 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
         oesa: widget.formulario.oesa,
         atendimentosAno: widget.formulario.atendimentosAno,
         tipoViveiro: _tipoViveiroController.text,
-        areaViveiro: double.parse(_areaViveiroController.text),
-        areaTaqueRede: double.parse(_areaTanqueRedeController.text),
+        areaViveiro: double.tryParse(_areaViveiroController.text),
+        areaTaqueRede: double.tryParse(_areaTanqueRedeController.text),
         tipoSistemaFechado: _tipoSisFechadoController.text,
-        areaSistemaFechado: double.parse(_areaSisFechadoController.text),
-        areaRaceway: double.parse(_areaRacewayController.text),
+        areaSistemaFechado: double.tryParse(_areaSisFechadoController.text),
+        areaRaceway: double.tryParse(_areaRacewayController.text),
         especieProducao: _especieProdController.text,
-        pesoProducao: double.parse(_pesoProdController.text),
-        unidadesProducao: int.parse(_unidadeProdController.text),
-        areaJovemProducao: double.parse(_areaJovProdController.text),
+        pesoProducao: double.tryParse(_pesoProdController.text),
+        unidadesProducao: int.tryParse(_unidadeProdController.text),
+        areaJovemProducao: double.tryParse(_areaJovProdController.text),
         especieAreaJov: _especieAreaJovController.text,
         milheirosAreaJov: _milheirosAreaJovController.text,
         especieOrnamental: _especieOrnController.text,
-        pesoOrnamental: double.parse(_pesoOrnController.text),
-        unidadesOrnamental: int.parse(_unidadesOrnController.text),
+        pesoOrnamental: double.tryParse(_pesoOrnController.text),
+        unidadesOrnamental: int.tryParse(_unidadesOrnController.text),
       );
 
       Navigator.push(context, MaterialPageRoute(builder: (_) => InformacoesComerciaisPage(pessoa: widget.pessoa, formulario: formulario)),);
@@ -107,43 +112,78 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                 children: [
                   StepIndicator(currentStep: 1),
                   const SizedBox(height: 24),
-                  const Text('ENGORDA', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Row(children: const [Text('ENGORDA', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
-                  const Text('Modelo e produção', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Row(children: const [Text('Modelo e Produção', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
-                  CampoForm(label: "Tipo", value: "", controller: _tipoViveiroController, required: true),
-                  CampoForm(label: "Area total (m³)", value: "", controller: _areaViveiroController, required: true),
+                  SwitchForm(
+                      label: 'Viveiro',
+                      value: _hasViveiro,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasViveiro = val;
+                          _tipoViveiroController.clear();
+                          _areaViveiroController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "Tipo", value: "", controller: _tipoViveiroController, required: true, enabled: _hasViveiro),
+                  CampoForm(label: "Area total (m³)", value: "", controller: _areaViveiroController, required: true, enabled: _hasViveiro),
 
-                  const Text('Tanque Rede', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "Área total (m³)", value: "", controller: _areaTanqueRedeController, required: false),
+                  SwitchForm(
+                      label: 'Tanque Rede',
+                      value: _hasTanqueRede,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasTanqueRede = val;
+                          _areaTanqueRedeController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "Área total (m³)", value: "", controller: _areaTanqueRedeController, required: false, enabled: _hasTanqueRede),
 
-                  const Text('Sistema Fechado', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "Tipo", value: "", controller: _tipoSisFechadoController, required: true),
-                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaSisFechadoController, required: true),
+                  SwitchForm(
+                      label: 'Sistema Fechado',
+                      value: _hasSistemaFechado,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasSistemaFechado = val;
+                          _areaSisFechadoController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "Tipo", value: "", controller: _tipoSisFechadoController, required: true, enabled: _hasSistemaFechado),
+                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaSisFechadoController, required: true, enabled: _hasSistemaFechado),
 
-                  const Text('Raceway', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaRacewayController, required: false),
+                  SwitchForm(
+                      label: 'Raceway',
+                      value: _hasRaceway,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasRaceway = val;
+                          _areaRacewayController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaRacewayController, required: false, enabled: _hasRaceway),
 
                   const Text('Produção', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-                  CampoForm(label: "Espécie Digitada", value: "", controller: _especieProdController, required: true),
-                  CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoProdController, required: true),
-                  CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadeProdController, required: true),
+                  CampoForm(label: "Espécie Digitada", value: "", controller: _especieProdController, required: true, enabled: true),
+                  CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoProdController, required: true, enabled: true),
+                  CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadeProdController, required: true, enabled: true),
 
                   const Text('Forma Jovem', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-                  CampoForm(label: "Área total de produção (m³)", value: "", controller: _areaJovProdController, required: true),
-                  CampoForm(label: "Espécie Digitada", value: "", controller: _especieAreaJovController, required: true),
-                  CampoForm(label: "Milheiros Digitados", value: "", controller: _milheirosAreaJovController, required: true),
+                  CampoForm(label: "Área total de produção (m³)", value: "", controller: _areaJovProdController, required: true, enabled: true),
+                  CampoForm(label: "Espécie Digitada", value: "", controller: _especieAreaJovController, required: true, enabled: true),
+                  CampoForm(label: "Milheiros Digitados", value: "", controller: _milheirosAreaJovController, required: true, enabled: true),
 
                   const Text('Ornamental', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-                  CampoForm(label: "Espécie Digitada", value: "", controller: _especieOrnController, required: true),
-                  CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoOrnController, required: true),
-                  CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadesOrnController, required: true),
+                  CampoForm(label: "Espécie Digitada", value: "", controller: _especieOrnController, required: true, enabled: true),
+                  CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoOrnController, required: true, enabled: true),
+                  CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadesOrnController, required: true, enabled: true),
 
                   // Botão "Voltar"
                   Row(

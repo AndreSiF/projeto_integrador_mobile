@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/fields/switch_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/form/cultivo_producao.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
@@ -18,6 +19,10 @@ class IdentEmprePage extends StatefulWidget {
 
 class _IdentEmprePageState extends State<IdentEmprePage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nomeRespTecnicoController = TextEditingController();
+  final TextEditingController _numRespTecnicoController = TextEditingController();
+  final TextEditingController _telefoneRespTecnicoController = TextEditingController();
+  final TextEditingController _emailRespTecnicoController = TextEditingController();
   final TextEditingController _enderecoEmpreController = TextEditingController();
   final TextEditingController _municipioEmpreController = TextEditingController();
   final TextEditingController _ufEmpreController = TextEditingController();
@@ -30,23 +35,32 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
   final TextEditingController _carController = TextEditingController();
   final TextEditingController _oesaController = TextEditingController();
   final TextEditingController _atendAnoController = TextEditingController();
+  bool _hasRespTecnico = false;
+  bool _hasDAP = false;
+  bool _hasLicencaAmb = false;
+  bool _hasOutorga = false;
+  bool _hasCTF = false;
+  bool _hasCAR = false;
+  bool _hasOESA = false;
+  bool _hasAssistenciaTecnica = false;
 
   // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
+        //TODO: ADD THE CONTROLLERS HERE
         enderecoEmpre: _enderecoEmpreController.text,
         municipioEmpre: _municipioEmpreController.text,
         ufEmpre: _ufEmpreController.text,
-        latitude: double.parse(_latitudeController.text),
-        longitude: double.parse(_longitudeController.text),
-        dap: int.parse(_dapController.text),
-        cadAmbiental: int.parse(_cadAmbientalController.text),
-        outorga: int.parse(_numOutorgaController.text),
-        ctf: int.parse(_ctfController.text),
-        car: int.parse(_carController.text),
-        oesa: int.parse(_oesaController.text),
-        atendimentosAno: int.parse(_atendAnoController.text),
+        latitude: double.tryParse(_latitudeController.text),
+        longitude: double.tryParse(_longitudeController.text),
+        dap: int.tryParse(_dapController.text),
+        cadAmbiental: int.tryParse(_cadAmbientalController.text),
+        outorga: int.tryParse(_numOutorgaController.text),
+        ctf: int.tryParse(_ctfController.text),
+        car: int.tryParse(_carController.text),
+        oesa: int.tryParse(_oesaController.text),
+        atendimentosAno: int.tryParse(_atendAnoController.text),
       );
 
       Navigator.push(context, MaterialPageRoute(builder: (_) => CultivoProducaoPage(pessoa: widget.pessoa, formulario: formulario)),);
@@ -92,44 +106,122 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                 children: [
                   StepIndicator(currentStep: 0),
                   const SizedBox(height: 24),
-                  const Text('Empreendimento', textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold,)),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "Endereço", value: "", controller: _enderecoEmpreController, required: true),
-                  CampoForm(label: "Município", value: "", controller: _municipioEmpreController, required: true),
-                  CampoForm(label: "UF", value: "", controller: _ufEmpreController, required: true),
+                  // Informações do Responsável Legal
+                  SwitchForm(
+                      label: 'Possui responsável técnico',
+                      value: _hasRespTecnico,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasRespTecnico = val;
+                          _nomeRespTecnicoController.clear();
+                          _numRespTecnicoController.clear();
+                          _telefoneRespTecnicoController.clear();
+                          _emailRespTecnicoController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "Nome Completo", value: "", controller: _nomeRespTecnicoController, required: true, enabled: _hasRespTecnico),
+                  CampoForm(label: "N° do Registro Profissional", value: "", controller: _numRespTecnicoController, required: true, enabled: _hasRespTecnico),
+                  CampoForm(label: "Telefone", value: "", controller: _telefoneRespTecnicoController, required: true, enabled: _hasRespTecnico),
+                  CampoForm(label: "Email", value: "", controller: _emailRespTecnicoController, required: true, enabled: _hasRespTecnico),
 
-                  const Text('Coordenadas Geográficas', style: TextStyle(fontWeight: FontWeight.bold),),
+                  // Informações do empreendimento
                   const SizedBox(height: 16),
-                  CampoForm(label: "Latitude", value: "", controller: _latitudeController, required: true),
-                  CampoForm(label: "Longitude", value: "", controller: _longitudeController, required: true),
+                  Row(children: const [Text('Empreendimento', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
+                  const SizedBox(height: 16),
+                  CampoForm(label: "Endereço", value: "", controller: _enderecoEmpreController, required: true, enabled: true),
+                  CampoForm(label: "Município", value: "", controller: _municipioEmpreController, required: true, enabled: true),
+                  CampoForm(label: "UF", value: "", controller: _ufEmpreController, required: true, enabled: true),
 
-                  const Text('Possui Documento de Aptidão ao PRONAF-DAP', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-                  CampoForm(label: "N° DAP", value: "", controller: _dapController, required: false),
+                  Row(children: const [Text('Coordenadas Geográficas', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
+                  const SizedBox(height: 16),
+                  CampoForm(label: "Latitude", value: "", controller: _latitudeController, required: true, enabled: true),
+                  CampoForm(label: "Longitude", value: "", controller: _longitudeController, required: true, enabled: true),
 
-                  const Text('Possui Licença Ambiental', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "N° do Cadastro", value: "", controller: _cadAmbientalController, required: false),
+                  SwitchForm(
+                      label: 'Possui Documento de\nAptidão ao PRONAF-DAP',
+                      value: _hasDAP,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasDAP = val;
+                          _dapController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "N° DAP", value: "", controller: _dapController, required: true, enabled: _hasDAP),
 
-                  const Text("Possui Outorga de uso d'água", style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "N° da Outorga", value: "", controller: _numOutorgaController, required: false),
+                  SwitchForm(
+                      label: 'Possui Licença Ambiental',
+                      value: _hasLicencaAmb,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasLicencaAmb = val;
+                          _cadAmbientalController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _cadAmbientalController, required: true, enabled: _hasLicencaAmb),
 
-                  const Text('Possui Cadastro Técnico Federal - CTF', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "N° do Cadastro", value: "", controller: _ctfController, required: false),
+                  SwitchForm(
+                      label: "Possui Outorga de uso d'água",
+                      value: _hasOutorga,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasOutorga = val;
+                          _numOutorgaController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "N° da Outorga", value: "", controller: _numOutorgaController, required: true, enabled: _hasOutorga),
 
-                  const Text('Possui Cadastro Ambiental Rural - CAR', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "N° do Cadastro", value: "", controller: _carController, required: false),
+                  SwitchForm(
+                      label: 'Possui Cadastro Técnico\nFederal - CTF',
+                      value: _hasCTF,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasCTF = val;
+                          _ctfController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _ctfController, required: true, enabled: _hasCTF),
 
-                  const Text('Possui Cadastro na OESA', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "N° do Cadastro", value: "", controller: _oesaController, required: false),
+                  SwitchForm(
+                      label: 'Possui Cadastro Ambiental\nRural - CAR',
+                      value: _hasCAR,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasCAR = val;
+                          _carController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _carController, required: true, enabled: _hasCAR),
 
-                  const Text('Possui Assistência Técnica', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-                  CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: false),
+                  SwitchForm(
+                      label: 'Possui Cadastro na OESA',
+                      value: _hasOESA,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasOESA = val;
+                          _oesaController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _oesaController, required: true, enabled: _hasOESA),
+
+                  SwitchForm(
+                      label: 'Possui Assistência Técnica',
+                      value: _hasAssistenciaTecnica,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasAssistenciaTecnica = val;
+                          _atendAnoController.clear();
+                        });
+                      }
+                  ),
+                  CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: true, enabled: _hasAssistenciaTecnica),
 
 
                   // Botão "Voltar"

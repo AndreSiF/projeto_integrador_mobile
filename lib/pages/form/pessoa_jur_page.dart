@@ -81,17 +81,17 @@ class _CnpjPageState extends State<CnpjPage> {
                 children: [
                   const SizedBox(height: 8),
                   // Campos de informações da empresa e indivíduo CNPJ
-                  CampoForm(label: "Razão Social", value: "", controller: _razaoController, required: true),
-                  CampoForm(label: "CNPJ", value: "", controller: _cnpjController, required: true),
-                  CampoForm(label: "CNAE", value: "", controller: _cnaeController, required: true),
-                  CampoForm(label: "Endereço", value: "", controller: _enderecoController, required: true),
-                  CampoForm(label: "Município", value: "", controller: _municipioController, required: true),
-                  CampoForm(label: "UF", value: "", controller: _ufController, required: true),
-                  CampoForm(label: "Responsável Legal", value: "", controller: _respController, required: true),
-                  CampoForm(label: "CPF", value: "", controller: _cpfRespController, required: true),
-                  CampoForm(label: "RGP", value: "", controller: _rgpRespController, required: true),
-                  CampoForm(label: "Telefone", value: "", controller: _telefoneRespController, required: true),
-                  CampoForm(label: "E-mail", value: "", controller: _emailRespController, required: true),
+                  CampoForm(label: "Razão Social", value: "", controller: _razaoController, required: true, enabled: true),
+                  CampoForm(label: "CNPJ", value: "", controller: _cnpjController, required: true, enabled: true),
+                  CampoForm(label: "CNAE", value: "", controller: _cnaeController, required: true, enabled: true),
+                  CampoForm(label: "Endereço", value: "", controller: _enderecoController, required: true, enabled: true),
+                  CampoForm(label: "Município", value: "", controller: _municipioController, required: true, enabled: true),
+                  CampoForm(label: "UF", value: "", controller: _ufController, required: true, enabled: true),
+                  CampoForm(label: "Responsável Legal", value: "", controller: _respController, required: true, enabled: true),
+                  CampoForm(label: "CPF", value: "", controller: _cpfRespController, required: true, enabled: true),
+                  CampoForm(label: "RGP", value: "", controller: _rgpRespController, required: true, enabled: true),
+                  CampoForm(label: "Telefone", value: "", controller: _telefoneRespController, required: true, enabled: true),
+                  CampoForm(label: "E-mail", value: "", controller: _emailRespController, required: true, enabled: true),
 
                   // Botão "Voltar"
                   Row(
