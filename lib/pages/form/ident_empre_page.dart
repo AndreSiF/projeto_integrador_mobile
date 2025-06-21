@@ -129,15 +129,15 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   const SizedBox(height: 16),
                   Row(children: const [Text('Empreendimento', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
-                  CampoForm(label: "Endereço", value: "", controller: _enderecoEmpreController, required: true, enabled: true),
-                  CampoForm(label: "Município", value: "", controller: _municipioEmpreController, required: true, enabled: true),
-                  CampoForm(label: "UF", value: "", controller: _ufEmpreController, required: true, enabled: true),
+                  CampoForm(label: "Endereço", value: "dasd", controller: _enderecoEmpreController, required: true, enabled: true),
+                  CampoForm(label: "Município", value: "asd", controller: _municipioEmpreController, required: true, enabled: true),
+                  CampoForm(label: "UF", value: "dasdsa", controller: _ufEmpreController, required: true, enabled: true),
 
                   const SizedBox(height: 16),
                   Row(children: const [Text('Coordenadas Geográficas', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
-                  CampoForm(label: "Latitude", value: "", controller: _latitudeController, required: true, enabled: true),
-                  CampoForm(label: "Longitude", value: "", controller: _longitudeController, required: true, enabled: true),
+                  CampoForm(label: "Latitude", value: "323", controller: _latitudeController, required: true, enabled: true),
+                  CampoForm(label: "Longitude", value: "12", controller: _longitudeController, required: true, enabled: true),
 
                   SwitchForm(
                       label: 'Possui Documento de\nAptidão ao PRONAF-DAP',
@@ -222,7 +222,6 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                       }
                   ),
                   CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: true, enabled: _hasAssistenciaTecnica),
-
 
                   // Botão "Voltar"
                   Row(

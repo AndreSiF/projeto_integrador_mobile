@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_integrador_mobile/models/campos/campos_producao.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
@@ -19,6 +20,7 @@ class CultivoProducaoPage extends StatefulWidget {
 
 class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
   final _formKey = GlobalKey<FormState>();
+  List<CamposProducao> producoes = [];
   final TextEditingController _tipoViveiroController = TextEditingController();
   final TextEditingController _areaViveiroController = TextEditingController();
   final TextEditingController _areaTanqueRedeController = TextEditingController();
@@ -39,6 +41,23 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
   bool _hasSistemaFechado = false;
   bool _hasRaceway = false;
 
+  @override
+  void initState(){
+    super.initState();
+    producoes.add(CamposProducao());
+  }
+
+  void adicionarProducao(){
+    setState(() {
+      producoes.add(CamposProducao());
+    });
+  }
+
+  void removerProducao(int index){
+    setState(() {
+      producoes.removeAt(index);
+    });
+  }
 
   // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
@@ -169,9 +188,66 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
 
                   const Text('Produção', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
-                  CampoForm(label: "Espécie Digitada", value: "", controller: _especieProdController, required: true, enabled: true),
-                  CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoProdController, required: true, enabled: true),
-                  CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadeProdController, required: true, enabled: true),
+                  // Expanded(
+                  //   child: ListView.builder(
+                  //     itemCount: producoes.length,
+                  //     itemBuilder: (context, index) {
+                  //       final producao = producoes[index];
+                  //       return Card(
+                  //         shape: RoundedRectangleBorder(
+                  //             borderRadius: BorderRadius.circular(16)),
+                  //         elevation: 3,
+                  //         margin: const EdgeInsets.symmetric(vertical: 8),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.all(12.0),
+                  //           child: Column(
+                  //             children: [
+                  //               TextFormField(
+                  //                 controller: producao.especieController,
+                  //                 decoration: const InputDecoration(
+                  //                     hintText: 'Espécie digitada'),
+                  //               ),
+                  //               TextFormField(
+                  //                 controller: producao.producaoKgController,
+                  //                 decoration: const InputDecoration(
+                  //                     hintText: 'Produção (kg) digitada'),
+                  //                 keyboardType: TextInputType.number,
+                  //               ),
+                  //               TextFormField(
+                  //                 controller: producao.unidadesController,
+                  //                 decoration: const InputDecoration(
+                  //                     hintText: 'Unidades (se anfíbio ou réptil)'),
+                  //                 keyboardType: TextInputType.number,
+                  //               ),
+                  //               const SizedBox(height: 8),
+                  //               Align(
+                  //                 alignment: Alignment.centerRight,
+                  //                 child: IconButton(
+                  //                   icon: const Icon(Icons.delete, color: Colors.red),
+                  //                   onPressed: () => removerProducao(index),
+                  //                 ),
+                  //               )
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+                  const SizedBox(height: 12),
+                  ElevatedButton.icon(
+                    onPressed: adicionarProducao,
+                    icon: const Icon(Icons.add),
+                    label: const Text('Espécie'),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                    ),
+                  ),
+
+                  // CampoForm(label: "Espécie Digitada", value: "", controller: _especieProdController, required: true, enabled: true),
+                  // CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoProdController, required: true, enabled: true),
+                  // CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadeProdController, required: true, enabled: true),
 
                   const Text('Forma Jovem', style: TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(height: 16),
