@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
+enum InputType {
+  TEXT,
+  EMAIL,
+  INTEGER,
+  DECIMAL,
+}
 
 class CampoForm extends StatelessWidget{
   final String label;
   final String? value;
   final TextEditingController? controller;
   final bool required;
-  final bool enabled;
+  final bool isEnabled;
+  final List<MaskTextInputFormatter>? mask;
+  final int? lenght;
+  final InputType inputType;
 
   const CampoForm({
     super.key,
@@ -13,19 +25,49 @@ class CampoForm extends StatelessWidget{
     required this.value,
     required this.controller,
     required this.required,
-    required this.enabled
+    required this.isEnabled,
+    required this.mask,
+    required this.lenght,
+    required this.inputType
   });
 
   @override
   Widget build(BuildContext context) {
-    if(required && enabled){
+    TextInputType keyboardType;
+    List<TextInputFormatter>? inputFormatters;
+    
+    switch (inputType) {
+      case InputType.INTEGER:
+        keyboardType = TextInputType.number;
+        inputFormatters = null;
+        break;
+        
+      case InputType.EMAIL:
+        keyboardType = TextInputType.emailAddress;
+        inputFormatters = [FilteringTextInputFormatter.deny(RegExp(r'\s'))];
+        break;
+
+      case InputType.DECIMAL:
+        keyboardType = TextInputType.numberWithOptions(decimal: true);
+        inputFormatters = [FilteringTextInputFormatter.allow(RegExp(r'^\d*[\.,]?\d{0,2}'))];
+        break;
+
+      case InputType.TEXT:
+        keyboardType = TextInputType.text;
+        inputFormatters = null;
+        break;
+    }
+    if(required && isEnabled){
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: TextFormField(
           controller: controller,
-          enabled: enabled,
+          enabled: isEnabled,
+          inputFormatters: inputFormatters ?? mask,
+          maxLength: lenght,
+          keyboardType: keyboardType,
           decoration: InputDecoration(
-            labelText: enabled ? label : '...',
+            labelText: isEnabled ? label : '...',
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             filled: true,
             fillColor: Colors.white,
@@ -50,9 +92,11 @@ class CampoForm extends StatelessWidget{
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: TextFormField(
           controller: controller,
-          enabled: enabled,
+          enabled: isEnabled,
+          inputFormatters: mask,
+          maxLength: lenght,
           decoration: InputDecoration(
-            labelText: enabled ? label : '...',
+            labelText: isEnabled ? label : '...',
             floatingLabelBehavior: FloatingLabelBehavior.auto,
             filled: true,
             fillColor: Colors.white,

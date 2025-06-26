@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/masks.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 
@@ -29,9 +30,9 @@ class _CpfPageState extends State<CpfPage> {
       final pessoa = Pessoa(
         nome: _nomeController.text,
         cpf: _cpfController.text,
-        telefone: int.parse(_telefoneController.text),
+        //telefone: int.parse(_telefoneController.text),
         email: _emailController.text,
-        rgp: int.parse(_rgpController.text),
+        //rgp: int.parse(_rgpController.text),
         endereco: _enderecoController.text,
         uf: _ufController.text,
         municipio: _municipioController.text,
@@ -75,21 +76,19 @@ class _CpfPageState extends State<CpfPage> {
               children: [
                 const SizedBox(height: 8),
 
-
-
                 // Informações do indivíduo
-                CampoForm(label: "Nome Completo", value: "nome", controller: _nomeController, required: true, enabled: true),
-                CampoForm(label: "CPF", value: "CPF", controller: _cpfController, required: true, enabled: true),
-                CampoForm(label: "Telefone", value: "32132", controller: _telefoneController, required: true, enabled: true),
-                CampoForm(label: "E-mail", value: "aaa", controller: _emailController, required: true, enabled: true),
-                CampoForm(label: "RGP", value: "32131", controller: _rgpController, required: true, enabled: true),
-                CampoForm(label: "Endereço", value: "adsda", controller: _enderecoController, required: true, enabled: true),
-                CampoForm(label: "UF", value: "adsda", controller: _ufController, required: true, enabled: true),
-                CampoForm(label: "Município", value: "adsdas", controller: _municipioController, required: true, enabled: true),
+                CampoForm(label: "Nome Completo", value: "", controller: _nomeController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                CampoForm(label: "CPF", value: "", controller: _cpfController, required: true, isEnabled: true, mask: [cpfFormatter], lenght: 14, inputType: InputType.INTEGER),
+                CampoForm(label: "Telefone", value: "", controller: _telefoneController, required: true, isEnabled: true, mask: [phoneFormatter], lenght: 15, inputType: InputType.INTEGER),
+                CampoForm(label: "E-Mail", value: "", controller: _emailController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.EMAIL),
+                CampoForm(label: "RGP", value: "", controller: _rgpController, required: true, isEnabled: true, mask: [rgpFormatter], lenght: 10, inputType: InputType.TEXT),
+                CampoForm(label: "Endereço", value: "", controller: _enderecoController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                CampoForm(label: "UF", value: "", controller: _ufController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.TEXT),
+                CampoForm(label: "Município", value: "", controller: _municipioController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
 
-                // Botão "Voltar"
                 Row(
                   children: [
+                    // Botão "Voltar"
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () => Navigator.push(

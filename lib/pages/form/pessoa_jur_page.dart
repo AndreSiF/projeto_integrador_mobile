@@ -3,6 +3,7 @@ import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
+import 'package:projeto_integrador_mobile/pages/components/masks.dart';
 
 // Primeira página do formulário (pessoa jurídica) preenche as informações de uma pessoa jurídica
 class CnpjPage extends StatefulWidget {
@@ -33,9 +34,9 @@ class _CnpjPageState extends State<CnpjPage> {
         razaoSocial: _razaoController.text,
         cnpj: _cnpjController.text,
         cnae: _cnaeController.text,
-        telefone: int.parse(_telefoneRespController.text),
+        //telefone: int.parse(_telefoneRespController.text),
         email: _emailRespController.text,
-        rgp: int.parse(_rgpRespController.text),
+        //rgp: int.parse(_rgpRespController.text),
         endereco: _enderecoController.text,
         uf: _ufController.text,
         municipio: _municipioController.text,
@@ -81,21 +82,21 @@ class _CnpjPageState extends State<CnpjPage> {
                 children: [
                   const SizedBox(height: 8),
                   // Campos de informações da empresa e indivíduo CNPJ
-                  CampoForm(label: "Razão Social", value: "", controller: _razaoController, required: true, enabled: true),
-                  CampoForm(label: "CNPJ", value: "", controller: _cnpjController, required: true, enabled: true),
-                  CampoForm(label: "CNAE", value: "", controller: _cnaeController, required: true, enabled: true),
-                  CampoForm(label: "Endereço", value: "", controller: _enderecoController, required: true, enabled: true),
-                  CampoForm(label: "Município", value: "", controller: _municipioController, required: true, enabled: true),
-                  CampoForm(label: "UF", value: "", controller: _ufController, required: true, enabled: true),
-                  CampoForm(label: "Responsável Legal", value: "", controller: _respController, required: true, enabled: true),
-                  CampoForm(label: "CPF", value: "", controller: _cpfRespController, required: true, enabled: true),
-                  CampoForm(label: "RGP", value: "", controller: _rgpRespController, required: true, enabled: true),
-                  CampoForm(label: "Telefone", value: "", controller: _telefoneRespController, required: true, enabled: true),
-                  CampoForm(label: "E-mail", value: "", controller: _emailRespController, required: true, enabled: true),
+                  CampoForm(label: "Razão Social", value: "", controller: _razaoController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "CNPJ", value: "", controller: _cnpjController, required: true, isEnabled: true, mask: [cnpjFormatter], lenght: 18, inputType: InputType.INTEGER),
+                  CampoForm(label: "CNAE", value: "", controller: _cnaeController, required: true, isEnabled: true, mask: [cnaeFormatter], lenght: 10, inputType: InputType.INTEGER),
+                  CampoForm(label: "Endereço", value: "", controller: _enderecoController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "Município", value: "", controller: _municipioController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "UF", value: "", controller: _ufController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.TEXT),
+                  CampoForm(label: "Responsável Legal", value: "", controller: _respController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "CPF", value: "", controller: _cpfRespController, required: true, isEnabled: true, mask: [cpfFormatter], lenght: 14, inputType: InputType.INTEGER),
+                  CampoForm(label: "RGP", value: "", controller: _rgpRespController, required: true, isEnabled: true, mask: [rgpFormatter], lenght: 10, inputType: InputType.TEXT),
+                  CampoForm(label: "Telefone", value: "", controller: _telefoneRespController, required: true, isEnabled: true, mask: [phoneFormatter], lenght: 15, inputType: InputType.INTEGER),
+                  CampoForm(label: "E-Mail", value: "", controller: _emailRespController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.EMAIL),
 
-                  // Botão "Voltar"
                   Row(
                     children: [
+                      // Botão "Voltar"
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () => Navigator.push(

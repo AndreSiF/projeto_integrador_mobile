@@ -208,23 +208,9 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             children: [
-                              TextFormField(
-                                controller: aquisicaoFormaJovem.ufOrigemController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Estado de Origem do Fornecedor]'),
-                              ),
-                              TextFormField(
-                                controller: aquisicaoFormaJovem.especieController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Espécie Digitada]'),
-                                keyboardType: TextInputType.number,
-                              ),
-                              TextFormField(
-                                controller: aquisicaoFormaJovem.milheirosController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Milheiros Digitados]'),
-                                keyboardType: TextInputType.number,
-                              ),
+                              CampoForm(label: "[Estado de Origem do Fornecedor]", value: "", controller: aquisicaoFormaJovem.ufOrigemController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.TEXT),
+                              CampoForm(label: "[Espécie Digitada]", value: "", controller: aquisicaoFormaJovem.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                              CampoForm(label: "[Milheiros Digitados]", value: "", controller: aquisicaoFormaJovem.milheirosController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
                               const SizedBox(height: 8),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -267,23 +253,9 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             children: [
-                              TextFormField(
-                                controller: aquisicaoRacao.ufOrigemController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Estado de Origem do Fornecedor]'),
-                              ),
-                              TextFormField(
-                                controller: aquisicaoRacao.unidadeController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Unidades Digitadas]'),
-                                keyboardType: TextInputType.number,
-                              ),
-                              TextFormField(
-                                controller: aquisicaoRacao.quantidadeController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Quantidade Digitadas]'),
-                                keyboardType: TextInputType.number,
-                              ),
+                              CampoForm(label: "[Estado de Origem do Fornecedor]", value: "", controller: aquisicaoRacao.ufOrigemController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.TEXT),
+                              CampoForm(label: "[Unidades Digitadas]", value: "", controller: aquisicaoRacao.unidadeController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
+                              CampoForm(label: "[Quantidade Digitadas]", value: "", controller: aquisicaoRacao.quantidadeController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
                               const SizedBox(height: 8),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -325,35 +297,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             children: [
-                              TextFormField(
-                                controller: comercializacaoEspecie.ufOrigemController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Estado de Origem do Fornecedor]'),
-                              ),
-                              TextFormField(
-                                controller: comercializacaoEspecie.especieController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Espécie Digitada]'),
-                                keyboardType: TextInputType.number,
-                              ),
-                              TextFormField(
-                                controller: comercializacaoEspecie.producaoKgController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Produção Comercializada (kg)]'),
-                                keyboardType: TextInputType.number,
-                              ),
-                              TextFormField(
-                                controller: comercializacaoEspecie.quantidadeController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Quantidade Digitada]'),
-                                keyboardType: TextInputType.number,
-                              ),
-                              TextFormField(
-                                controller: comercializacaoEspecie.precoMedioController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Preço Médio]'),
-                                keyboardType: TextInputType.number,
-                              ),
+                              CampoForm(label: "[Estado de Origem do Fornecedor]", value: "", controller: comercializacaoEspecie.ufOrigemController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.TEXT),
+                              CampoForm(label: "[Espécie Digitada]", value: "", controller: comercializacaoEspecie.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                              CampoForm(label: "[Produção Comercializada (kg)]", value: "", controller: comercializacaoEspecie.producaoKgController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
+                              CampoForm(label: "[Quantidade Digitada]", value: "", controller: comercializacaoEspecie.quantidadeController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.INTEGER),
+                              CampoForm(label: "[Preço Médio]", value: "", controller: comercializacaoEspecie.precoMedioController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
                               const SizedBox(height: 8),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -385,9 +333,9 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: comercializacoesEspecie.length,
+                    itemCount: producoesOrnamentais.length,
                     itemBuilder: (context, index) {
-                      final comercializacaoEspecie = comercializacoesEspecie[index];
+                      final producaoOrnamentais = producoesOrnamentais[index];
                       return Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),
@@ -397,35 +345,9 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             children: [
-                              TextFormField(
-                                controller: comercializacaoEspecie.ufOrigemController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Estado de Origem do Fornecedor]'),
-                              ),
-                              TextFormField(
-                                controller: comercializacaoEspecie.especieController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Espécie Digitada]'),
-                                keyboardType: TextInputType.number,
-                              ),
-                              TextFormField(
-                                controller: comercializacaoEspecie.producaoKgController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Produção Comercializada (kg)]'),
-                                keyboardType: TextInputType.number,
-                              ),
-                              TextFormField(
-                                controller: comercializacaoEspecie.quantidadeController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Quantidade Digitada]'),
-                                keyboardType: TextInputType.number,
-                              ),
-                              TextFormField(
-                                controller: comercializacaoEspecie.precoMedioController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Preço Médio]'),
-                                keyboardType: TextInputType.number,
-                              ),
+                              CampoForm(label: "[Estado de Origem do Fornecedor]", value: "", controller: producaoOrnamentais.ufOrigemController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.TEXT),
+                              CampoForm(label: "[Unidades Digitadas]", value: "", controller: producaoOrnamentais.unidadeController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
+                              CampoForm(label: "[Quantidade Digitada]", value: "", controller: producaoOrnamentais.quantidadeController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
                               const SizedBox(height: 8),
                               Align(
                                 alignment: Alignment.centerRight,

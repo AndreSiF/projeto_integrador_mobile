@@ -32,9 +32,28 @@ final localizacaoFormatter = MaskTextInputFormatter(
   mask: '##,#° @',
   filter: {
     "#": RegExp(r'[0-9]'),
-    "@": RegExp(r'[SNLO]'),
+    "@": RegExp(r'[SNLOsnlo]'),
   },
 );
+
+final outorgaFormatter = MaskTextInputFormatter(
+  mask: '#####/####',
+  filter: {"#": RegExp(r'[0-9]')},
+);
+
+final ctfFormatter = MaskTextInputFormatter(
+  mask: '#######',
+  filter: {"#": RegExp(r'[0-9]')},
+);
+
+final oesaFormatter = MaskTextInputFormatter(
+  mask: '######',
+  filter: {"#": RegExp(r'[0-9]')},
+);
+
+
+
+
 
 
 

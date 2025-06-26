@@ -3,6 +3,7 @@ import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/switch_form_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/masks.dart';
 import 'package:projeto_integrador_mobile/pages/form/cultivo_producao.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
@@ -52,13 +53,13 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
         enderecoEmpre: _enderecoEmpreController.text,
         municipioEmpre: _municipioEmpreController.text,
         ufEmpre: _ufEmpreController.text,
-        latitude: double.tryParse(_latitudeController.text),
-        longitude: double.tryParse(_longitudeController.text),
-        dap: int.tryParse(_dapController.text),
-        cadAmbiental: int.tryParse(_cadAmbientalController.text),
-        outorga: int.tryParse(_numOutorgaController.text),
+        //latitude: double.tryParse(_latitudeController.text),
+        //longitude: double.tryParse(_longitudeController.text),
+        //dap: int.tryParse(_dapController.text),
+        //cadAmbiental: int.tryParse(_cadAmbientalController.text),
+        //outorga: int.tryParse(_numOutorgaController.text),
         ctf: int.tryParse(_ctfController.text),
-        car: int.tryParse(_carController.text),
+        //car: int.tryParse(_carController.text),
         oesa: int.tryParse(_oesaController.text),
         atendimentosAno: int.tryParse(_atendAnoController.text),
       );
@@ -120,24 +121,24 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "Nome Completo", value: "", controller: _nomeRespTecnicoController, required: true, enabled: _hasRespTecnico),
-                  CampoForm(label: "N° do Registro Profissional", value: "", controller: _numRespTecnicoController, required: true, enabled: _hasRespTecnico),
-                  CampoForm(label: "Telefone", value: "", controller: _telefoneRespTecnicoController, required: true, enabled: _hasRespTecnico),
-                  CampoForm(label: "Email", value: "", controller: _emailRespTecnicoController, required: true, enabled: _hasRespTecnico),
+                  CampoForm(label: "Nome Completo", value: "", controller: _nomeRespTecnicoController, required: true, isEnabled: _hasRespTecnico, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "N° do Registro Profissional", value: "", controller: _numRespTecnicoController, required: true, isEnabled: _hasRespTecnico, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "Telefone", value: "", controller: _telefoneRespTecnicoController, required: true, isEnabled: _hasRespTecnico, mask: [phoneFormatter], lenght: 15, inputType: InputType.INTEGER),
+                  CampoForm(label: "E-mail", value: "", controller: _emailRespTecnicoController, required: true, isEnabled: _hasRespTecnico, mask: null, lenght: null, inputType: InputType.EMAIL),
 
                   // Informações do empreendimento
                   const SizedBox(height: 16),
                   Row(children: const [Text('Empreendimento', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
-                  CampoForm(label: "Endereço", value: "dasd", controller: _enderecoEmpreController, required: true, enabled: true),
-                  CampoForm(label: "Município", value: "asd", controller: _municipioEmpreController, required: true, enabled: true),
-                  CampoForm(label: "UF", value: "dasdsa", controller: _ufEmpreController, required: true, enabled: true),
+                  CampoForm(label: "Endereço", value: "", controller: _enderecoEmpreController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "Município", value: "", controller: _municipioEmpreController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "UF", value: "", controller: _ufEmpreController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.TEXT),
 
                   const SizedBox(height: 16),
                   Row(children: const [Text('Coordenadas Geográficas', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
-                  CampoForm(label: "Latitude", value: "323", controller: _latitudeController, required: true, enabled: true),
-                  CampoForm(label: "Longitude", value: "12", controller: _longitudeController, required: true, enabled: true),
+                  CampoForm(label: "Latitude", value: "", controller: _latitudeController, required: true, isEnabled: true, mask: [localizacaoFormatter], lenght: 7, inputType: InputType.TEXT),
+                  CampoForm(label: "Longitude", value: "", controller: _longitudeController, required: true, isEnabled: true, mask: [localizacaoFormatter], lenght: 7, inputType: InputType.TEXT),
 
                   SwitchForm(
                       label: 'Possui Documento de\nAptidão ao PRONAF-DAP',
@@ -149,7 +150,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "N° DAP", value: "", controller: _dapController, required: true, enabled: _hasDAP),
+                  CampoForm(label: "N° DAP", value: "", controller: _dapController, required: true, isEnabled: _hasDAP, mask: null, lenght: null, inputType: InputType.TEXT),
 
                   SwitchForm(
                       label: 'Possui Licença Ambiental',
@@ -161,7 +162,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "N° do Cadastro", value: "", controller: _cadAmbientalController, required: true, enabled: _hasLicencaAmb),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _cadAmbientalController, required: true, isEnabled: _hasLicencaAmb, mask: null, lenght: null, inputType: InputType.TEXT),
 
                   SwitchForm(
                       label: "Possui Outorga de uso d'água",
@@ -173,7 +174,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "N° da Outorga", value: "", controller: _numOutorgaController, required: true, enabled: _hasOutorga),
+                  CampoForm(label: "N° da Outorga", value: "", controller: _numOutorgaController, required: true, isEnabled: _hasOutorga, mask: [outorgaFormatter], lenght: 10, inputType: InputType.INTEGER),
 
                   SwitchForm(
                       label: 'Possui Cadastro Técnico\nFederal - CTF',
@@ -185,7 +186,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "N° do Cadastro", value: "", controller: _ctfController, required: true, enabled: _hasCTF),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _ctfController, required: true, isEnabled: _hasCTF, mask: [ctfFormatter], lenght: 7, inputType: InputType.INTEGER),
 
                   SwitchForm(
                       label: 'Possui Cadastro Ambiental\nRural - CAR',
@@ -197,7 +198,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "N° do Cadastro", value: "", controller: _carController, required: true, enabled: _hasCAR),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _carController, required: true, isEnabled: _hasCAR, mask: null, lenght: null, inputType: InputType.TEXT),
 
                   SwitchForm(
                       label: 'Possui Cadastro na OESA',
@@ -209,7 +210,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "N° do Cadastro", value: "", controller: _oesaController, required: true, enabled: _hasOESA),
+                  CampoForm(label: "N° do Cadastro", value: "", controller: _oesaController, required: true, isEnabled: _hasOESA, mask: [oesaFormatter], lenght: 6, inputType: InputType.INTEGER),
 
                   SwitchForm(
                       label: 'Possui Assistência Técnica',
@@ -221,11 +222,11 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: true, enabled: _hasAssistenciaTecnica),
+                  CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: true, isEnabled: _hasAssistenciaTecnica, mask: null, lenght: 3, inputType: InputType.INTEGER),
 
-                  // Botão "Voltar"
                   Row(
                     children: [
+                      // Botão "Voltar"
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () {

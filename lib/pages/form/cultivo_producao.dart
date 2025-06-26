@@ -6,6 +6,7 @@ import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/botao_adicionar_item.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/switch_form_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/masks.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/info_comerciais_page.dart';
 import 'package:projeto_integrador_mobile/pages/components/steps/steps_component.dart';
@@ -177,8 +178,8 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                         });
                       }
                   ), // Informações do viveiro
-                  CampoForm(label: "Tipo", value: "", controller: _tipoViveiroController, required: true, enabled: _hasViveiro),
-                  CampoForm(label: "Area total (m³)", value: "", controller: _areaViveiroController, required: true, enabled: _hasViveiro),
+                  CampoForm(label: "Tipo", value: "", controller: _tipoViveiroController, required: true, isEnabled: _hasViveiro, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "Area total (m³)", value: "", controller: _areaViveiroController, required: true, isEnabled: _hasViveiro , mask: null, lenght: 5, inputType: InputType.DECIMAL),
 
                   SwitchForm(
                       label: 'Tanque Rede',
@@ -190,7 +191,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                         });
                       }
                   ), // Área do Tanque Rede
-                  CampoForm(label: "Área total (m³)", value: "", controller: _areaTanqueRedeController, required: false, enabled: _hasTanqueRede),
+                  CampoForm(label: "Área total (m³)", value: "", controller: _areaTanqueRedeController, required: false, isEnabled: _hasTanqueRede, mask: null, lenght: 5, inputType: InputType.DECIMAL),
 
                   SwitchForm(
                       label: 'Sistema Fechado',
@@ -202,8 +203,8 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                         });
                       }
                   ), // Sistema Fechado
-                  CampoForm(label: "Tipo", value: "", controller: _tipoSisFechadoController, required: true, enabled: _hasSistemaFechado),
-                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaSisFechadoController, required: true, enabled: _hasSistemaFechado),
+                  CampoForm(label: "Tipo", value: "", controller: _tipoSisFechadoController, required: true, isEnabled: _hasSistemaFechado, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaSisFechadoController, required: true, isEnabled: _hasSistemaFechado, mask: null, lenght: 5, inputType: InputType.DECIMAL),
 
                   SwitchForm(
                       label: 'Raceway',
@@ -215,7 +216,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                         });
                       }
                   ), // Área do Raceway
-                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaRacewayController, required: false, enabled: _hasRaceway),
+                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaRacewayController, required: false, isEnabled: _hasRaceway, mask: null, lenght: 5, inputType: InputType.DECIMAL),
 
                   Row(children: const [Text('Produção', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
@@ -234,23 +235,9 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                             padding: const EdgeInsets.all(12.0),
                             child: Column(
                               children: [
-                                TextFormField(
-                                  controller: producao.especieController,
-                                  decoration: const InputDecoration(
-                                      hintText: '[Espécie digitada]'),
-                                ),
-                                TextFormField(
-                                  controller: producao.producaoKgController,
-                                  decoration: const InputDecoration(
-                                      hintText: '[Produção (kg) digitada]'),
-                                  keyboardType: TextInputType.number,
-                                ),
-                                TextFormField(
-                                  controller: producao.unidadesController,
-                                  decoration: const InputDecoration(
-                                      hintText: '[Unidades (se anfíbio ou réptil)]'),
-                                  keyboardType: TextInputType.number,
-                                ),
+                                CampoForm(label: "[Espécie digitada]", value: "", controller: producao.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                                CampoForm(label: "[Produção (kg) digitada]", value: "", controller: producao.producaoKgController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
+                                CampoForm(label: "[Unidades (se anfíbio ou réptil)]", value: "", controller: producao.unidadesController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
                                 const SizedBox(height: 8),
                                 Align(
                                   alignment: Alignment.centerRight,
@@ -275,6 +262,8 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
 
                   Row(children: const [Text('Forma Jovem', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
+                  CampoForm(label: "Área total de produção (m³)", value: "", controller: _areaJovProdController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
+                  const SizedBox(height: 16),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
@@ -290,17 +279,8 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             children: [
-                              TextFormField(
-                                controller: formaJovem.especieController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Espécie digitada]'),
-                              ),
-                              TextFormField(
-                                controller: formaJovem.milheirosController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Milheiros digitado]'),
-                                keyboardType: TextInputType.number,
-                              ),
+                              CampoForm(label: "[Espécie digitada]", value: "", controller: formaJovem.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                              CampoForm(label: "[Milheiros digitado]", value: "", controller: formaJovem.milheirosController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
                               const SizedBox(height: 8),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -340,23 +320,9 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                           padding: const EdgeInsets.all(12.0),
                           child: Column(
                             children: [
-                              TextFormField(
-                                controller: producaoOrnamental.especieController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Espécie digitada]'),
-                              ),
-                              TextFormField(
-                                controller: producaoOrnamental.producaoKgController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Produção (kg) digitada]'),
-                                keyboardType: TextInputType.number,
-                              ),
-                              TextFormField(
-                                controller: producaoOrnamental.unidadesController,
-                                decoration: const InputDecoration(
-                                    hintText: '[Unidades (se anfíbio ou réptil)]'),
-                                keyboardType: TextInputType.number,
-                              ),
+                              CampoForm(label: "[Espécie digitada]", value: "", controller: producaoOrnamental.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                              CampoForm(label: "[Produção (kg) digitada]", value: "", controller: producaoOrnamental.producaoKgController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
+                              CampoForm(label: "[Unidades (se anfíbio ou réptil)]", value: "", controller: producaoOrnamental.unidadesController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
                               const SizedBox(height: 8),
                               Align(
                                 alignment: Alignment.centerRight,
