@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_integrador_mobile/models/campos/campos_forma_jovem.dart';
+import 'package:projeto_integrador_mobile/models/campos/campos_producao.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/pages/components/fields/botao_adicionar_item.dart';
+import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/fields/switch_form_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/masks.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/info_comerciais_page.dart';
-import 'package:projeto_integrador_mobile/pages/steps/steps_component.dart';
+import 'package:projeto_integrador_mobile/pages/components/steps/steps_component.dart';
 
 // Terceira página do formulário, serve para informações do cultivo e produção da fazenda
 class CultivoProducaoPage extends StatefulWidget {
@@ -17,6 +23,9 @@ class CultivoProducaoPage extends StatefulWidget {
 
 class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
   final _formKey = GlobalKey<FormState>();
+  List<CamposProducao> producoes = [];
+  List<CamposFormaJovem> formasJovens = [];
+  List<CamposProducao> producoesOrnamentais = [];
   final TextEditingController _tipoViveiroController = TextEditingController();
   final TextEditingController _areaViveiroController = TextEditingController();
   final TextEditingController _areaTanqueRedeController = TextEditingController();
@@ -32,12 +41,60 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
   final TextEditingController _especieOrnController = TextEditingController();
   final TextEditingController _pesoOrnController = TextEditingController();
   final TextEditingController _unidadesOrnController = TextEditingController();
+  bool _hasViveiro = false;
+  bool _hasTanqueRede = false;
+  bool _hasSistemaFechado = false;
+  bool _hasRaceway = false;
 
+  @override
+  void initState(){
+    super.initState();
+    producoes.add(CamposProducao());
+    formasJovens.add(CamposFormaJovem());
+    producoesOrnamentais.add(CamposProducao());
+  }
+
+  void adicionarProducao(){
+    setState(() {
+      producoes.add(CamposProducao());
+    });
+  }
+
+  void removerProducao(int index){
+    setState(() {
+      producoes.removeAt(index);
+    });
+  }
+
+  void adicionarFormaJovem(){
+    setState(() {
+      formasJovens.add(CamposFormaJovem());
+    });
+  }
+
+  void removerFormaJovem(int index){
+    setState(() {
+      formasJovens.removeAt(index);
+    });
+  }
+
+  void adicionarProducaoOrnamental(){
+    setState(() {
+      producoesOrnamentais.add(CamposProducao());
+    });
+  }
+
+  void removerProducaoOrnamental(int index){
+    setState(() {
+      producoesOrnamentais.removeAt(index);
+    });
+  }
 
   // Cria o objeto necessário para próxima página e envia o usuário com o objeto para tal página
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
+        // TODO: AJUSTAR OS CONTROLLERS
         enderecoEmpre: widget.formulario.enderecoEmpre,
         municipioEmpre: widget.formulario.municipioEmpre,
         ufEmpre: widget.formulario.ufEmpre,
@@ -51,20 +108,20 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
         oesa: widget.formulario.oesa,
         atendimentosAno: widget.formulario.atendimentosAno,
         tipoViveiro: _tipoViveiroController.text,
-        areaViveiro: double.parse(_areaViveiroController.text),
-        areaTaqueRede: double.parse(_areaTanqueRedeController.text),
+        areaViveiro: double.tryParse(_areaViveiroController.text),
+        areaTaqueRede: double.tryParse(_areaTanqueRedeController.text),
         tipoSistemaFechado: _tipoSisFechadoController.text,
-        areaSistemaFechado: double.parse(_areaSisFechadoController.text),
-        areaRaceway: double.parse(_areaRacewayController.text),
+        areaSistemaFechado: double.tryParse(_areaSisFechadoController.text),
+        areaRaceway: double.tryParse(_areaRacewayController.text),
         especieProducao: _especieProdController.text,
-        pesoProducao: double.parse(_pesoProdController.text),
-        unidadesProducao: int.parse(_unidadeProdController.text),
-        areaJovemProducao: double.parse(_areaJovProdController.text),
+        pesoProducao: double.tryParse(_pesoProdController.text),
+        unidadesProducao: int.tryParse(_unidadeProdController.text),
+        areaJovemProducao: double.tryParse(_areaJovProdController.text),
         especieAreaJov: _especieAreaJovController.text,
         milheirosAreaJov: _milheirosAreaJovController.text,
         especieOrnamental: _especieOrnController.text,
-        pesoOrnamental: double.parse(_pesoOrnController.text),
-        unidadesOrnamental: int.parse(_unidadesOrnController.text),
+        pesoOrnamental: double.tryParse(_pesoOrnController.text),
+        unidadesOrnamental: int.tryParse(_unidadesOrnController.text),
       );
 
       Navigator.push(context, MaterialPageRoute(builder: (_) => InformacoesComerciaisPage(pessoa: widget.pessoa, formulario: formulario)),);
@@ -105,381 +162,188 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                 children: [
                   StepIndicator(currentStep: 1),
                   const SizedBox(height: 24),
-                  const Text('ENGORDA', style: TextStyle(fontWeight: FontWeight.bold),),
+
+                  Row(children: const [Text('ENGORDA', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
-                  const Text('Modelo e produção', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Row(children: const [Text('Modelo e Produção', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
-                  // Campo do tipo do viveiro da produção
-                  TextFormField(
-                    controller: _tipoViveiroController,
-                    decoration: InputDecoration(
-                      labelText: 'Tipo',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  SwitchForm(
+                      label: 'Viveiro',
+                      value: _hasViveiro,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasViveiro = val;
+                          _tipoViveiroController.clear();
+                          _areaViveiroController.clear();
+                        });
+                      }
+                  ), // Informações do viveiro
+                  CampoForm(label: "Tipo", value: "", controller: _tipoViveiroController, required: true, isEnabled: _hasViveiro, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "Area total (m³)", value: "", controller: _areaViveiroController, required: true, isEnabled: _hasViveiro , mask: null, lenght: 5, inputType: InputType.DECIMAL),
 
-                  // Campo da área total do viveiro
-                  TextFormField(
-                    controller: _areaViveiroController,
-                    decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  SwitchForm(
+                      label: 'Tanque Rede',
+                      value: _hasTanqueRede,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasTanqueRede = val;
+                          _areaTanqueRedeController.clear();
+                        });
+                      }
+                  ), // Área do Tanque Rede
+                  CampoForm(label: "Área total (m³)", value: "", controller: _areaTanqueRedeController, required: false, isEnabled: _hasTanqueRede, mask: null, lenght: 5, inputType: InputType.DECIMAL),
 
-                  const Text('Tanque Rede', style: TextStyle(fontWeight: FontWeight.bold),),
+                  SwitchForm(
+                      label: 'Sistema Fechado',
+                      value: _hasSistemaFechado,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasSistemaFechado = val;
+                          _areaSisFechadoController.clear();
+                        });
+                      }
+                  ), // Sistema Fechado
+                  CampoForm(label: "Tipo", value: "", controller: _tipoSisFechadoController, required: true, isEnabled: _hasSistemaFechado, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaSisFechadoController, required: true, isEnabled: _hasSistemaFechado, mask: null, lenght: 5, inputType: InputType.DECIMAL),
+
+                  SwitchForm(
+                      label: 'Raceway',
+                      value: _hasRaceway,
+                      onChanged: (val) {
+                        setState(() {
+                          _hasRaceway = val;
+                          _areaRacewayController.clear();
+                        });
+                      }
+                  ), // Área do Raceway
+                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaRacewayController, required: false, isEnabled: _hasRaceway, mask: null, lenght: 5, inputType: InputType.DECIMAL),
+
+                  Row(children: const [Text('Produção', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
-
-                  // Campo da área total do tanque rede
-                  TextFormField(
-                    controller: _areaTanqueRedeController,
-                    decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: producoes.length,
+                      itemBuilder: (context, index) {
+                        final producao = producoes[index];
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          elevation: 3,
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              children: [
+                                CampoForm(label: "[Espécie digitada]", value: "", controller: producao.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                                CampoForm(label: "[Produção (kg) digitada]", value: "", controller: producao.producaoKgController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
+                                CampoForm(label: "[Unidades (se anfíbio ou réptil)]", value: "", controller: producao.unidadesController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
+                                const SizedBox(height: 8),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: IconButton(
+                                    icon: const Icon(Icons.delete, color: Colors.red),
+                                    onPressed: () => removerProducao(index),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  const Text('Sistema Fechado', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-
-                  //Campo do tipo de sistema fechado
-                  TextFormField(
-                    controller: _tipoSisFechadoController,
-                    decoration: InputDecoration(
-                      labelText: 'Tipo',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo da área do sistema fechado
-                  TextFormField(
-                    controller: _areaSisFechadoController,
-                    decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-
-                  const Text('Raceway', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 12),
+                  BotaoAdicionarItem(label: 'Espécie', onPressed: adicionarProducao),
                   const SizedBox(height: 16),
 
-                  // Campo da área do raceway
-                  TextFormField(
-                    controller: _areaRacewayController,
-                    decoration: InputDecoration(
-                      labelText: 'Área Total (m³)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  // CampoForm(label: "Espécie Digitada", value: "", controller: _especieProdController, required: true, enabled: true),
+                  // CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoProdController, required: true, enabled: true),
+                  // CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadeProdController, required: true, enabled: true),
 
-                  const Text('Produção', style: TextStyle(fontWeight: FontWeight.bold),),
+                  Row(children: const [Text('Forma Jovem', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
+                  const SizedBox(height: 16),
+                  CampoForm(label: "Área total de produção (m³)", value: "", controller: _areaJovProdController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
+                  const SizedBox(height: 16),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: formasJovens.length,
+                    itemBuilder: (context, index) {
+                      final formaJovem = formasJovens[index];
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                        elevation: 3,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            children: [
+                              CampoForm(label: "[Espécie digitada]", value: "", controller: formaJovem.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                              CampoForm(label: "[Milheiros digitado]", value: "", controller: formaJovem.milheirosController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
+                              const SizedBox(height: 8),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: IconButton(
+                                  icon: const Icon(Icons.delete, color: Colors.red),
+                                  onPressed: () => removerFormaJovem(index),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  BotaoAdicionarItem(label: 'Espécie', onPressed: adicionarFormaJovem),
                   const SizedBox(height: 16),
 
-                  // Campo do nome da espécie produzida
-                  TextFormField(
-                    controller: _especieProdController,
-                    decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  // CampoForm(label: "Área total de produção (m³)", value: "", controller: _areaJovProdController, required: true, enabled: true),
+                  // CampoForm(label: "Espécie Digitada", value: "", controller: _especieAreaJovController, required: true, enabled: true),
+                  // CampoForm(label: "Milheiros Digitados", value: "", controller: _milheirosAreaJovController, required: true, enabled: true),
 
-                  // Campo do peso da espécie produzida
-                  TextFormField(
-                    controller: _pesoProdController,
-                    decoration: InputDecoration(
-                      labelText: 'Produção (kg) digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
+                  Row(children: const [Text('Ornamental', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
+                  const SizedBox(height: 16),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: producoesOrnamentais.length,
+                    itemBuilder: (context, index) {
+                      final producaoOrnamental = producoesOrnamentais[index];
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                        elevation: 3,
+                        margin: const EdgeInsets.symmetric(vertical: 8),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            children: [
+                              CampoForm(label: "[Espécie digitada]", value: "", controller: producaoOrnamental.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                              CampoForm(label: "[Produção (kg) digitada]", value: "", controller: producaoOrnamental.producaoKgController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
+                              CampoForm(label: "[Unidades (se anfíbio ou réptil)]", value: "", controller: producaoOrnamental.unidadesController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
+                              const SizedBox(height: 8),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: IconButton(
+                                  icon: const Icon(Icons.delete, color: Colors.red),
+                                  onPressed: () => removerProducaoOrnamental(index),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  SizedBox(height: 16),
-
-                  // Campo da quantidade de espécies produzidas em unidades
-                  TextFormField(
-                    controller: _unidadeProdController,
-                    decoration: InputDecoration(
-                      labelText: 'Unidades (se anfíbio ou réptil)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-
-                  const Text('Forma Jovem', style: TextStyle(fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 12),
+                  BotaoAdicionarItem(label: 'Espécie', onPressed: adicionarProducaoOrnamental),
                   const SizedBox(height: 16),
 
-                  // Campo da área de produção jovem
-                  TextFormField(
-                    controller: _areaJovProdController,
-                    decoration: InputDecoration(
-                      labelText: 'Área Total de Produção (m³)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do nome da espécie na área de produção jovem
-                  TextFormField(
-                    controller: _especieAreaJovController,
-                    decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo dos milheiros da produção de forma jovem
-                  TextFormField(
-                    controller: _milheirosAreaJovController,
-                    decoration: InputDecoration(
-                      labelText: 'Milheiros digitados',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  const Text('Ornamental', style: TextStyle(fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 16),
-
-                  // Campo do nome da espécie ornamental produzida
-                  TextFormField(
-                    controller: _especieOrnController,
-                    decoration: InputDecoration(
-                      labelText: 'Espécie digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do peso da espécie ornamental produzida
-                  TextFormField(
-                    controller: _pesoOrnController,
-                    decoration: InputDecoration(
-                      labelText: 'Produção (kg) digitada',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo da quantidade de espécies ornamentais produzidas
-                  TextFormField(
-                    controller: _unidadesOrnController,
-                    decoration: InputDecoration(
-                      labelText: 'Unidades (se anfíbio ou réptil)',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                  ),
-                  SizedBox(height: 16),
+                  // CampoForm(label: "Espécie Digitada", value: "", controller: _especieOrnController, required: true, enabled: true),
+                  // CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoOrnController, required: true, enabled: true),
+                  // CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadesOrnController, required: true, enabled: true),
 
                   // Botão "Voltar"
                   Row(

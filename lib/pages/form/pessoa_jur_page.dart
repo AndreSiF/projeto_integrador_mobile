@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
+import 'package:projeto_integrador_mobile/pages/components/masks.dart';
 
 // Primeira página do formulário (pessoa jurídica) preenche as informações de uma pessoa jurídica
 class CnpjPage extends StatefulWidget {
@@ -32,9 +34,9 @@ class _CnpjPageState extends State<CnpjPage> {
         razaoSocial: _razaoController.text,
         cnpj: _cnpjController.text,
         cnae: _cnaeController.text,
-        telefone: int.parse(_telefoneRespController.text),
+        //telefone: int.parse(_telefoneRespController.text),
         email: _emailRespController.text,
-        rgp: int.parse(_rgpRespController.text),
+        //rgp: int.parse(_rgpRespController.text),
         endereco: _enderecoController.text,
         uf: _ufController.text,
         municipio: _municipioController.text,
@@ -79,271 +81,22 @@ class _CnpjPageState extends State<CnpjPage> {
               child: Column(
                 children: [
                   const SizedBox(height: 8),
-                  // Campo de razão social
-                  TextFormField(
-                    controller: _razaoController,
-                    decoration: InputDecoration(
-                      labelText: 'Razão Social',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
+                  // Campos de informações da empresa e indivíduo CNPJ
+                  CampoForm(label: "Razão Social", value: "", controller: _razaoController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "CNPJ", value: "", controller: _cnpjController, required: true, isEnabled: true, mask: [cnpjFormatter], lenght: 18, inputType: InputType.INTEGER),
+                  CampoForm(label: "CNAE", value: "", controller: _cnaeController, required: true, isEnabled: true, mask: [cnaeFormatter], lenght: 10, inputType: InputType.INTEGER),
+                  CampoForm(label: "Endereço", value: "", controller: _enderecoController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "Município", value: "", controller: _municipioController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "UF", value: "", controller: _ufController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.TEXT),
+                  CampoForm(label: "Responsável Legal", value: "", controller: _respController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
+                  CampoForm(label: "CPF", value: "", controller: _cpfRespController, required: true, isEnabled: true, mask: [cpfFormatter], lenght: 14, inputType: InputType.INTEGER),
+                  CampoForm(label: "RGP", value: "", controller: _rgpRespController, required: true, isEnabled: true, mask: [rgpFormatter], lenght: 10, inputType: InputType.TEXT),
+                  CampoForm(label: "Telefone", value: "", controller: _telefoneRespController, required: true, isEnabled: true, mask: [phoneFormatter], lenght: 15, inputType: InputType.INTEGER),
+                  CampoForm(label: "E-Mail", value: "", controller: _emailRespController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.EMAIL),
 
-                  // Campo de CNPJ
-                  TextFormField(
-                    controller: _cnpjController,
-                    decoration: InputDecoration(
-                      labelText: 'CNPJ',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo de CNAE
-                  TextFormField(
-                    controller: _cnaeController,
-                    decoration: InputDecoration(
-                      labelText: 'Código CNAE principal',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  //Campo de endereço
-                  TextFormField(
-                    controller: _enderecoController,
-                    decoration: InputDecoration(
-                      labelText: 'Endereço',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo de município
-                  TextFormField(
-                    controller: _municipioController,
-                    decoration: InputDecoration(
-                      labelText: 'Município',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo de UF
-                  TextFormField(
-                    controller: _ufController,
-                    decoration: InputDecoration(
-                      labelText: 'UF',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do nome do responsável legal
-                  TextFormField(
-                    controller: _respController,
-                    decoration: InputDecoration(
-                      labelText: 'Responsável Legal',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do CPF do responsável legal
-                  TextFormField(
-                    controller: _cpfRespController,
-                    decoration: InputDecoration(
-                      labelText: 'CPF',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do RGP do responsável legal
-                  TextFormField(
-                    controller: _rgpRespController,
-                    decoration: InputDecoration(
-                      labelText: 'RGP',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do telefone do responsável legal
-                  TextFormField(
-                    controller: _telefoneRespController,
-                    decoration: InputDecoration(
-                      labelText: 'Telefone',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Campo do email do responsável legal
-                  TextFormField(
-                    controller: _emailRespController,
-                    decoration: InputDecoration(
-                      labelText: 'E-mail',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E)), // cor da borda
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF6F6A7E), width: 2),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
-                    ),
-                    validator: (value) =>
-                    value == null || value.isEmpty ? 'Campo obrigatório' : null,
-                  ),
-                  SizedBox(height: 16),
-
-                  // Botão "Voltar"
                   Row(
                     children: [
+                      // Botão "Voltar"
                       Expanded(
                         child: OutlinedButton(
                           onPressed: () => Navigator.push(
