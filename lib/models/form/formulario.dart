@@ -1,19 +1,22 @@
-import 'dart:ffi';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/aquisicao_jovem.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/aquisicao_racao.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/comercializacao.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/forma_jovem.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/producao.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/producao_ornamentais.dart';
 
-import 'package:projeto_integrador_mobile/models/form/aquisicao_jovem.dart';
-import 'package:projeto_integrador_mobile/models/form/aquisicao_racao.dart';
-import 'package:projeto_integrador_mobile/models/form/comercializacao.dart';
-import 'package:projeto_integrador_mobile/models/form/forma_jovem.dart';
-import 'package:projeto_integrador_mobile/models/form/pessoa.dart';
-import 'package:projeto_integrador_mobile/models/form/producao.dart';
-import 'package:projeto_integrador_mobile/models/form/producao_ornamentais.dart';
+import 'elementos_formulario/producao_ornamental.dart';
 
 class FormularioN {
+  final int? id;
+  final String? uuid;
+
   // Pessoa
-  final PessoaN pessoa;
+  final PessoaN? pessoa;
 
   // Responsável Técnico
-  final Bool hasResponsavelTecnico;
+  final bool? hasResponsavelTecnico;
   final String? nomeResponsavelTecnico;
   final String? registroResponsavelTecnico;
   final String? telefoneResponsavelTecnico;
@@ -25,72 +28,73 @@ class FormularioN {
   final String? ufEmpreendimento;
 
   // Coordenadas Geográficas
-  final String? Latitude;
-  final String? Longitude;
+  final String? latitude;
+  final String? longitude;
 
   // Documentação
-  final Bool hasDap;
-  final Int? dap;
+  final bool? hasDap;
+  final int? dap;
 
-  final Bool hasLicencaAmbiental;
-  final Int? licencaAmbiental;
+  final bool? hasLicencaAmbiental;
+  final int? licencaAmbiental;
 
-  final Bool hasOutorga;
+  final bool? hasOutorga;
   final String? outorga;
 
-  final Bool hasCtf;
-  final Int? ctf;
+  final bool? hasCtf;
+  final int? ctf;
 
-  final Bool hasCar;
+  final bool? hasCar;
   final String? car;
 
-  final Bool hasOesa;
-  final Int? oesa;
+  final bool? hasOesa;
+  final int? oesa;
 
-  final Bool hasAssistenciaTecnica;
-  final Int? atendimentosAno;
+  final bool? hasAssistenciaTecnica;
+  final int? atendimentosAno;
 
   // Modelo e Produção
-  final Bool hasViveiro;
+  final bool? hasViveiro;
   final String? tipoViveiro;
-  final Double? areaViveiro;
+  final double? areaViveiro;
 
   // Tanque Rede
-  final Bool hasTanqueRede;
-  final Double? areaTanqueRede;
+  final bool? hasTanqueRede;
+  final double? areaTanqueRede;
 
   // Sistema Fechado
-  final Bool hasSistemaFechado;
+  final bool? hasSistemaFechado;
   final String? tipoSistemaFechado;
-  final Double? areaRaceway;
 
   // Raceway
-  final Bool hasRaceway;
-  final Double? areaRaceway;
+  final bool? hasRaceway;
+  final double? areaRaceway;
 
   // Produção
-  final List<Producao> producoes;
+  final List<Producao>? producoes;
 
   // Forma Jovem
-  final Double? areaFormaJovem;
-  final List<FormaJovem> formasJovem;
+  final double? areaFormaJovem;
+  final List<FormaJovem>? formasJovem;
 
   // Ornamental
-  final List<Producao> producoesOrnamental;
+  final List<ProducaoOrnamental>? producoesOrnamental;
 
   // Aquisição de formas jovens
-  final List<AquisicaoJovem> aquisicoesFormaJovem;
+  final List<AquisicaoJovem>? aquisicoesFormaJovem;
 
   // Aquisição de Ração
-  final List<AquisicaoRacao> aquisicoesRacao;
+  final List<AquisicaoRacao>? aquisicoesRacao;
 
   // Comercialização por espécie
-  final List<Comercializacao> comercializacaoEspecie;
+  final List<Comercializacao>? comercializacaoEspecie;
 
   // Produção de Ornamentais
-  final List<producaoOrnamentais> producoesOrnamentais;
+  final List<ProducaoOrnamentais>? producoesOrnamentais;
 
-  FormularioN(
+  FormularioN({
+    this.id,
+    this.uuid,
     this.pessoa,
     this.hasResponsavelTecnico,
     this.nomeResponsavelTecnico,
@@ -100,8 +104,8 @@ class FormularioN {
     this.enderecoEmpreendimento,
     this.municipioEmpreendimento,
     this.ufEmpreendimento,
-    this.Latitude,
-    this.Longitude,
+    this.latitude,
+    this.longitude,
     this.hasDap,
     this.dap,
     this.hasLicencaAmbiental,
@@ -133,5 +137,161 @@ class FormularioN {
     this.aquisicoesRacao,
     this.comercializacaoEspecie,
     this.producoesOrnamentais,
-  );
+  });
+
+  Map<String, dynamic> toMap(){
+    return{
+      'id_formulario': id,
+      'uuid_formulario': uuid,
+      'pessoa': pessoa?.toMap(),
+      'has_responsavel_tecnico': hasResponsavelTecnico != null ? (hasResponsavelTecnico! ? 1 : 0) : null,
+      'nome_responsavel_tecnico': nomeResponsavelTecnico,
+      'registro_responsavel_tecnico': registroResponsavelTecnico,
+      'telefone_responsavel_tecnico': telefoneResponsavelTecnico,
+      'email_responsavel_tecnico': emailResponsavelTecnico,
+      'endereco_empreendimento': enderecoEmpreendimento,
+      'municipio_empreendimento': enderecoEmpreendimento,
+      'uf_empreendimento': ufEmpreendimento,
+      'latitude': latitude,
+      'longitude': longitude,
+      'has_dap': hasDap != null ? (hasDap! ? 1 : 0) : null,
+      'dap': dap,
+      'has_licenca_ambiental': hasLicencaAmbiental != null ? (hasLicencaAmbiental! ? 1 : 0) : null,
+      'licenca_ambiental': licencaAmbiental,
+      'has_outorga': hasOutorga != null ? (hasOutorga! ? 1 : 0) : null,
+      'outorga': outorga,
+      'has_ctf': hasCtf != null ? (hasCtf! ? 1 : 0) : null,
+      'ctf': ctf,
+      'has_car': hasCar != null ? (hasCar! ? 1 : 0) : null,
+      'car': car,
+      'has_oesa': hasOesa != null ? (hasOesa! ? 1 : 0) : null,
+      'oesa': oesa,
+      'has_assistencia_tecnica': hasAssistenciaTecnica != null ? (hasAssistenciaTecnica! ? 1 : 0) : null,
+      'atendimentos_ano': atendimentosAno,
+      'has_viveiro': hasViveiro != null ? (hasViveiro! ? 1 : 0) : null,
+      'tipó_viveiro': tipoViveiro,
+      'area_viveiro': areaViveiro,
+      'has_tanque_rede': hasTanqueRede != null ? (hasTanqueRede! ? 1 : 0) : null,
+      'area_tanque_rede': areaTanqueRede,
+      'has_sistema_fechado': hasSistemaFechado != null ? (hasSistemaFechado! ? 1 : 0) : null,
+      'tipo_sistema_fechado': tipoSistemaFechado,
+      'has_raceway': hasRaceway != null ? (hasRaceway! ? 1 : 0) : null,
+      'area_raceway': areaRaceway,
+      'producoes': producoes?.map((p) => p.toMap()).toList(),
+      'area_forma_jovem': areaFormaJovem,
+      'formas_jovem': formasJovem?.map((fj) => fj.toMap()).toList(),
+      'producoes_ornamental': producoesOrnamental?.map((po) => po.toMap()).toList(),
+      'aquisicoes_forma_jovem': aquisicoesFormaJovem?.map((afj) => afj.toMap()).toList(),
+      'aquisicoes_racao': aquisicoesRacao?.map((ar) => ar.toMap()).toList(),
+      'comercializacao_especie': comercializacaoEspecie?.map((ce) => ce.toMap()).toList(),
+      'producoes_ornamentais': producoesOrnamentais?.map((pos) => pos.toMap()).toList(),
+    };
+  }
+
+  factory FormularioN.fromMap(Map<String, dynamic> map) {
+    return FormularioN(
+      id: _parseInt(map['id_comercializacao']),
+      uuid: map['uuid_formulario'] as String?,
+      pessoa: map['pessoa'] != null ? PessoaN.fromMap(map['pessoa']) : null,
+      hasResponsavelTecnico: map['has_responsavel_tecnico'] == 1,
+      nomeResponsavelTecnico: map['nome_responsavel_tecnico'] is String ? map['nome_responsavel_tecnico'] : null,
+      registroResponsavelTecnico: map['registro_responsavel_tecnico'] is String ? map['registro_responsavel_tecnico'] : null,
+      telefoneResponsavelTecnico: map['telefone_responsavel_tecnico'] is String ? map['telefone_responsavel_tecnico'] : null,
+      emailResponsavelTecnico: map['email_responsavel_tecnico'] is String ? map['email_responsavel_tecnico'] : null,
+      enderecoEmpreendimento: map['endereco_empreendimento'] is String ? map['endereco_empreendimento'] : null,
+      municipioEmpreendimento: map['municipio_empreendimento'] is String ? map['municipio_empreendimento'] : null,
+      ufEmpreendimento: map['uf_empreendimento'] is String ? map['uf_empreendimento'] : null,
+      latitude: map['latitude'] is String ? map['latitude'] : null,
+      longitude: map['longitude'] is String ? map['longitude'] : null,
+      hasDap: map['has_dap'] == 1,
+      dap: _parseInt(map['dap']),
+      hasLicencaAmbiental: map['has_licenca_ambiental'] == 1,
+      licencaAmbiental: _parseInt(map['licenca_ambiental']),
+      hasOutorga: map['has_outorga'] == 1,
+      outorga: map['outorga'] is String ? map['outorga'] : null,
+      hasCtf: map['has_ctf'] == 1,
+      ctf: _parseInt(map['ctf']),
+      hasCar: map['has_car'] == 1,
+      car: map['car'] is String ? map['car'] : null,
+      hasOesa: map['has_oesa'] == 1,
+      oesa: _parseInt(map['oesa']),
+      hasAssistenciaTecnica: map['has_assistencia_tecnica'] == 1,
+      atendimentosAno: _parseInt(map['atendimentos_ano']),
+      hasViveiro: map['has_viveiro'] == 1,
+      tipoViveiro: map['tipo_viveiro'] is String ? map['tipo_viveiro'] : null,
+      areaViveiro: _parseDouble(map['area_viveiro']),
+      hasTanqueRede: map['has_tanque_rede'] == 1,
+      areaTanqueRede: _parseDouble(map['area_tanque_rede']),
+      hasSistemaFechado: map['has_sistema_fechado'] == 1,
+      tipoSistemaFechado: map['tipo_sistema_fechado'] is String ? map['tipo_sistema_fechado'] : null,
+      hasRaceway: map['has_raceway'] == 1,
+      areaRaceway: _parseDouble(map['area_raceway']),
+      producoes: map['producoes'] != null ? (map['producoes'] as List<dynamic>).map((item) => Producao.fromMap(item)).toList() : null,
+      areaFormaJovem: map['area_forma_jovem'] is double ? map['area_forma_jovem'] : null,
+      formasJovem: map['formas_jovem'] != null ? (map['formas_jovem'] as List<dynamic>).map((item) => FormaJovem.fromMap(item)).toList() : null,
+      producoesOrnamental: map['producoes_ornamental'] != null ? (map['producoes_ornamental'] as List<dynamic>).map((item) => ProducaoOrnamental.fromMap(item)).toList() : null,
+      aquisicoesFormaJovem: map['aquisicoes_forma_jovem'] != null ? (map['aquisicoes_forma_jovem'] as List<dynamic>).map((item) => AquisicaoJovem.fromMap(item)).toList() : null,
+      aquisicoesRacao: map['aquisicoes_racao'] != null ? (map['aquisicoes_racao'] as List<dynamic>).map((item) => AquisicaoRacao.fromMap(item)).toList() : null,
+      comercializacaoEspecie: map['comercializacao_especie'] != null ? (map['comercializacao_especie'] as List<dynamic>).map((item) => Comercializacao.fromMap(item)).toList() : null,
+      producoesOrnamentais: map['producoes_ornamentais'] != null ? (map['producoes_ornamentais'] as List<dynamic>).map((item) => ProducaoOrnamentais.fromMap(item)).toList() : null,
+    );
+  }
 }
+
+int? _parseInt(dynamic value) {
+  if (value is int) {
+    return value;
+  } else if (value is String) {
+    return value.isNotEmpty ? int.tryParse(value) : null;
+  }
+  return null;
+}
+
+double? _parseDouble(dynamic value) {
+  if (value is double) {
+    return value;
+  } else if (value is String) {
+    return value.isNotEmpty ? double.tryParse(value) : null;
+  }
+  return null;
+}
+
+// CREATE TABLE formulario (
+// id_formulario INTEGER PRIMARY KEY AUTOINCREMENT,
+// uuid_formulario TEXT ,
+// pessoa TEXT,  -- Armazenar JSON ou criar uma tabela separada
+// has_responsavel_tecnico BOOL,
+// nome_responsavel_tecnico TEXT,
+// registro_responsavel_tecnico TEXT,
+// telefone_responsavel_tecnico TEXT,
+// email_responsavel_tecnico TEXT,
+// endereco_empreendimento TEXT,
+// municipio_empreendimento TEXT,
+// uf_empreendimento TEXT,
+// latitude REAL,
+// longitude REAL,
+// has_dap BOOL,
+// dap INTEGER,
+// has_licenca_ambiental BOOL,
+// licenca_ambiental INTEGER,
+// has_outorga BOOL,
+// outorga TEXT,
+// has_ctf BOOL,
+// ctf INTEGER,
+// has_car BOOL,
+// car TEXT,
+// has_oesa BOOL,
+// oesa INTEGER,
+// has_assistencia_tecnica BOOL,
+// atendimentos_ano INTEGER,
+// has_viveiro BOOL,
+// tipo_viveiro TEXT,
+// area_viveiro REAL,
+// has_tanque_rede BOOL,
+// area_tanque_rede REAL,
+// has_sistema_fechado BOOL,
+// tipo_sistema_fechado TEXT,
+// has_raceway BOOL,
+// area_raceway REAL,
+// area_forma_jovem REAL,
+// );

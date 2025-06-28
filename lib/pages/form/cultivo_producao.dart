@@ -256,10 +256,6 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   BotaoAdicionarItem(label: 'Espécie', onPressed: adicionarProducao),
                   const SizedBox(height: 16),
 
-                  // CampoForm(label: "Espécie Digitada", value: "", controller: _especieProdController, required: true, enabled: true),
-                  // CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoProdController, required: true, enabled: true),
-                  // CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadeProdController, required: true, enabled: true),
-
                   Row(children: const [Text('Forma Jovem', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
                   CampoForm(label: "Área total de produção (m³)", value: "", controller: _areaJovProdController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
@@ -299,10 +295,6 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   BotaoAdicionarItem(label: 'Espécie', onPressed: adicionarFormaJovem),
                   const SizedBox(height: 16),
 
-                  // CampoForm(label: "Área total de produção (m³)", value: "", controller: _areaJovProdController, required: true, enabled: true),
-                  // CampoForm(label: "Espécie Digitada", value: "", controller: _especieAreaJovController, required: true, enabled: true),
-                  // CampoForm(label: "Milheiros Digitados", value: "", controller: _milheirosAreaJovController, required: true, enabled: true),
-
                   Row(children: const [Text('Ornamental', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
                   ListView.builder(
@@ -340,10 +332,6 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   const SizedBox(height: 12),
                   BotaoAdicionarItem(label: 'Espécie', onPressed: adicionarProducaoOrnamental),
                   const SizedBox(height: 16),
-
-                  // CampoForm(label: "Espécie Digitada", value: "", controller: _especieOrnController, required: true, enabled: true),
-                  // CampoForm(label: "Produção (kg) Digitada", value: "", controller: _pesoOrnController, required: true, enabled: true),
-                  // CampoForm(label: "Unidades (se anfíbio ou réptil)", value: "", controller: _unidadesOrnController, required: true, enabled: true),
 
                   // Botão "Voltar"
                   Row(
