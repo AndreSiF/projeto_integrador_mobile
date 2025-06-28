@@ -1,16 +1,18 @@
 class Producao {
   final int? id;
   final String? uuid;
+  final String? uuidFormulario;
   final String? especie;
   final double? producaoKg;
   final int? unidades;
 
-  Producao({this.id, this.uuid, this.especie, this.producaoKg, this.unidades});
+  Producao({this.id, this.uuid, this.uuidFormulario, this.especie, this.producaoKg, this.unidades});
 
   Map<String, dynamic> toMap() {
     return {
       'id_producao': id,
       'uuid_producao': uuid,
+      'uuid_formulario_producao': uuidFormulario,
       'especie_producao': especie,
       'producao_kg_producao': producaoKg,
       'unidades_producao': unidades,
@@ -21,6 +23,7 @@ class Producao {
     return Producao(
       id: _parseInt(map['id_producao']),
       uuid: map['uuid_producao'] is String ? map['uuid_producao'] : null,
+      uuidFormulario: map['uuid_formulario_producao'] is String ? map['uuid_formulario_producao'] : null,
       especie: map['especie_producao'] is String ? map['especie_producao'] : null,
       producaoKg: _parseDouble(map['producao_kg_producao']),
       unidades: _parseInt(map['unidades_producao']),
