@@ -1,7 +1,9 @@
+import 'package:projeto_integrador_mobile/models/campos/campos_comercializacao.dart';
+
 class Comercializacao {
   final int? id;
-  final String? uuid;
-  final String? uuidFormulario;
+  String? uuid;
+  String? uuidFormulario;
   final String? ufOrigem;
   final String? especie;
   final double? producaoKg;
@@ -44,6 +46,30 @@ class Comercializacao {
       precoMedio: _parseDouble(map['preco_medio_comercializacao']),
     );
   }
+
+  List<Comercializacao> obterComercializacoes(List<CamposComercializacao> producoes) {
+    List<Comercializacao> listaComercializacao = [];
+
+    for (var campo in producoes) {
+      // Obtendo os valores dos controladores
+      String? ufOrigem = campo.ufOrigemController.text;
+      String? especie = campo.especieController.text;
+      double? producaoKg = double.tryParse(campo.producaoKgController.text);
+      int? quantidade = int.tryParse(campo.quantidadeController.text);
+      double? precoMedio = double.tryParse(campo.precoMedioController.text);
+
+      // Criando um objeto Producao e adicionando à lista
+      listaComercializacao.add(Comercializacao(
+        ufOrigem: ufOrigem,
+        especie: especie,
+        producaoKg: producaoKg,
+        quantidade: quantidade,
+        precoMedio: precoMedio,
+      ));
+    }
+
+    return listaComercializacao;
+  }
 }
 
 int? _parseInt(dynamic value) {
@@ -64,16 +90,4 @@ double? _parseDouble(dynamic value) {
   return null;
 }
 
-// await db.execute('''
-//           CREATE TABLE comercializacao (
-//             id_comercializacao INTEGER PRIMARY KEY AUTOINCREMENT,
-//             uuid_comercializacao TEXT,
-//             uuid_formulario_comercializacao TEXT,
-//             uf_origem_comercializacao TEXT,
-//             especie_comercializacao TEXT,
-//             producao_kg_comercializacao REAL,
-//             quantidade_comercializacao INTEGER,
-//             preco_medio_comercializacao REAL,
-//             FOREIGN KEY (uuid_formulario_comercializacao) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
-//           )
-//         ''');
+

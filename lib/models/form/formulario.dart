@@ -8,12 +8,12 @@ import 'package:projeto_integrador_mobile/models/form/elementos_formulario/produ
 
 import 'elementos_formulario/producao_ornamental.dart';
 
-class FormularioN {
+class Formulario {
   final int? id;
-  final String? uuid;
+  String? uuid;
 
   // Pessoa
-  final PessoaN? pessoa;
+  final Pessoa? pessoa;
 
   // Responsável Técnico
   final bool? hasResponsavelTecnico;
@@ -65,6 +65,7 @@ class FormularioN {
   // Sistema Fechado
   final bool? hasSistemaFechado;
   final String? tipoSistemaFechado;
+  final double? areaSistemaFechado;
 
   // Raceway
   final bool? hasRaceway;
@@ -92,7 +93,7 @@ class FormularioN {
   // Produção de Ornamentais
   final List<ProducaoOrnamentais>? producoesOrnamentais;
 
-  FormularioN({
+  Formulario({
     this.id,
     this.uuid,
     this.pessoa,
@@ -127,6 +128,7 @@ class FormularioN {
     this.areaTanqueRede,
     this.hasSistemaFechado,
     this.tipoSistemaFechado,
+    this.areaSistemaFechado,
     this.areaRaceway,
     this.hasRaceway,
     this.producoes,
@@ -175,6 +177,7 @@ class FormularioN {
       'area_tanque_rede': areaTanqueRede,
       'has_sistema_fechado': hasSistemaFechado != null ? (hasSistemaFechado! ? 1 : 0) : null,
       'tipo_sistema_fechado': tipoSistemaFechado,
+      'area_sistema_fechado': areaSistemaFechado,
       'has_raceway': hasRaceway != null ? (hasRaceway! ? 1 : 0) : null,
       'area_raceway': areaRaceway,
       'producoes': producoes?.map((p) => p.toMap()).toList(),
@@ -188,11 +191,11 @@ class FormularioN {
     };
   }
 
-  factory FormularioN.fromMap(Map<String, dynamic> map) {
-    return FormularioN(
+  factory Formulario.fromMap(Map<String, dynamic> map) {
+    return Formulario(
       id: _parseInt(map['id_comercializacao']),
       uuid: map['uuid_formulario'] as String?,
-      pessoa: map['pessoa'] != null ? PessoaN.fromMap(map['pessoa']) : null,
+      pessoa: map['pessoa'] != null ? Pessoa.fromMap(map['pessoa']) : null,
       hasResponsavelTecnico: map['has_responsavel_tecnico'] == 1,
       nomeResponsavelTecnico: map['nome_responsavel_tecnico'] is String ? map['nome_responsavel_tecnico'] : null,
       registroResponsavelTecnico: map['registro_responsavel_tecnico'] is String ? map['registro_responsavel_tecnico'] : null,
@@ -224,6 +227,7 @@ class FormularioN {
       areaTanqueRede: _parseDouble(map['area_tanque_rede']),
       hasSistemaFechado: map['has_sistema_fechado'] == 1,
       tipoSistemaFechado: map['tipo_sistema_fechado'] is String ? map['tipo_sistema_fechado'] : null,
+      areaSistemaFechado: _parseDouble(map['area_sistema_fechado']),
       hasRaceway: map['has_raceway'] == 1,
       areaRaceway: _parseDouble(map['area_raceway']),
       producoes: map['producoes'] != null ? (map['producoes'] as List<dynamic>).map((item) => Producao.fromMap(item)).toList() : null,
@@ -256,42 +260,4 @@ double? _parseDouble(dynamic value) {
   return null;
 }
 
-// CREATE TABLE formulario (
-// id_formulario INTEGER PRIMARY KEY AUTOINCREMENT,
-// uuid_formulario TEXT ,
-// pessoa TEXT,  -- Armazenar JSON ou criar uma tabela separada
-// has_responsavel_tecnico BOOL,
-// nome_responsavel_tecnico TEXT,
-// registro_responsavel_tecnico TEXT,
-// telefone_responsavel_tecnico TEXT,
-// email_responsavel_tecnico TEXT,
-// endereco_empreendimento TEXT,
-// municipio_empreendimento TEXT,
-// uf_empreendimento TEXT,
-// latitude REAL,
-// longitude REAL,
-// has_dap BOOL,
-// dap INTEGER,
-// has_licenca_ambiental BOOL,
-// licenca_ambiental INTEGER,
-// has_outorga BOOL,
-// outorga TEXT,
-// has_ctf BOOL,
-// ctf INTEGER,
-// has_car BOOL,
-// car TEXT,
-// has_oesa BOOL,
-// oesa INTEGER,
-// has_assistencia_tecnica BOOL,
-// atendimentos_ano INTEGER,
-// has_viveiro BOOL,
-// tipo_viveiro TEXT,
-// area_viveiro REAL,
-// has_tanque_rede BOOL,
-// area_tanque_rede REAL,
-// has_sistema_fechado BOOL,
-// tipo_sistema_fechado TEXT,
-// has_raceway BOOL,
-// area_raceway REAL,
-// area_forma_jovem REAL,
-// );
+

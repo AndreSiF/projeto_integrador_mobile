@@ -1,4 +1,4 @@
-class Pessoa{
+class PessoaOld{
   final int? idPessoa;
   final String? nome;
   final String? cpf;
@@ -12,7 +12,7 @@ class Pessoa{
   final String? cnpj;
   final String? cnae;
 
-  Pessoa({
+  PessoaOld({
     this.idPessoa,
     this.nome,
     this.cpf,
@@ -44,8 +44,8 @@ class Pessoa{
       };
     }
 
-  factory Pessoa.fromMap(Map<String, dynamic> map) {
-    return Pessoa(
+  factory PessoaOld.fromMap(Map<String, dynamic> map) {
+    return PessoaOld(
       idPessoa: _parseInt(map['id_pessoa']),
       nome: map['nome'] is String ? map['nome'] : null,
       cpf: map['cpf'] is String ? map['cpf'] : null,

@@ -1,33 +1,45 @@
 import 'package:projeto_integrador_mobile/core/database.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
+import 'package:uuid/uuid.dart';
 
-class PessoaDao {
+class PessoaDaos {
   static const String table = 'pessoa';
 
   // DAO que insere pessoa no banco de dados
   Future<int> insertPessoa(Pessoa pessoa) async {
     final db = await AppDatabase().database;
+    pessoa.uuid = Uuid().v4();
     return db.insert(table, pessoa.toMap());
   }
 
-  // DAO que deleta pessoa no banco de dados
-  Future<void> deletePessoa(int id) async {
-    final db = await AppDatabase().database;
-    await db.delete(table, where: 'id_pessoa = ?', whereArgs: [id]);
-  }
-
   // DAO que atualiza uma entrada de uma pessoa no banco de dados
-  Future<void> atualizarPessoa(Pessoa pessoa) async {
+  Future<void> updatePessoa(Pessoa pessoa) async {
     final db = await AppDatabase().database;
     await db.update(
       table,
       pessoa.toMap(),
-      where: 'id_pessoa = ?',
-      whereArgs: [pessoa.idPessoa],
+      where: 'uuid_pessoa = ?',
+      whereArgs: [pessoa.uuid],
     );
   }
 
-  // DAO que retonar todas as entradas de pessoas no bando de dados
+  // DAO que retorna a pessoa associada a um formulário especificado pelo UUID do formulário
+  Future<Pessoa?> getPessoaByFormularioUuid(String uuid) async {
+    final db = await AppDatabase().database;
+    final List<Map<String, dynamic>> maps = await db.query(
+        table,
+        where: 'uuid_formulario_pessoa = ?',
+        whereArgs: [uuid]
+    );
+    if (maps.isNotEmpty) {
+      return Pessoa.fromMap(maps.first);
+    }
+    else {
+      return null;
+    }
+  }
+
+  // DAO que retonar todas as entradas de pessoas no banco de dados
   Future<List<Pessoa>> getPessoas() async {
     final db = await AppDatabase().database;
     final List<Map<String, dynamic>> maps = await db.query(table);

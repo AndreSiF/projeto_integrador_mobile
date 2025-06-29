@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/campos/campos_forma_jovem.dart';
 import 'package:projeto_integrador_mobile/models/campos/campos_producao.dart';
-import 'package:projeto_integrador_mobile/models/form.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/campos/campos_producao_ornamental.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/forma_jovem.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/producao.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/producao_ornamental.dart';
+import 'package:projeto_integrador_mobile/models/form/formulario.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/botao_adicionar_item.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/switch_form_component.dart';
-import 'package:projeto_integrador_mobile/pages/components/masks.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/info_comerciais_page.dart';
 import 'package:projeto_integrador_mobile/pages/components/steps/steps_component.dart';
@@ -25,22 +28,22 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
   final _formKey = GlobalKey<FormState>();
   List<CamposProducao> producoes = [];
   List<CamposFormaJovem> formasJovens = [];
-  List<CamposProducao> producoesOrnamentais = [];
+  List<CamposProducaoOrnamental> producoesOrnamental = [];
   final TextEditingController _tipoViveiroController = TextEditingController();
   final TextEditingController _areaViveiroController = TextEditingController();
   final TextEditingController _areaTanqueRedeController = TextEditingController();
   final TextEditingController _tipoSisFechadoController = TextEditingController();
   final TextEditingController _areaSisFechadoController = TextEditingController();
   final TextEditingController _areaRacewayController = TextEditingController();
-  final TextEditingController _especieProdController = TextEditingController();
-  final TextEditingController _pesoProdController = TextEditingController();
-  final TextEditingController _unidadeProdController = TextEditingController();
   final TextEditingController _areaJovProdController = TextEditingController();
-  final TextEditingController _especieAreaJovController = TextEditingController();
-  final TextEditingController _milheirosAreaJovController = TextEditingController();
-  final TextEditingController _especieOrnController = TextEditingController();
-  final TextEditingController _pesoOrnController = TextEditingController();
-  final TextEditingController _unidadesOrnController = TextEditingController();
+  //final TextEditingController _especieProdController = TextEditingController();
+  // final TextEditingController _pesoProdController = TextEditingController();
+  // final TextEditingController _unidadeProdController = TextEditingController();
+  // final TextEditingController _especieAreaJovController = TextEditingController();
+  // final TextEditingController _milheirosAreaJovController = TextEditingController();
+  // final TextEditingController _especieOrnController = TextEditingController();
+  // final TextEditingController _pesoOrnController = TextEditingController();
+  // final TextEditingController _unidadesOrnController = TextEditingController();
   bool _hasViveiro = false;
   bool _hasTanqueRede = false;
   bool _hasSistemaFechado = false;
@@ -51,7 +54,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
     super.initState();
     producoes.add(CamposProducao());
     formasJovens.add(CamposFormaJovem());
-    producoesOrnamentais.add(CamposProducao());
+    producoesOrnamental.add(CamposProducaoOrnamental());
   }
 
   void adicionarProducao(){
@@ -80,13 +83,13 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
 
   void adicionarProducaoOrnamental(){
     setState(() {
-      producoesOrnamentais.add(CamposProducao());
+      producoesOrnamental.add(CamposProducaoOrnamental());
     });
   }
 
   void removerProducaoOrnamental(int index){
     setState(() {
-      producoesOrnamentais.removeAt(index);
+      producoesOrnamental.removeAt(index);
     });
   }
 
@@ -95,13 +98,13 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
         // TODO: AJUSTAR OS CONTROLLERS
-        enderecoEmpre: widget.formulario.enderecoEmpre,
-        municipioEmpre: widget.formulario.municipioEmpre,
-        ufEmpre: widget.formulario.ufEmpre,
+        enderecoEmpreendimento: widget.formulario.enderecoEmpreendimento,
+        municipioEmpreendimento: widget.formulario.municipioEmpreendimento,
+        ufEmpreendimento: widget.formulario.ufEmpreendimento,
         latitude: widget.formulario.latitude,
         longitude: widget.formulario.longitude,
         dap: widget.formulario.dap,
-        cadAmbiental: widget.formulario.cadAmbiental,
+        licencaAmbiental: widget.formulario.licencaAmbiental,
         outorga: widget.formulario.outorga,
         ctf: widget.formulario.ctf,
         car: widget.formulario.car,
@@ -109,19 +112,22 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
         atendimentosAno: widget.formulario.atendimentosAno,
         tipoViveiro: _tipoViveiroController.text,
         areaViveiro: double.tryParse(_areaViveiroController.text),
-        areaTaqueRede: double.tryParse(_areaTanqueRedeController.text),
+        areaTanqueRede: double.tryParse(_areaTanqueRedeController.text),
         tipoSistemaFechado: _tipoSisFechadoController.text,
         areaSistemaFechado: double.tryParse(_areaSisFechadoController.text),
         areaRaceway: double.tryParse(_areaRacewayController.text),
-        especieProducao: _especieProdController.text,
-        pesoProducao: double.tryParse(_pesoProdController.text),
-        unidadesProducao: int.tryParse(_unidadeProdController.text),
-        areaJovemProducao: double.tryParse(_areaJovProdController.text),
-        especieAreaJov: _especieAreaJovController.text,
-        milheirosAreaJov: _milheirosAreaJovController.text,
-        especieOrnamental: _especieOrnController.text,
-        pesoOrnamental: double.tryParse(_pesoOrnController.text),
-        unidadesOrnamental: int.tryParse(_unidadesOrnController.text),
+        producoes: Producao().obterProducoes(producoes),
+        formasJovem: FormaJovem().obterFormas(formasJovens),
+        producoesOrnamental: ProducaoOrnamental().obterProducoes(producoesOrnamental),
+        // especieProducao: _especieProdController.text,
+        // pesoProducao: double.tryParse(_pesoProdController.text),
+        // unidadesProducao: int.tryParse(_unidadeProdController.text),
+        // areaJovemProducao: double.tryParse(_areaJovProdController.text),
+        // especieAreaJov: _especieAreaJovController.text,
+        // milheirosAreaJov: _milheirosAreaJovController.text,
+        // especieOrnamental: _especieOrnController.text,
+        // pesoOrnamental: double.tryParse(_pesoOrnController.text),
+        // unidadesOrnamental: int.tryParse(_unidadesOrnController.text),
       );
 
       Navigator.push(context, MaterialPageRoute(builder: (_) => InformacoesComerciaisPage(pessoa: widget.pessoa, formulario: formulario)),);
@@ -179,7 +185,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                       }
                   ), // Informações do viveiro
                   CampoForm(label: "Tipo", value: "", controller: _tipoViveiroController, required: true, isEnabled: _hasViveiro, mask: null, lenght: null, inputType: InputType.TEXT),
-                  CampoForm(label: "Area total (m³)", value: "", controller: _areaViveiroController, required: true, isEnabled: _hasViveiro , mask: null, lenght: 5, inputType: InputType.DECIMAL),
+                  CampoForm(label: "Area total (m³)", value: "", controller: _areaViveiroController, required: true, isEnabled: _hasViveiro , mask: null, lenght: null, inputType: InputType.DECIMAL),
 
                   SwitchForm(
                       label: 'Tanque Rede',
@@ -191,7 +197,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                         });
                       }
                   ), // Área do Tanque Rede
-                  CampoForm(label: "Área total (m³)", value: "", controller: _areaTanqueRedeController, required: false, isEnabled: _hasTanqueRede, mask: null, lenght: 5, inputType: InputType.DECIMAL),
+                  CampoForm(label: "Área total (m³)", value: "", controller: _areaTanqueRedeController, required: false, isEnabled: _hasTanqueRede, mask: null, lenght: null, inputType: InputType.DECIMAL),
 
                   SwitchForm(
                       label: 'Sistema Fechado',
@@ -204,7 +210,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                       }
                   ), // Sistema Fechado
                   CampoForm(label: "Tipo", value: "", controller: _tipoSisFechadoController, required: true, isEnabled: _hasSistemaFechado, mask: null, lenght: null, inputType: InputType.TEXT),
-                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaSisFechadoController, required: true, isEnabled: _hasSistemaFechado, mask: null, lenght: 5, inputType: InputType.DECIMAL),
+                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaSisFechadoController, required: true, isEnabled: _hasSistemaFechado, mask: null, lenght: null, inputType: InputType.DECIMAL),
 
                   SwitchForm(
                       label: 'Raceway',
@@ -216,7 +222,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                         });
                       }
                   ), // Área do Raceway
-                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaRacewayController, required: false, isEnabled: _hasRaceway, mask: null, lenght: 5, inputType: InputType.DECIMAL),
+                  CampoForm(label: "Área Total (m³)", value: "", controller: _areaRacewayController, required: false, isEnabled: _hasRaceway, mask: null, lenght: null, inputType: InputType.DECIMAL),
 
                   Row(children: const [Text('Produção', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
@@ -300,9 +306,9 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: producoesOrnamentais.length,
+                    itemCount: producoesOrnamental.length,
                     itemBuilder: (context, index) {
-                      final producaoOrnamental = producoesOrnamentais[index];
+                      final producaoOrnamental = producoesOrnamental[index];
                       return Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),

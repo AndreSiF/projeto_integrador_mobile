@@ -18,8 +18,8 @@ class VisualizarFormPage extends StatefulWidget {
 
 class _VisualizarFormPageState extends State<VisualizarFormPage> {
   bool _editando = false;
-  late Pessoa pessoa;
-  late Formulario formulario;
+  late PessoaOld pessoa;
+  late FormularioOld formulario;
 
   // Pessoa
   late TextEditingController _nomeController;
@@ -231,7 +231,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
     final _pessoaService = PessoaService();
 
     try {
-      await _formService.deletaForm(widget.dados.formulario.idForm!);
+      //await formService.deletaForm(widget.dados.formulario.idForm!);
       await _pessoaService.deletaPessoa(widget.dados.pessoa.idPessoa!);
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -248,7 +248,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
 
   // Salva alterações feitas em um formulário para o banco de dados
   void _salvarAlteracoes() async {
-    final pessoaAtualizada = Pessoa(
+    final pessoaAtualizada = PessoaOld(
       idPessoa: pessoa.idPessoa,
       nome: _nomeController.text,
       cpf: _cpfController.text,
@@ -263,7 +263,7 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
       cnae: _cnaeController.text,
     );
 
-    final formularioAtualizado = Formulario(
+    final formularioAtualizado = FormularioOld(
       idForm: formulario.idForm,
       idPessoa: formulario.idPessoa,
       enderecoEmpre: _enderecoEmpreController.text,

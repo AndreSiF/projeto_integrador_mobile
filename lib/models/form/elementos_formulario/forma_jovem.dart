@@ -1,7 +1,9 @@
+import 'package:projeto_integrador_mobile/models/campos/campos_forma_jovem.dart';
+
 class FormaJovem {
   final int? id;
-  final String? uuid;
-  final String? uuidFormulario;
+  String? uuid;
+  String? uuidFormulario;
   final String? especie;
   final double? milheiros;
 
@@ -26,6 +28,24 @@ class FormaJovem {
       milheiros: _parseDouble(map['milheiros_forma_jovem']),
     );
   }
+
+  List<FormaJovem> obterFormas(List<CamposFormaJovem> producoes) {
+    List<FormaJovem> listaFormasJovem = [];
+
+    for (var campo in producoes) {
+      // Obtendo os valores dos controladores
+      String? especie = campo.especieController.text;
+      double? milheiros = double.tryParse(campo.milheirosController.text);
+
+      // Criando um objeto Producao e adicionando à lista
+      listaFormasJovem.add(FormaJovem(
+        especie: especie,
+        milheiros: milheiros,
+      ));
+    }
+
+    return listaFormasJovem;
+  }
 }
 
 int? _parseInt(dynamic value) {
@@ -46,13 +66,3 @@ double? _parseDouble(dynamic value) {
   return null;
 }
 
-// await db.execute('''
-//           CREATE TABLE forma_jovem (
-//             id_forma_jovem INTEGER PRIMARY KEY AUTOINCREMENT,
-//             uuid_forma_jovem TEXT,
-//             uuid_formulario_forma_jovem TEXT,
-//             especie_forma_jovem TEXT,
-//             milheiros_forma_jovem REAL,
-//             FOREIGN KEY (uuid_formulario_forma_jovem) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
-//           )
-//         ''');

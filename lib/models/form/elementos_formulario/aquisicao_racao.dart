@@ -1,7 +1,9 @@
+import 'package:projeto_integrador_mobile/models/campos/campos_aquisicao_racao.dart';
+
 class AquisicaoRacao {
   final int? id;
-  final String? uuid;
-  final String? uuidFormulario;
+  String? uuid;
+  String? uuidFormulario;
   final String? ufOrigem;
   final String? unidade;
   final double? quantidade;
@@ -36,6 +38,26 @@ class AquisicaoRacao {
       quantidade: _parseDouble(map['quantidade_aquisicao_racao']),
     );
   }
+
+  List<AquisicaoRacao> obterRacoes(List<CamposAquisicaoRacao> producoes) {
+    List<AquisicaoRacao> listaAquisicaoRacao = [];
+
+    for (var campo in producoes) {
+      // Obtendo os valores dos controladores
+      String? ufOrigem = campo.ufOrigemController.text;
+      String? unidade = campo.unidadeController.text;
+      double? quantidade = double.tryParse(campo.quantidadeController.text);
+
+      // Criando um objeto Producao e adicionando à lista
+      listaAquisicaoRacao.add(AquisicaoRacao(
+        ufOrigem: ufOrigem,
+        unidade: unidade,
+        quantidade: quantidade,
+      ));
+    }
+
+    return listaAquisicaoRacao;
+  }
 }
 
 int? _parseInt(dynamic value) {
@@ -56,14 +78,3 @@ double? _parseDouble(dynamic value) {
   return null;
 }
 
-// await db.execute('''
-//           CREATE TABLE aquisicao_racao (
-//             id_aquisicao_racao INTEGER PRIMARY KEY AUTOINCREMENT,
-//             uuid_aquisicao_racao TEXT,
-//             uuid_formulario_aquisicao_racao TEXT,
-//             uf_origem_aquisicao_racao TEXT,
-//             unidade_aquisicao_racao TEXT,
-//             quantidade_aquisicao_racao REAL,
-//             FOREIGN KEY (uuid_formulario_aquisicao_racao) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
-//           )
-//         ''');

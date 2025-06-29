@@ -1,5 +1,5 @@
 
-import 'package:projeto_integrador_mobile/dao/formulario_dao.dart';
+import 'package:projeto_integrador_mobile/dao/old/formulario_dao.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/models/pessoa_form.dart';
@@ -8,7 +8,7 @@ class FormService {
   final FormDao _formDao = FormDao();
 
   // Função que retorna todos os formulários
-  Future<List<Formulario>> getForms() async {
+  Future<List<FormularioOld>> getForms() async {
     return await _formDao.getForms();
   }
 
@@ -18,7 +18,7 @@ class FormService {
   }
 
   // Função que atualiza uma entrada da tabela do formulário
-  Future<void> updateForm(Formulario formulario) async{
+  Future<void> updateForm(FormularioOld formulario) async{
     try{
       await _formDao.atualizarFormulario(formulario);
     }
@@ -33,8 +33,8 @@ class FormService {
     final rawData = await _formDao.getPessoaComFormulariosRaw();
 
     return rawData.map((map) {
-      final pessoa = Pessoa.fromMap(map);
-      final formulario = Formulario.fromMap(map);
+      final pessoa = PessoaOld.fromMap(map);
+      final formulario = FormularioOld.fromMap(map);
       return PessoaComFormulario(pessoa: pessoa, formulario: formulario);
     }).toList();
   }

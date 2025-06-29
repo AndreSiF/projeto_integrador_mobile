@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  uuid: ^3.0.6
   mask_text_input_formatter: ^2.5.0
   flutter:
     sdk: flutter

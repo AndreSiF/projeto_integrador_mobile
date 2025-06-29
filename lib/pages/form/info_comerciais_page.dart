@@ -3,8 +3,12 @@ import 'package:projeto_integrador_mobile/models/campos/campos_aquisicao_jovem.d
 import 'package:projeto_integrador_mobile/models/campos/campos_aquisicao_racao.dart';
 import 'package:projeto_integrador_mobile/models/campos/campos_comercializacao.dart';
 import 'package:projeto_integrador_mobile/models/campos/campos_producao_ornamentais.dart';
-import 'package:projeto_integrador_mobile/models/form.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/aquisicao_jovem.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/aquisicao_racao.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/comercializacao.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/producao_ornamentais.dart';
+import 'package:projeto_integrador_mobile/models/form/formulario.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/botao_adicionar_item.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/form/cultivo_producao.dart';
@@ -24,76 +28,65 @@ class InformacoesComerciaisPage extends StatefulWidget {
 
 class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
   final _formKey = GlobalKey<FormState>();
-  List<CamposAquisicaoJov> aquisicoesJovem = [];
-  List<CamposAquisicaoRacao> aquisicoesRacao = [];
-  List<CamposComercializacao> comercializacoesEspecie = [];
-  List<CamposProducaoOrnamentais> producoesOrnamentais = [];
-  final TextEditingController _ufAquiJovController = TextEditingController();
-  final TextEditingController _especieAquiJovController = TextEditingController();
-  final TextEditingController _milheirosAquiJovController = TextEditingController();
-  final TextEditingController _ufOrigemRacaoController = TextEditingController();
-  final TextEditingController _unidadesRacaoController = TextEditingController();
-  final TextEditingController _quantidadeRacaoController = TextEditingController();
-  final TextEditingController _ufOrigemComercEspecieController = TextEditingController();
-  final TextEditingController _especieComercialController = TextEditingController();
-  final TextEditingController _prodComercialController = TextEditingController();
-  final TextEditingController _quantidadeComercialController = TextEditingController();
-  final TextEditingController _precoMedioController = TextEditingController();
+  List<CamposAquisicaoJov> aquisicoesJovemController = [];
+  List<CamposAquisicaoRacao> aquisicoesRacaoController = [];
+  List<CamposComercializacao> comercializacoesEspecieController = [];
+  List<CamposProducaoOrnamentais> producoesOrnamentaisController = [];
 
   @override
   void initState(){
     super.initState();
-    aquisicoesJovem.add(CamposAquisicaoJov());
-    aquisicoesRacao.add(CamposAquisicaoRacao());
-    comercializacoesEspecie.add(CamposComercializacao());
-    producoesOrnamentais.add(CamposProducaoOrnamentais());
+    aquisicoesJovemController.add(CamposAquisicaoJov());
+    aquisicoesRacaoController.add(CamposAquisicaoRacao());
+    comercializacoesEspecieController.add(CamposComercializacao());
+    producoesOrnamentaisController.add(CamposProducaoOrnamentais());
   }
 
   void adicionarAquisicaoJovem() {
     setState(() {
-      aquisicoesJovem.add(CamposAquisicaoJov());
+      aquisicoesJovemController.add(CamposAquisicaoJov());
     });
   }
 
   void removerAquisicaoJovem(int index) {
     setState(() {
-      aquisicoesJovem.removeAt(index);
+      aquisicoesJovemController.removeAt(index);
     });
   }
 
   void adicionarAquisicaoRacao() {
     setState(() {
-      aquisicoesRacao.add(CamposAquisicaoRacao());
+      aquisicoesRacaoController.add(CamposAquisicaoRacao());
     });
   }
 
   void removerAquisicaoRacao(int index) {
     setState(() {
-      aquisicoesRacao.removeAt(index);
+      aquisicoesRacaoController.removeAt(index);
     });
   }
 
   void adicionarComercializacao() {
     setState(() {
-      comercializacoesEspecie.add(CamposComercializacao());
+      comercializacoesEspecieController.add(CamposComercializacao());
     });
   }
 
   void removerComercializacao(int index) {
     setState(() {
-      comercializacoesEspecie.removeAt(index);
+      comercializacoesEspecieController.removeAt(index);
     });
   }
 
   void adicionarProducaoOrnamentais() {
     setState(() {
-      producoesOrnamentais.add(CamposProducaoOrnamentais());
+      producoesOrnamentaisController.add(CamposProducaoOrnamentais());
     });
   }
 
   void removerProducaoOrnamentaisint(index) {
     setState(() {
-      producoesOrnamentais.removeAt(index);
+      producoesOrnamentaisController.removeAt(index);
     });
   }
 
@@ -101,13 +94,13 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
-        enderecoEmpre: widget.formulario.enderecoEmpre,
-        municipioEmpre: widget.formulario.municipioEmpre,
-        ufEmpre: widget.formulario.ufEmpre,
+        enderecoEmpreendimento: widget.formulario.enderecoEmpreendimento,
+        municipioEmpreendimento: widget.formulario.municipioEmpreendimento,
+        ufEmpreendimento: widget.formulario.ufEmpreendimento,
         latitude: widget.formulario.latitude,
         longitude: widget.formulario.longitude,
         dap: widget.formulario.dap,
-        cadAmbiental: widget.formulario.cadAmbiental,
+        licencaAmbiental: widget.formulario.licencaAmbiental,
         outorga: widget.formulario.outorga,
         ctf: widget.formulario.ctf,
         car: widget.formulario.car,
@@ -115,34 +108,21 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
         atendimentosAno: widget.formulario.atendimentosAno,
         tipoViveiro: widget.formulario.tipoViveiro,
         areaViveiro: widget.formulario.areaViveiro,
-        areaTaqueRede: widget.formulario.areaTaqueRede,
+        areaTanqueRede: widget.formulario.areaTanqueRede,
         tipoSistemaFechado: widget.formulario.tipoSistemaFechado,
         areaSistemaFechado: widget.formulario.areaSistemaFechado,
         areaRaceway: widget.formulario.areaRaceway,
-        especieProducao: widget.formulario.especieProducao,
-        pesoProducao: widget.formulario.pesoProducao,
-        unidadesProducao: widget.formulario.unidadesProducao,
-        areaJovemProducao: widget.formulario.areaJovemProducao,
-        especieAreaJov: widget.formulario.especieAreaJov,
-        milheirosAreaJov: widget.formulario.milheirosAreaJov,
-        especieOrnamental: widget.formulario.especieOrnamental,
-        pesoOrnamental: widget.formulario.pesoOrnamental,
-        unidadesOrnamental: widget.formulario.unidadesOrnamental,
-        ufAquisicaoJov: _ufAquiJovController.text,
-        especieAquiJov: _especieAquiJovController.text,
-        milheirosAquiJov: _milheirosAquiJovController.text,
-        origemRacao: _ufOrigemRacaoController.text,
-        unidadesRacao: int.tryParse(_unidadesRacaoController.text),
-        quantidadeRacao: double.tryParse(_quantidadeRacaoController.text),
-        ufOrigemComercialEspecie: _ufOrigemComercEspecieController.text,
-        especieComercial: _especieComercialController.text,
-        prodComercial: double.tryParse(_prodComercialController.text),
-        quantidadeComercial: int.tryParse(_quantidadeComercialController.text),
-        precoMedio: double.tryParse(_precoMedioController.text),
+        producoes: widget.formulario.producoes,
+        formasJovem: widget.formulario.formasJovem,
+        producoesOrnamental: widget.formulario.producoesOrnamental,
+        aquisicoesFormaJovem: AquisicaoJovem().obterAquisicoesJovem(aquisicoesJovemController),
+        aquisicoesRacao: AquisicaoRacao().obterRacoes(aquisicoesRacaoController),
+        comercializacaoEspecie: Comercializacao().obterComercializacoes(comercializacoesEspecieController),
+        producoesOrnamentais: ProducaoOrnamentais().obterProducoes(producoesOrnamentaisController)
       );
       try{
         final CadastroService cadastroService = CadastroService();
-        cadastroService.cadastrarPessoaComFormulario(widget.pessoa, formulario);
+        //cadastroService.cadastrarPessoaComFormulario(widget.pessoa, formulario);
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Cadastro realizado com sucesso!')),);
       } catch(e){
@@ -196,9 +176,9 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: aquisicoesJovem.length,
+                    itemCount: aquisicoesJovemController.length,
                     itemBuilder: (context, index) {
-                      final aquisicaoFormaJovem = aquisicoesJovem[index];
+                      final aquisicaoFormaJovem = aquisicoesJovemController[index];
                       return Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),
@@ -228,22 +208,15 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   const SizedBox(height: 12),
                   BotaoAdicionarItem(label: 'Adicionar Aquisição', onPressed: adicionarAquisicaoJovem),
                   const SizedBox(height: 16),
-                  // const Text('ENGORDA', style: TextStyle(fontWeight: FontWeight.bold),),
-                  // const SizedBox(height: 16),
-                  // const Text('Aquisição de formas jovens', style: TextStyle(fontWeight: FontWeight.bold),),
-                  // const SizedBox(height: 16),
-                  // CampoForm(label: "Estado de Origem do Fornecedor", value: "", controller: _ufAquiJovController, required: true, enabled: true),
-                  // CampoForm(label: "Espécie Digitada", value: "", controller: _especieAquiJovController, required: true, enabled: true),
-                  // CampoForm(label: "Milheiros", value: "", controller: _milheirosAquiJovController, required: true, enabled: true),
 
                   Row(children: const [Text('Aquisição de Ração', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: aquisicoesRacao.length,
+                    itemCount: aquisicoesRacaoController.length,
                     itemBuilder: (context, index) {
-                      final aquisicaoRacao = aquisicoesRacao[index];
+                      final aquisicaoRacao = aquisicoesRacaoController[index];
                       return Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),
@@ -274,20 +247,14 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   BotaoAdicionarItem(label: 'Adicionar Aquisição', onPressed: adicionarAquisicaoJovem),
                   const SizedBox(height: 16),
 
-                  // const Text('Aquisição de ração', style: TextStyle(fontWeight: FontWeight.bold),),
-                  // const SizedBox(height: 16),
-                  // CampoForm(label: "Estado de Origem do Fornecedor", value: "", controller: _ufOrigemRacaoController, required: true, enabled: true),
-                  // CampoForm(label: "Unidades Digitadas", value: "", controller: _unidadesRacaoController, required: true, enabled: true),
-                  // CampoForm(label: "Quantidade Digitada", value: "", controller: _quantidadeRacaoController, required: true, enabled: true),
-
                   Row(children: const [Text('Comercialização por espécie', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: comercializacoesEspecie.length,
+                    itemCount: comercializacoesEspecieController.length,
                     itemBuilder: (context, index) {
-                      final comercializacaoEspecie = comercializacoesEspecie[index];
+                      final comercializacaoEspecie = comercializacoesEspecieController[index];
                       return Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),
@@ -320,22 +287,14 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                   BotaoAdicionarItem(label: 'Adicionar Aquisição', onPressed: adicionarComercializacao),
                   const SizedBox(height: 16),
 
-                  // const Text('Comercialização por espécie', style: TextStyle(fontWeight: FontWeight.bold),),
-                  // const SizedBox(height: 16),
-                  // CampoForm(label: "Estado de Origem do Fornecedor", value: "", controller: _ufOrigemComercEspecieController, required: true, enabled: true),
-                  // CampoForm(label: "Espécie Digitada", value: "", controller: _especieComercialController, required: true, enabled: true),
-                  // CampoForm(label: "Produção Comercializada (kg)", value: "", controller: _prodComercialController, required: true, enabled: true),
-                  // CampoForm(label: "Quantidade Digitada", value: "", controller: _quantidadeComercialController, required: true, enabled: true),
-                  // CampoForm(label: "Preço Médio", value: "", controller: _precoMedioController, required: true, enabled: true),
-
                   Row(children: const [Text('Produção de Ornamentais', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
                   const SizedBox(height: 16),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: producoesOrnamentais.length,
+                    itemCount: producoesOrnamentaisController.length,
                     itemBuilder: (context, index) {
-                      final producaoOrnamentais = producoesOrnamentais[index];
+                      final producaoOrnamentais = producoesOrnamentaisController[index];
                       return Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)),

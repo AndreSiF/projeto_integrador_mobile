@@ -1,5 +1,5 @@
-import 'package:projeto_integrador_mobile/dao/formulario_dao.dart';
-import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
+import 'package:projeto_integrador_mobile/dao/old/formulario_dao.dart';
+import 'package:projeto_integrador_mobile/dao/old/pessoa_dao.dart';
 import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 
@@ -8,7 +8,7 @@ class CadastroService{
   final FormDao _formDao = FormDao();
 
   // Função que cadastra o formulário com a chave estrangeira gerada pela pessoa cadastrada
-  Future<void> cadastrarPessoaComFormulario(Pessoa pessoa, Formulario formulario) async {
+  Future<void> cadastrarPessoaComFormulario(PessoaOld pessoa, FormularioOld formulario) async {
     int idPessoa = await _pessoaDao.insertPessoa(pessoa);
 
     final formularioComPessoa = formulario.copyWith(idPessoa: idPessoa);

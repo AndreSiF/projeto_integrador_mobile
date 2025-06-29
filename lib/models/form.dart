@@ -1,4 +1,4 @@
-class Formulario {
+class FormularioOld {
   final int? idForm;
   final int? idPessoa;
 
@@ -46,7 +46,7 @@ class Formulario {
   final int? quantidadeComercial;
   final double? precoMedio;
 
-  Formulario({
+  FormularioOld({
     this.idForm,
     this.idPessoa,
     this.enderecoEmpre,
@@ -89,8 +89,8 @@ class Formulario {
     this.precoMedio,
   });
 
-  factory Formulario.fromMap(Map<String, dynamic> map) {
-    return Formulario(
+  factory FormularioOld.fromMap(Map<String, dynamic> map) {
+    return FormularioOld(
       idForm: _parseInt(map['id_form']),
       idPessoa: _parseInt(map['id_pessoa']),
       enderecoEmpre: map['endereco_empre'] is String ? map['endereco_empre'] : null,
@@ -179,7 +179,7 @@ class Formulario {
     };
   }
 
-  Formulario copyWith({
+  FormularioOld copyWith({
     int? idForm,
     int? idPessoa,
     String? enderecoEmpre,
@@ -221,7 +221,7 @@ class Formulario {
     int? quantidadeComercial,
     double? precoMedio,
   }) {
-    return Formulario(
+    return FormularioOld(
       idForm: idForm ?? this.idForm,
       idPessoa: idPessoa ?? this.idPessoa,
       enderecoEmpre: enderecoEmpre ?? this.enderecoEmpre,

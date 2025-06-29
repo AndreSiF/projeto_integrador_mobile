@@ -1,7 +1,9 @@
+import 'package:projeto_integrador_mobile/models/campos/campos_producao_ornamentais.dart';
+
 class ProducaoOrnamentais {
   final int? id;
-  final String? uuid;
-  final String? uuidFormulario;
+  String? uuid;
+  String? uuidFormulario;
   final String? ufOrigem;
   final int? unidades;
   final double? quantidade;
@@ -36,6 +38,26 @@ class ProducaoOrnamentais {
       quantidade: _parseDouble(map['quantidade_producao_ornamentais']),
     );
   }
+
+  List<ProducaoOrnamentais> obterProducoes(List<CamposProducaoOrnamentais> producoes) {
+    List<ProducaoOrnamentais> listaProducoesOrnamentais = [];
+
+    for (var campo in producoes) {
+      // Obtendo os valores dos controladores
+      String? ufOrigem = campo.ufOrigemController.text;
+      int? unidade = int.tryParse(campo.unidadeController.text);
+      double? quantidade = double.tryParse(campo.quantidadeController.text);
+
+      // Criando um objeto Producao e adicionando à lista
+      listaProducoesOrnamentais.add(ProducaoOrnamentais(
+        ufOrigem: ufOrigem,
+        unidades: unidade,
+        quantidade: quantidade,
+      ));
+    }
+
+    return listaProducoesOrnamentais;
+  }
 }
 
 int? _parseInt(dynamic value) {
@@ -57,14 +79,4 @@ double? _parseDouble(dynamic value) {
   return null;
 }
 
-// await db.execute('''
-//           CREATE TABLE producao_ornamentais (
-//             id_producao_ornamentais INTEGER PRIMARY KEY AUTOINCREMENT,
-//             uuid_producao_ornamentais TEXT,
-//             uuid_formulario_producao_ornamentais TEXT,
-//             uf_origem_producao_ornamentais TEXT,
-//             unidades_producao_ornamentais INTEGER,
-//             quantidade_producao_ornamentais REAL,
-//             FOREIGN KEY (uuid_formulario_producao_ornamentais) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
-//           )
-//         ''');
+

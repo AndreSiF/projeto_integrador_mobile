@@ -1,11 +1,11 @@
-import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
+import 'package:projeto_integrador_mobile/dao/old/pessoa_dao.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 
 class PessoaService {
   final PessoaDao _pessoaDao = PessoaDao();
 
   // Função que retorna todas as pessoas
-  Future<List<Pessoa>> getPessoas() async {
+  Future<List<PessoaOld>> getPessoas() async {
     return await _pessoaDao.getPessoas();
   }
 
@@ -15,7 +15,7 @@ class PessoaService {
   }
 
   // Função que atualiza uma entrada da tabela pessoa
-  Future<void> updatePessoa(Pessoa pessoa) async{
+  Future<void> updatePessoa(PessoaOld pessoa) async{
     try{
       await _pessoaDao.atualizarPessoa(pessoa);
     }

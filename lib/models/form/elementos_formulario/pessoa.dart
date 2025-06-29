@@ -1,7 +1,7 @@
-class PessoaN {
+class Pessoa {
   final int? id;
-  final String? uuid;
-  final String? uuidFormulario;
+  String? uuid;
+  String? uuidFormulario;
   final String? nome;
   final String? cpf;
   final String? telefone;
@@ -20,7 +20,7 @@ class PessoaN {
   final String? telefoneResponsavelLegal;
   final String? emailResponsavelLegal;
 
-  PessoaN({
+  Pessoa({
     this.id,
     this.uuid,
     this.uuidFormulario,
@@ -68,8 +68,8 @@ class PessoaN {
     };
   }
 
-  factory PessoaN.fromMap(Map<String, dynamic> map) {
-    return PessoaN(
+  factory Pessoa.fromMap(Map<String, dynamic> map) {
+    return Pessoa(
       id: _parseInt(map['id_pessoa']),
       uuid: map['uuid_pessoa'] is String ? map['uuid_pessoa'] : null,
       uuidFormulario: map['uuid_formulario_pessoa'] is String ? map['uuid_formulario_pessoa'] : null,
@@ -101,26 +101,4 @@ int? _parseInt(dynamic value) {
   return null;
 }
 
-// await db.execute('''
-//           CREATE TABLE pessoa (
-//             id_pessoa INTEGER PRIMARY KEY AUTOINCREMENT,
-//             uuid_pessoa TEXT,
-//             uuid_formulario_pessoa TEXT,
-//             nome_pessoa TEXT,
-//             cpf_pessoa TEXT,
-//             telefone_pessoa TEXT,
-//             email_pessoa TEXT,
-//             rgp_pessoa TEXT,
-//             endereco TEXT,
-//             uf TEXT,
-//             municipio TEXT,
-//             razao_social TEXT,
-//             cnpj TEXT,
-//             cnae TEXT,
-//             responsavel_legal TEXT,
-//             rgp_responsavel_legal TEXT,
-//             telefone_responsavel_legal TEXT,
-//             email_responsavel_legal TEXT,
-//             FOREIGN KEY (uuid_formulario_pessoa) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
-//           )
-//         ''');
+

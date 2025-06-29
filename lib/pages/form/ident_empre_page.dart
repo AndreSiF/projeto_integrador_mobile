@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador_mobile/models/form.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/formulario.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/switch_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/components/masks.dart';
@@ -50,18 +50,29 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
         //TODO: ADD THE CONTROLLERS HERE
-        enderecoEmpre: _enderecoEmpreController.text,
-        municipioEmpre: _municipioEmpreController.text,
-        ufEmpre: _ufEmpreController.text,
-        //latitude: double.tryParse(_latitudeController.text),
-        //longitude: double.tryParse(_longitudeController.text),
-        //dap: int.tryParse(_dapController.text),
-        //cadAmbiental: int.tryParse(_cadAmbientalController.text),
-        //outorga: int.tryParse(_numOutorgaController.text),
+        nomeResponsavelTecnico: _nomeRespTecnicoController.text,
+        registroResponsavelTecnico: _numRespTecnicoController.text,
+        telefoneResponsavelTecnico: _telefoneRespTecnicoController.text,
+        emailResponsavelTecnico: _emailRespTecnicoController.text,
+        enderecoEmpreendimento: _enderecoEmpreController.text,
+        municipioEmpreendimento: _municipioEmpreController.text,
+        ufEmpreendimento: _ufEmpreController.text,
+        latitude: _latitudeController.text,
+        longitude: _longitudeController.text,
+        dap: int.tryParse(_dapController.text),
+        licencaAmbiental: int.tryParse(_cadAmbientalController.text),
+        outorga: _numOutorgaController.text,
         ctf: int.tryParse(_ctfController.text),
-        //car: int.tryParse(_carController.text),
+        car: _carController.text,
         oesa: int.tryParse(_oesaController.text),
         atendimentosAno: int.tryParse(_atendAnoController.text),
+        hasResponsavelTecnico: _hasRespTecnico,
+        hasDap: _hasDAP,
+        hasLicencaAmbiental: _hasLicencaAmb,
+        hasOutorga: _hasOutorga,
+        hasCtf: _hasCTF,
+        hasOesa: _hasOESA,
+        hasAssistenciaTecnica: _hasAssistenciaTecnica,
       );
 
       Navigator.push(context, MaterialPageRoute(builder: (_) => CultivoProducaoPage(pessoa: widget.pessoa, formulario: formulario)),);
