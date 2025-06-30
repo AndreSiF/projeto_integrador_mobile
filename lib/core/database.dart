@@ -27,8 +27,7 @@ class AppDatabase {
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE formulario (
-            id_formulario INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid_formulario TEXT,
+            uuid_formulario TEXT PRIMARY KEY,
             has_responsavel_tecnico INTEGER,
             nome_responsavel_tecnico TEXT,
             registro_responsavel_tecnico TEXT,
@@ -68,8 +67,7 @@ class AppDatabase {
         ''');
         await db.execute('''
           CREATE TABLE pessoa (
-            id_pessoa INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid_pessoa TEXT,
+            uuid_pessoa TEXT PRIMARY KEY,
             uuid_formulario_pessoa TEXT,
             nome_pessoa TEXT,
             cpf_pessoa TEXT,
@@ -91,8 +89,7 @@ class AppDatabase {
         ''');
         await db.execute('''
           CREATE TABLE producao_ornamental (
-            id_producao_ornamental INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid_producao_ornamental TEXT,
+            uuid_producao_ornamental TEXT PRIMARY KEY,
             uuid_formulario_producao_ornamental TEXT,
             especie_producao_ornamental TEXT,
             producao_kg_producao_ornamental REAL,
@@ -102,8 +99,7 @@ class AppDatabase {
         ''');
         await db.execute('''
           CREATE TABLE producao_ornamentais (
-            id_producao_ornamentais INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid_producao_ornamentais TEXT,
+            uuid_producao_ornamentais TEXT PRIMARY KEY,
             uuid_formulario_producao_ornamentais TEXT,
             uf_origem_producao_ornamentais TEXT,
             unidades_producao_ornamentais INTEGER,
@@ -113,8 +109,7 @@ class AppDatabase {
         ''');
         await db.execute('''
           CREATE TABLE producao (
-            id_producao INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid_producao TEXT,
+            uuid_producao TEXT PRIMARY KEY,
             uuid_formulario_producao TEXT,
             especie_producao TEXT,
             producao_kg_producao REAL,
@@ -124,8 +119,7 @@ class AppDatabase {
         ''');
         await db.execute('''
           CREATE TABLE forma_jovem (
-            id_forma_jovem INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid_forma_jovem TEXT,
+            uuid_forma_jovem TEXT PRIMARY KEY,
             uuid_formulario_forma_jovem TEXT,
             especie_forma_jovem TEXT,
             milheiros_forma_jovem REAL,
@@ -134,8 +128,7 @@ class AppDatabase {
         ''');
         await db.execute('''
           CREATE TABLE comercializacao (
-            id_comercializacao INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid_comercializacao TEXT,
+            uuid_comercializacao TEXT PRIMARY KEY,
             uuid_formulario_comercializacao TEXT,
             uf_origem_comercializacao TEXT,
             especie_comercializacao TEXT,
@@ -147,8 +140,7 @@ class AppDatabase {
         ''');
         await db.execute('''
           CREATE TABLE aquisicao_racao (
-            id_aquisicao_racao INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid_aquisicao_racao TEXT,
+            uuid_aquisicao_racao TEXT PRIMARY KEY,
             uuid_formulario_aquisicao_racao TEXT,
             uf_origem_aquisicao_racao TEXT,
             unidade_aquisicao_racao TEXT,
@@ -158,8 +150,7 @@ class AppDatabase {
         ''');
         await db.execute('''
           CREATE TABLE aquisicao_jovem (
-            id_aquisicao_jovem INTEGER PRIMARY KEY AUTOINCREMENT,
-            uuid_aquisicao_jovem TEXT,
+            uuid_aquisicao_jovem TEXT PRIMARY KEY,
             uuid_formulario_aquisicao_jovem TEXT,
             uf_origem_aquisicao_jovem TEXT,
             especie_aquisicao_jovem TEXT,

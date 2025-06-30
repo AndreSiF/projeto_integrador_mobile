@@ -84,7 +84,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
     });
   }
 
-  void removerProducaoOrnamentaisint(index) {
+  void removerProducaoOrnamentais(index) {
     setState(() {
       producoesOrnamentaisController.removeAt(index);
     });
@@ -239,7 +239,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                                 alignment: Alignment.centerRight,
                                 child: IconButton(
                                   icon: const Icon(Icons.delete, color: Colors.red),
-                                  onPressed: () => removerAquisicaoJovem(index),
+                                  onPressed: () => removerAquisicaoRacao(index),
                                 ),
                               )
                             ],
@@ -249,7 +249,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  BotaoAdicionarItem(label: 'Adicionar Aquisição', onPressed: adicionarAquisicaoJovem),
+                  BotaoAdicionarItem(label: 'Adicionar Aquisição', onPressed: adicionarAquisicaoRacao),
                   const SizedBox(height: 16),
 
                   Row(children: const [Text('Comercialização por espécie', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),],),
@@ -317,7 +317,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                                 alignment: Alignment.centerRight,
                                 child: IconButton(
                                   icon: const Icon(Icons.delete, color: Colors.red),
-                                  onPressed: () => removerComercializacao(index),
+                                  onPressed: () => removerProducaoOrnamentais(index),
                                 ),
                               )
                             ],
@@ -327,7 +327,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  BotaoAdicionarItem(label: 'Adicionar Produção', onPressed: adicionarComercializacao),
+                  BotaoAdicionarItem(label: 'Adicionar Produção', onPressed: adicionarProducaoOrnamentais),
                   const SizedBox(height: 16),
 
                   // Botão "Voltar"

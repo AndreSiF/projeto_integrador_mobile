@@ -1,7 +1,6 @@
 import 'package:projeto_integrador_mobile/models/campos/campos_aquisicao_racao.dart';
 
 class AquisicaoRacao {
-  final int? id;
   String? uuid;
   String? uuidFormulario;
   final String? ufOrigem;
@@ -9,7 +8,6 @@ class AquisicaoRacao {
   final double? quantidade;
 
   AquisicaoRacao({
-    this.id,
     this.uuid,
     this.uuidFormulario,
     this.ufOrigem,
@@ -19,7 +17,6 @@ class AquisicaoRacao {
 
   Map<String, dynamic> toMap() {
     return{
-      'id_aquisicao_racao': id,
       'uuid_aquisicao_racao': uuid,
       'uuid_formulario_aquisicao_racao': uuidFormulario,
       'uf_origem_aquisicao_racao': ufOrigem,
@@ -30,7 +27,6 @@ class AquisicaoRacao {
 
   factory AquisicaoRacao.fromMap(Map<String, dynamic> map) {
     return AquisicaoRacao(
-      id: _parseInt(map['id_aquisicao_racao']),
       uuid: map['uuid_aquisicao_racao'] is String ? map['uuid_aquisicao_racao'] : null,
       uuidFormulario: map['uuid_formulario_aquisicao_racao'] is String ? map['uuid_formulario_aquisicao_racao'] : null,
       ufOrigem: map['uf_origem_aquisicao_racao'] is String ? map['uf_origem_aquisicao_racao'] : null,
@@ -58,15 +54,6 @@ class AquisicaoRacao {
 
     return listaAquisicaoRacao;
   }
-}
-
-int? _parseInt(dynamic value) {
-  if (value is int) {
-    return value;
-  } else if (value is String) {
-    return value.isNotEmpty ? int.tryParse(value) : null;
-  }
-  return null;
 }
 
 double? _parseDouble(dynamic value) {

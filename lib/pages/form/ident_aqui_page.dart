@@ -27,13 +27,13 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
       print(form.municipioEmpreendimento);
       FormularioDao().test();
 
-      // print('TESTE DE PESSOA');
-      // List<Pessoa> pessoas = await PessoaDao().getPessoas();
-      // print(pessoas.first.nome);
-      // for(var pessoa in pessoas){
-      //   print(pessoa.uuidFormulario);
-      //   print(pessoa.nome);
-      // }
+      print('TESTE DE PESSOA');
+      List<Pessoa> pessoas = await PessoaDao().getPessoas();
+      print(pessoas.first.nome);
+      for(var pessoa in pessoas){
+        print(pessoa.uuidFormulario);
+        print(pessoa.nome);
+      }
     }
   }
 

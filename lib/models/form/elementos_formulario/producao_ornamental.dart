@@ -1,18 +1,16 @@
 import 'package:projeto_integrador_mobile/models/campos/campos_producao_ornamental.dart';
 
 class ProducaoOrnamental {
-  final int? id;
   String? uuid;
   String? uuidFormulario;
   final String? especie;
   final double? producaoKg;
   final int? unidades;
 
-  ProducaoOrnamental({this.id, this.uuid, this.uuidFormulario, this.especie, this.producaoKg, this.unidades});
+  ProducaoOrnamental({this.uuid, this.uuidFormulario, this.especie, this.producaoKg, this.unidades});
 
   Map<String, dynamic> toMap() {
     return{
-      'id_producao_ornamental': id,
       'uuid_producao_ornamental': uuid,
       'uuid_formulario_producao_ornamental': uuidFormulario,
       'especie_producao_ornamental': especie,
@@ -23,7 +21,6 @@ class ProducaoOrnamental {
 
   factory ProducaoOrnamental.fromMap(Map<String, dynamic> map) {
     return ProducaoOrnamental(
-      id: _parseInt(map['id_producao_ornamental']),
       uuid: map['uuid_producao_ornamental'] is String ? map['uuid_producao_ornamental'] : null,
       uuidFormulario: map['uuid_formulario_producao_ornamental'] is String ? map['uuid_formulario_producao_ornamental'] : null,
       especie: map['especie_producao_ornamental'] is String ? map['especie_producao_ornamental'] : null,

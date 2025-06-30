@@ -1,5 +1,4 @@
 class Pessoa {
-  final int? id;
   String? uuid;
   String? uuidFormulario;
   final String? nome;
@@ -21,7 +20,6 @@ class Pessoa {
   final String? emailResponsavelLegal;
 
   Pessoa({
-    this.id,
     this.uuid,
     this.uuidFormulario,
     this.nome,
@@ -45,7 +43,6 @@ class Pessoa {
 
   Map<String, dynamic> toMap() {
     return{
-      'id_pessoa': id,
       'uuid_pessoa': uuid,
       'uuid_formulario_pessoa': uuidFormulario,
       'nome_pessoa': nome,
@@ -54,7 +51,7 @@ class Pessoa {
       'email_pessoa': email,
 
       'rgp_pessoa': rgp,
-      'endereco:': endereco,
+      'endereco': endereco,
       'uf': uf,
       'municipio': municipio,
 
@@ -70,7 +67,6 @@ class Pessoa {
 
   factory Pessoa.fromMap(Map<String, dynamic> map) {
     return Pessoa(
-      id: _parseInt(map['id_pessoa']),
       uuid: map['uuid_pessoa'] is String ? map['uuid_pessoa'] : null,
       uuidFormulario: map['uuid_formulario_pessoa'] is String ? map['uuid_formulario_pessoa'] : null,
       nome: map['nome_pessoa'] is String ? map['nome_pessoa'] : null,
@@ -90,15 +86,6 @@ class Pessoa {
       emailResponsavelLegal:  map['email_responsavel_legal'] is String ? map['email_responsavel_legal'] : null,
     );
   }
-}
-
-int? _parseInt(dynamic value) {
-  if (value is int) {
-    return value;
-  } else if (value is String) {
-    return value.isNotEmpty ? int.tryParse(value) : null;
-  }
-  return null;
 }
 
 

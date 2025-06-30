@@ -36,14 +36,6 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
   final TextEditingController _areaSisFechadoController = TextEditingController();
   final TextEditingController _areaRacewayController = TextEditingController();
   final TextEditingController _areaJovProdController = TextEditingController();
-  //final TextEditingController _especieProdController = TextEditingController();
-  // final TextEditingController _pesoProdController = TextEditingController();
-  // final TextEditingController _unidadeProdController = TextEditingController();
-  // final TextEditingController _especieAreaJovController = TextEditingController();
-  // final TextEditingController _milheirosAreaJovController = TextEditingController();
-  // final TextEditingController _especieOrnController = TextEditingController();
-  // final TextEditingController _pesoOrnController = TextEditingController();
-  // final TextEditingController _unidadesOrnController = TextEditingController();
   bool _hasViveiro = false;
   bool _hasTanqueRede = false;
   bool _hasSistemaFechado = false;
@@ -97,7 +89,6 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
-        // TODO: AJUSTAR OS CONTROLLERS
         pessoa: widget.pessoa,
         nomeResponsavelTecnico: widget.formulario.nomeResponsavelTecnico,
         registroResponsavelTecnico: widget.formulario.registroResponsavelTecnico,
@@ -124,15 +115,6 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
         producoes: Producao().obterProducoes(producoes),
         formasJovem: FormaJovem().obterFormas(formasJovens),
         producoesOrnamental: ProducaoOrnamental().obterProducoes(producoesOrnamental),
-        // especieProducao: _especieProdController.text,
-        // pesoProducao: double.tryParse(_pesoProdController.text),
-        // unidadesProducao: int.tryParse(_unidadeProdController.text),
-        // areaJovemProducao: double.tryParse(_areaJovProdController.text),
-        // especieAreaJov: _especieAreaJovController.text,
-        // milheirosAreaJov: _milheirosAreaJovController.text,
-        // especieOrnamental: _especieOrnController.text,
-        // pesoOrnamental: double.tryParse(_pesoOrnController.text),
-        // unidadesOrnamental: int.tryParse(_unidadesOrnController.text),
       );
 
       Navigator.push(context, MaterialPageRoute(builder: (_) => InformacoesComerciaisPage(pessoa: widget.pessoa, formulario: formulario)),);

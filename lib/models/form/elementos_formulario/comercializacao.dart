@@ -1,7 +1,6 @@
 import 'package:projeto_integrador_mobile/models/campos/campos_comercializacao.dart';
 
 class Comercializacao {
-  final int? id;
   String? uuid;
   String? uuidFormulario;
   final String? ufOrigem;
@@ -11,7 +10,6 @@ class Comercializacao {
   final double? precoMedio;
 
   Comercializacao({
-    this.id,
     this.uuid,
     this.uuidFormulario,
     this.ufOrigem,
@@ -23,7 +21,6 @@ class Comercializacao {
 
   Map<String, dynamic> toMap() {
     return{
-      'id_comercializacao': id,
       'uuid_comercializacao': uuid,
       'uuid_formulario_comercializacao': uuidFormulario,
       'uf_origem_comercializacao': ufOrigem,
@@ -36,7 +33,6 @@ class Comercializacao {
 
   factory Comercializacao.fromMap(Map<String, dynamic> map) {
     return Comercializacao(
-      id: _parseInt(map['id_comercializacao']),
       uuid: map['uuid_comercializacao'] is String ? map['uuid_comercializacao'] : null,
       uuidFormulario: map['uuid_formulario_comercializacao'] is String ? map['uuid_formulario_comercializacao'] : null,
       ufOrigem: map['uf_origem_comercializacao'] is String ? map['uf_origem_comercializacao'] : null,

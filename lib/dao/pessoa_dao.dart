@@ -10,6 +10,8 @@ class PessoaDao {
     final db = await AppDatabase().database;
     pessoa?.uuid = Uuid().v4();
     pessoa?.uuidFormulario = uuidFormulario;
+    String? uuidFOrmulariodaPessoa = pessoa?.uuidFormulario;
+    print('uuid_formulario do objeto pessoa: $uuidFOrmulariodaPessoa');
     return db.insert(table, pessoa!.toMap());
   }
 

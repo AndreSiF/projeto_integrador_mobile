@@ -7,9 +7,7 @@ import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_ornamentais_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_ornamental_dao.dart';
-import 'package:projeto_integrador_mobile/models/form/elementos_formulario/producao.dart';
 import 'package:projeto_integrador_mobile/models/form/formulario.dart';
-import 'package:uuid/uuid.dart';
 
 class FormularioDao {
   static const String table = 'formulario';
@@ -17,60 +15,9 @@ class FormularioDao {
   // insere uma entrada formulário no banco de dados
   Future<void> insertFormulario(Formulario formulario) async {
     final db = await AppDatabase().database;
-    //await db.transaction((txn) async {
-      String uuidFormulario = Uuid().v4();
-      formulario.uuid = uuidFormulario;
       await db.insert(table, formulario.toMap());
-      // print(formulario.pessoa?.nome);
-      // print(formulario.enderecoEmpreendimento);
-      // print(formulario.producoes?.isEmpty);
-      // Producao? producao = formulario.producoes?.first;
-      // print(producao?.uuidFormulario);
-      // print(producao?.especie);
-      PessoaDao().insertPessoa(formulario.pessoa, uuidFormulario);
-      if(formulario.producoes != null){
-        for(var producao in formulario.producoes!) {
-          ProducaoDao().insertProducao(producao, uuidFormulario);
-        }
-      }
-
-      if(formulario.producoesOrnamental != null){
-        for(var producaoOrnametal in formulario.producoesOrnamental!) {
-          ProducaoOrnamentalDao().insertProducaoOrnamental(producaoOrnametal, uuidFormulario);
-        }
-      }
-
-      if(formulario.producoesOrnamentais != null){
-        for(var producaoOrnamentais in formulario.producoesOrnamentais!) {
-          ProducaoOrnamentaisDao().insertProducaoOrnamentais(producaoOrnamentais, uuidFormulario);
-        }
-      }
-
-      if(formulario.aquisicoesFormaJovem != null){
-        for(var aquisicaoJovem in formulario.aquisicoesFormaJovem!) {
-          AquisicaoJovemDao().insertAquisicaoJovem(aquisicaoJovem, uuidFormulario);
-        }
-      }
-
-      if(formulario.formasJovem != null){
-        for(var formaJovem in formulario.formasJovem!){
-          FormaJovemDao().insertFormaJovem(formaJovem, uuidFormulario);
-        }
-      }
-
-      if(formulario.aquisicoesRacao != null){
-        for(var aquisicaoRacao in formulario.aquisicoesRacao!) {
-          AquisicaoRacaoDao().insertAquisicaoRacao(aquisicaoRacao, uuidFormulario);
-        }
-      }
-
-      if(formulario.comercializacaoEspecie != null){
-        for(var comercializacao in formulario.comercializacaoEspecie!) {
-          ComercializacaoDao().insertComercializacao(comercializacao, uuidFormulario);
-        }
-      }
-    //});
-    return;
+      String? uuidDoFormulario = formulario.uuid;
+      print('uuid do formulario: $uuidDoFormulario');
   }
 
   Future<void> deleteFormularioByUuid(String uuid) async {
@@ -83,7 +30,6 @@ class FormularioDao {
 
   Future<void> updateFormulario(Formulario formulario) async {
     final db = await AppDatabase().database;
-    await db.transaction((txn) async {
       await db.update(
         table,
         formulario.toMap(),
@@ -132,7 +78,6 @@ class FormularioDao {
           ComercializacaoDao().updateComercializacao(comercializacao);
         }
       }
-    });
   }
 
   Future<List<Formulario>> getFormularios() async {
