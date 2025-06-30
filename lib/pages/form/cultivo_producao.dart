@@ -14,6 +14,8 @@ import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/info_comerciais_page.dart';
 import 'package:projeto_integrador_mobile/pages/components/steps/steps_component.dart';
 
+import '../components/masks.dart';
+
 // Terceira página do formulário, serve para informações do cultivo e produção da fazenda
 class CultivoProducaoPage extends StatefulWidget {
   final Pessoa pessoa;
@@ -163,6 +165,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   SwitchForm(
                       label: 'Viveiro',
                       value: _hasViveiro,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasViveiro = val;
@@ -177,6 +180,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   SwitchForm(
                       label: 'Tanque Rede',
                       value: _hasTanqueRede,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasTanqueRede = val;
@@ -189,6 +193,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   SwitchForm(
                       label: 'Sistema Fechado',
                       value: _hasSistemaFechado,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasSistemaFechado = val;
@@ -202,6 +207,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                   SwitchForm(
                       label: 'Raceway',
                       value: _hasRaceway,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasRaceway = val;
@@ -230,7 +236,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                               children: [
                                 CampoForm(label: "[Espécie digitada]", value: "", controller: producao.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
                                 CampoForm(label: "[Produção (kg) digitada]", value: "", controller: producao.producaoKgController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
-                                CampoForm(label: "[Unidades (se anfíbio ou réptil)]", value: "", controller: producao.unidadesController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
+                                CampoForm(label: "[Unidades (se anfíbio ou réptil)]", value: "", controller: producao.unidadesController, required: true, isEnabled: true, mask: [numberFormatter], lenght: null, inputType: InputType.INTEGER),
                                 const SizedBox(height: 8),
                                 Align(
                                   alignment: Alignment.centerRight,
@@ -269,7 +275,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                           child: Column(
                             children: [
                               CampoForm(label: "[Espécie digitada]", value: "", controller: formaJovem.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
-                              CampoForm(label: "[Milheiros digitado]", value: "", controller: formaJovem.milheirosController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
+                              CampoForm(label: "[Milheiros digitado]", value: "", controller: formaJovem.milheirosController, required: true, isEnabled: true, mask: [numberFormatter], lenght: null, inputType: InputType.INTEGER),
                               const SizedBox(height: 8),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -307,7 +313,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
                             children: [
                               CampoForm(label: "[Espécie digitada]", value: "", controller: producaoOrnamental.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
                               CampoForm(label: "[Produção (kg) digitada]", value: "", controller: producaoOrnamental.producaoKgController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
-                              CampoForm(label: "[Unidades (se anfíbio ou réptil)]", value: "", controller: producaoOrnamental.unidadesController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
+                              CampoForm(label: "[Unidades (se anfíbio ou réptil)]", value: "", controller: producaoOrnamental.unidadesController, required: true, isEnabled: true, mask: [numberFormatter], lenght: null, inputType: InputType.INTEGER),
                               const SizedBox(height: 8),
                               Align(
                                 alignment: Alignment.centerRight,

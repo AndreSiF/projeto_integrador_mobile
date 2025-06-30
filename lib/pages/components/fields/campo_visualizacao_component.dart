@@ -7,13 +7,15 @@ class Campo extends StatelessWidget {
   final String? valor;
   final bool editando;
   final TextEditingController? controller;
+  final bool isEnabled;
 
   const Campo({
     super.key,
     required this.label,
     required this.valor,
-    this.editando = false,
-    this.controller,
+    required this.editando,
+    required this.controller,
+    required this.isEnabled,
   });
 
   @override
@@ -24,7 +26,7 @@ class Campo extends StatelessWidget {
         child: TextFormField(
           controller: controller,
           decoration: InputDecoration(
-            labelText: label,
+            labelText: isEnabled ? label : '...',
             border: const OutlineInputBorder(),
           ),
         ),
@@ -37,7 +39,7 @@ class Campo extends StatelessWidget {
           initialValue: texto,
           readOnly: true,
           decoration: InputDecoration(
-            labelText: label,
+            labelText: isEnabled ? label : '...',
             border: const OutlineInputBorder(),
           ),
         ),

@@ -123,6 +123,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui responsável técnico',
                       value: _hasRespTecnico,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasRespTecnico = val;
@@ -155,6 +156,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Documento de\nAptidão ao PRONAF-DAP',
                       value: _hasDAP,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasDAP = val;
@@ -167,6 +169,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Licença Ambiental',
                       value: _hasLicencaAmb,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasLicencaAmb = val;
@@ -179,6 +182,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: "Possui Outorga de uso d'água",
                       value: _hasOutorga,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasOutorga = val;
@@ -191,6 +195,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Cadastro Técnico\nFederal - CTF',
                       value: _hasCTF,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasCTF = val;
@@ -203,6 +208,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Cadastro Ambiental\nRural - CAR',
                       value: _hasCAR,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasCAR = val;
@@ -215,6 +221,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Cadastro na OESA',
                       value: _hasOESA,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasOESA = val;
@@ -227,6 +234,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Assistência Técnica',
                       value: _hasAssistenciaTecnica,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasAssistenciaTecnica = val;
@@ -234,7 +242,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: true, isEnabled: _hasAssistenciaTecnica, mask: null, lenght: 3, inputType: InputType.INTEGER),
+                  CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: true, isEnabled: _hasAssistenciaTecnica, mask: [numberFormatter], lenght: 3, inputType: InputType.INTEGER),
 
                   Row(
                     children: [
