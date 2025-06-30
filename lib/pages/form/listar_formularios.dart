@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador_mobile/models/pessoa_form.dart';
-import 'package:projeto_integrador_mobile/pages/form/visualizar_form.dart';
-import 'package:projeto_integrador_mobile/service/old/formulario_service.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/formulario.dart';
+import 'package:projeto_integrador_mobile/pages/form/visualizar_formulario.dart';
+import 'package:projeto_integrador_mobile/service/formulario_service.dart';
 
 // Página que lista todos os formulários completos, unindo o objeto formulário com o objeto pessoa
-class ListaPessoasComFormulariosPage extends StatefulWidget {
-  const ListaPessoasComFormulariosPage({super.key});
+class ListarFormulariosPage extends StatefulWidget {
+  const ListarFormulariosPage({super.key});
 
   @override
-  State<ListaPessoasComFormulariosPage> createState() => _ListaPessoasComFormulariosPageState();
+  State<ListarFormulariosPage> createState() => _ListarFormularioPageState();
 }
 
-class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormulariosPage> {
-  final FormService _formService = FormService();
-  late Future<List<PessoaComFormulario>> _pessoaComFormularios;
+class _ListarFormularioPageState extends State<ListarFormulariosPage> {
+  final FormularioService _formularioService = FormularioService();
+  late Future<List<Formulario>> _formularios;
 
   @override
   void initState() {
@@ -23,16 +24,16 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
 
   Future<void> _carregarDados() async {
     setState(() {
-      _pessoaComFormularios = _formService.getPessoaComFormularios();
+      _formularios = _formularioService.getFormularios();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Pessoas com Formulários')),
-      body: FutureBuilder<List<PessoaComFormulario>>(
-        future: _pessoaComFormularios,
+      appBar: AppBar(title: const Text('Formulários')),
+      body: FutureBuilder<List<Formulario>>(
+        future: _formularios,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -50,18 +51,16 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final item = snapshot.data![index];
-                final pessoa = item.pessoa;
-                final formulario = item.formulario;
-
-                if ((pessoa.cnpj ?? '').isEmpty){
+                final Pessoa? pessoa = item.pessoa;
+                if ((pessoa?.cnpj ?? '').isEmpty){
                   return ListTile(
-                    title: Text('Proprietário: ${pessoa.nome} - \nEndereço da fazenda: ${formulario.enderecoEmpre}'),
-                    subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
+                    title: Text('Proprietário: ${pessoa?.nome}'),
+                    subtitle: Text('Endereço da fazenda: ${item.enderecoEmpreendimento}'),
                     onTap: () async {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VisualizarFormPage(dados: item),
+                          builder: (context) => VisualizarFormularioPage(dados: item),
                         ),
                       );
                       _carregarDados();
@@ -70,13 +69,13 @@ class _ListaPessoasComFormulariosPageState extends State<ListaPessoasComFormular
                   );
                 } else {
                   return ListTile(
-                    title: Text('Razão Social: ${pessoa.razaoSocial} - Endereço da fazenda: ${formulario.enderecoEmpre}'),
-                    subtitle: Text('Espécie Produzida: ${formulario.especieProducao}'),
+                    title: Text('Razão Social: ${pessoa?.razaoSocial}'),
+                    subtitle: Text('Endereço da fazenda: ${item.enderecoEmpreendimento}'),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VisualizarFormPage(dados: item),
+                          builder: (context) => VisualizarFormularioPage(dados: item),
                         ),
                       );
                     },

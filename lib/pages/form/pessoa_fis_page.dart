@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/components/masks.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
