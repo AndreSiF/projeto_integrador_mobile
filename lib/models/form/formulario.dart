@@ -13,7 +13,7 @@ class Formulario {
   String? uuid;
 
   // Pessoa
-  final Pessoa? pessoa;
+  Pessoa? pessoa;
 
   // Responsável Técnico
   final bool? hasResponsavelTecnico;
@@ -72,26 +72,26 @@ class Formulario {
   final double? areaRaceway;
 
   // Produção
-  final List<Producao>? producoes;
+  List<Producao>? producoes;
 
   // Forma Jovem
   final double? areaFormaJovem;
-  final List<FormaJovem>? formasJovem;
+  List<FormaJovem>? formasJovem;
 
   // Ornamental
-  final List<ProducaoOrnamental>? producoesOrnamental;
+  List<ProducaoOrnamental>? producoesOrnamental;
 
   // Aquisição de formas jovens
-  final List<AquisicaoJovem>? aquisicoesFormaJovem;
+  List<AquisicaoJovem>? aquisicoesFormaJovem;
 
   // Aquisição de Ração
-  final List<AquisicaoRacao>? aquisicoesRacao;
+  List<AquisicaoRacao>? aquisicoesRacao;
 
   // Comercialização por espécie
-  final List<Comercializacao>? comercializacaoEspecie;
+  List<Comercializacao>? comercializacaoEspecie;
 
   // Produção de Ornamentais
-  final List<ProducaoOrnamentais>? producoesOrnamentais;
+  List<ProducaoOrnamentais>? producoesOrnamentais;
 
   Formulario({
     this.id,
@@ -145,7 +145,7 @@ class Formulario {
     return{
       'id_formulario': id,
       'uuid_formulario': uuid,
-      'pessoa': pessoa?.toMap(),
+      //'pessoa': pessoa?.toMap(),
       'has_responsavel_tecnico': hasResponsavelTecnico != null ? (hasResponsavelTecnico! ? 1 : 0) : null,
       'nome_responsavel_tecnico': nomeResponsavelTecnico,
       'registro_responsavel_tecnico': registroResponsavelTecnico,
@@ -171,7 +171,7 @@ class Formulario {
       'has_assistencia_tecnica': hasAssistenciaTecnica != null ? (hasAssistenciaTecnica! ? 1 : 0) : null,
       'atendimentos_ano': atendimentosAno,
       'has_viveiro': hasViveiro != null ? (hasViveiro! ? 1 : 0) : null,
-      'tipó_viveiro': tipoViveiro,
+      'tipo_viveiro': tipoViveiro,
       'area_viveiro': areaViveiro,
       'has_tanque_rede': hasTanqueRede != null ? (hasTanqueRede! ? 1 : 0) : null,
       'area_tanque_rede': areaTanqueRede,
@@ -180,14 +180,14 @@ class Formulario {
       'area_sistema_fechado': areaSistemaFechado,
       'has_raceway': hasRaceway != null ? (hasRaceway! ? 1 : 0) : null,
       'area_raceway': areaRaceway,
-      'producoes': producoes?.map((p) => p.toMap()).toList(),
+      // 'producoes': producoes?.map((p) => p.toMap()).toList(),
       'area_forma_jovem': areaFormaJovem,
-      'formas_jovem': formasJovem?.map((fj) => fj.toMap()).toList(),
-      'producoes_ornamental': producoesOrnamental?.map((po) => po.toMap()).toList(),
-      'aquisicoes_forma_jovem': aquisicoesFormaJovem?.map((afj) => afj.toMap()).toList(),
-      'aquisicoes_racao': aquisicoesRacao?.map((ar) => ar.toMap()).toList(),
-      'comercializacao_especie': comercializacaoEspecie?.map((ce) => ce.toMap()).toList(),
-      'producoes_ornamentais': producoesOrnamentais?.map((pos) => pos.toMap()).toList(),
+      // 'formas_jovem': formasJovem?.map((fj) => fj.toMap()).toList(),
+      // 'producoes_ornamental': producoesOrnamental?.map((po) => po.toMap()).toList(),
+      // 'aquisicoes_forma_jovem': aquisicoesFormaJovem?.map((afj) => afj.toMap()).toList(),
+      // 'aquisicoes_racao': aquisicoesRacao?.map((ar) => ar.toMap()).toList(),
+      // 'comercializacao_especie': comercializacaoEspecie?.map((ce) => ce.toMap()).toList(),
+      // 'producoes_ornamentais': producoesOrnamentais?.map((pos) => pos.toMap()).toList(),
     };
   }
 
@@ -195,7 +195,7 @@ class Formulario {
     return Formulario(
       id: _parseInt(map['id_comercializacao']),
       uuid: map['uuid_formulario'] as String?,
-      pessoa: map['pessoa'] != null ? Pessoa.fromMap(map['pessoa']) : null,
+      //pessoa: map['pessoa'] != null ? Pessoa.fromMap(map['pessoa']) : null,
       hasResponsavelTecnico: map['has_responsavel_tecnico'] == 1,
       nomeResponsavelTecnico: map['nome_responsavel_tecnico'] is String ? map['nome_responsavel_tecnico'] : null,
       registroResponsavelTecnico: map['registro_responsavel_tecnico'] is String ? map['registro_responsavel_tecnico'] : null,
@@ -230,14 +230,14 @@ class Formulario {
       areaSistemaFechado: _parseDouble(map['area_sistema_fechado']),
       hasRaceway: map['has_raceway'] == 1,
       areaRaceway: _parseDouble(map['area_raceway']),
-      producoes: map['producoes'] != null ? (map['producoes'] as List<dynamic>).map((item) => Producao.fromMap(item)).toList() : null,
-      areaFormaJovem: map['area_forma_jovem'] is double ? map['area_forma_jovem'] : null,
-      formasJovem: map['formas_jovem'] != null ? (map['formas_jovem'] as List<dynamic>).map((item) => FormaJovem.fromMap(item)).toList() : null,
-      producoesOrnamental: map['producoes_ornamental'] != null ? (map['producoes_ornamental'] as List<dynamic>).map((item) => ProducaoOrnamental.fromMap(item)).toList() : null,
-      aquisicoesFormaJovem: map['aquisicoes_forma_jovem'] != null ? (map['aquisicoes_forma_jovem'] as List<dynamic>).map((item) => AquisicaoJovem.fromMap(item)).toList() : null,
-      aquisicoesRacao: map['aquisicoes_racao'] != null ? (map['aquisicoes_racao'] as List<dynamic>).map((item) => AquisicaoRacao.fromMap(item)).toList() : null,
-      comercializacaoEspecie: map['comercializacao_especie'] != null ? (map['comercializacao_especie'] as List<dynamic>).map((item) => Comercializacao.fromMap(item)).toList() : null,
-      producoesOrnamentais: map['producoes_ornamentais'] != null ? (map['producoes_ornamentais'] as List<dynamic>).map((item) => ProducaoOrnamentais.fromMap(item)).toList() : null,
+      // producoes: map['producoes'] != null ? (map['producoes'] as List<dynamic>).map((item) => Producao.fromMap(item)).toList() : null,
+      // areaFormaJovem: map['area_forma_jovem'] is double ? map['area_forma_jovem'] : null,
+      // formasJovem: map['formas_jovem'] != null ? (map['formas_jovem'] as List<dynamic>).map((item) => FormaJovem.fromMap(item)).toList() : null,
+      // producoesOrnamental: map['producoes_ornamental'] != null ? (map['producoes_ornamental'] as List<dynamic>).map((item) => ProducaoOrnamental.fromMap(item)).toList() : null,
+      // aquisicoesFormaJovem: map['aquisicoes_forma_jovem'] != null ? (map['aquisicoes_forma_jovem'] as List<dynamic>).map((item) => AquisicaoJovem.fromMap(item)).toList() : null,
+      // aquisicoesRacao: map['aquisicoes_racao'] != null ? (map['aquisicoes_racao'] as List<dynamic>).map((item) => AquisicaoRacao.fromMap(item)).toList() : null,
+      // comercializacaoEspecie: map['comercializacao_especie'] != null ? (map['comercializacao_especie'] as List<dynamic>).map((item) => Comercializacao.fromMap(item)).toList() : null,
+      // producoesOrnamentais: map['producoes_ornamentais'] != null ? (map['producoes_ornamentais'] as List<dynamic>).map((item) => ProducaoOrnamentais.fromMap(item)).toList() : null,
     );
   }
 }

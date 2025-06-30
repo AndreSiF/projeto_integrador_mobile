@@ -98,6 +98,11 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
         // TODO: AJUSTAR OS CONTROLLERS
+        pessoa: widget.pessoa,
+        nomeResponsavelTecnico: widget.formulario.nomeResponsavelTecnico,
+        registroResponsavelTecnico: widget.formulario.registroResponsavelTecnico,
+        telefoneResponsavelTecnico: widget.formulario.telefoneResponsavelTecnico,
+        emailResponsavelTecnico: widget.formulario.emailResponsavelTecnico,
         enderecoEmpreendimento: widget.formulario.enderecoEmpreendimento,
         municipioEmpreendimento: widget.formulario.municipioEmpreendimento,
         ufEmpreendimento: widget.formulario.ufEmpreendimento,

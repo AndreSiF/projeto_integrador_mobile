@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:projeto_integrador_mobile/dao/formulario_dao.dart';
+import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/producao.dart';
+import 'package:projeto_integrador_mobile/models/form/formulario.dart';
 import 'package:projeto_integrador_mobile/pages/form/listar_pessoas_formularios_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
@@ -7,6 +12,30 @@ import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
 // Página de seleção entre pessoa física ou pessoa jurídica (Home)
 class IdentificacaoAquicultorPage extends StatelessWidget {
   const IdentificacaoAquicultorPage({super.key});
+
+  Future<void> _test() async {
+    List<Formulario> formularios = await FormularioDao().getFormularios();
+    for(var form in formularios) {
+      print(form.uuid);
+      Producao? producao = form.producoes?.first;
+      print(producao?.especie);
+      print(form.pessoa?.nome);
+      print(form.pessoa?.uuid);
+      print(form.pessoa?.uuidFormulario);
+      print(form.pessoa?.email);
+      print(form.tipoSistemaFechado);
+      print(form.municipioEmpreendimento);
+      FormularioDao().test();
+
+      // print('TESTE DE PESSOA');
+      // List<Pessoa> pessoas = await PessoaDao().getPessoas();
+      // print(pessoas.first.nome);
+      // for(var pessoa in pessoas){
+      //   print(pessoa.uuidFormulario);
+      //   print(pessoa.nome);
+      // }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +122,8 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
               SizedBox(height: 24),
               Center(
                 child: TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListaPessoasComFormulariosPage())),
+                  //onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListaPessoasComFormulariosPage())),
+                  onPressed: _test,
                   child: Text(
                     'Voltar para o início',
                     style: TextStyle(color: Color(0xFF0D47A1)),

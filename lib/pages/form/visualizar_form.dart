@@ -3,8 +3,7 @@ import 'package:projeto_integrador_mobile/models/form.dart';
 import 'package:projeto_integrador_mobile/models/pessoa.dart';
 import 'package:projeto_integrador_mobile/models/pessoa_form.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_visualizacao_component.dart';
-import 'package:projeto_integrador_mobile/service/formulario_service.dart';
-import 'package:projeto_integrador_mobile/service/pessoa_service.dart';
+import 'package:projeto_integrador_mobile/service/old/formulario_service.dart';
 
 // Página que serve para visualizar um formulário específico
 class VisualizarFormPage extends StatefulWidget {
@@ -228,11 +227,11 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
   // Exclui o formulário do banco de dados
   void _excluirRegistro() async {
     final _formService = FormService();
-    final _pessoaService = PessoaService();
+    //final _pessoaService = PessoaService();
 
     try {
       //await formService.deletaForm(widget.dados.formulario.idForm!);
-      await _pessoaService.deletaPessoa(widget.dados.pessoa.idPessoa!);
+      //await _pessoaService.deletaPessoa(widget.dados.pessoa.idPessoa!);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Formulário excluído com sucesso.')),
@@ -306,11 +305,11 @@ class _VisualizarFormPageState extends State<VisualizarFormPage> {
       precoMedio: double.tryParse(_precoMedioController.text),
     );
 
-    final FormService _formService = FormService();
-    final PessoaService _pessoaService = PessoaService();
+    // final FormService _formService = FormService();
+    // final PessoaService _pessoaService = PessoaService();
 
-    await _pessoaService.updatePessoa(pessoaAtualizada);
-    await _formService.updateForm(formularioAtualizado);
+    // await _pessoaService.updatePessoa(pessoaAtualizada);
+    // await _formService.updateForm(formularioAtualizado);
 
     setState(() {
       _editando = false;

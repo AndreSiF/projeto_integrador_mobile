@@ -50,6 +50,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
         //TODO: ADD THE CONTROLLERS HERE
+        pessoa: widget.pessoa,
         nomeResponsavelTecnico: _nomeRespTecnicoController.text,
         registroResponsavelTecnico: _numRespTecnicoController.text,
         telefoneResponsavelTecnico: _telefoneRespTecnicoController.text,

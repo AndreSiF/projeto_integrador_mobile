@@ -29,7 +29,6 @@ class AppDatabase {
           CREATE TABLE formulario (
             id_formulario INTEGER PRIMARY KEY AUTOINCREMENT,
             uuid_formulario TEXT,
-            pessoa TEXT,
             has_responsavel_tecnico INTEGER,
             nome_responsavel_tecnico TEXT,
             registro_responsavel_tecnico TEXT,

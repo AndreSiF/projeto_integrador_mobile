@@ -1,41 +1,27 @@
+import 'package:projeto_integrador_mobile/dao/formulario_dao.dart';
+import 'package:projeto_integrador_mobile/models/form/formulario.dart';
 
-import 'package:projeto_integrador_mobile/dao/old/formulario_dao.dart';
-import 'package:projeto_integrador_mobile/models/form.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
-import 'package:projeto_integrador_mobile/models/pessoa_form.dart';
+class FormularioService {
+  final FormularioDao _formularioDao = FormularioDao();
 
-class FormService {
-  final FormDao _formDao = FormDao();
-
-  // Função que retorna todos os formulários
-  Future<List<FormularioOld>> getForms() async {
-    return await _formDao.getForms();
+  Future<void> insertFormulario(Formulario formulario) async {
+    await _formularioDao.insertFormulario(formulario);
   }
 
-  // Função que deleta um formulário baseado em seu ID
-  Future<void> deletaForm(int id) async{
-    await _formDao.deleteForm(id);
+  Future<List<Formulario>> getFormularios() async {
+    return await _formularioDao.getFormularios();
   }
 
-  // Função que atualiza uma entrada da tabela do formulário
-  Future<void> updateForm(FormularioOld formulario) async{
+  Future<void> deleteFormulario(String uuid) async {
+    await _formularioDao.deleteFormularioByUuid(uuid);
+  }
+
+  Future<void> updateFormulario(Formulario formulario) async {
     try{
-      await _formDao.atualizarFormulario(formulario);
+      await _formularioDao.updateFormulario(formulario);
     }
     catch(e){
       rethrow;
     }
-  }
-
-  // Função que retorna um objeto que serve como junção de um formulário
-  // e de uma pessoa (utilizado para visualização no frontend)
-  Future<List<PessoaComFormulario>> getPessoaComFormularios() async {
-    final rawData = await _formDao.getPessoaComFormulariosRaw();
-
-    return rawData.map((map) {
-      final pessoa = PessoaOld.fromMap(map);
-      final formulario = FormularioOld.fromMap(map);
-      return PessoaComFormulario(pessoa: pessoa, formulario: formulario);
-    }).toList();
   }
 }

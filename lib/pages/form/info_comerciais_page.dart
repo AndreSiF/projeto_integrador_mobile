@@ -14,7 +14,7 @@ import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_com
 import 'package:projeto_integrador_mobile/pages/form/cultivo_producao.dart';
 import 'package:projeto_integrador_mobile/pages/form/formulario_completo_page.dart';
 import 'package:projeto_integrador_mobile/pages/components/steps/steps_component.dart';
-import 'package:projeto_integrador_mobile/service/cadastro_service.dart';
+import 'package:projeto_integrador_mobile/service/formulario_service.dart';
 
 // Quarta página do formulário, preenche as informações comerciais do empreendimento
 class InformacoesComerciaisPage extends StatefulWidget {
@@ -94,6 +94,11 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
+        pessoa: widget.pessoa,
+        nomeResponsavelTecnico: widget.formulario.nomeResponsavelTecnico,
+        registroResponsavelTecnico: widget.formulario.registroResponsavelTecnico,
+        telefoneResponsavelTecnico: widget.formulario.telefoneResponsavelTecnico,
+        emailResponsavelTecnico: widget.formulario.emailResponsavelTecnico,
         enderecoEmpreendimento: widget.formulario.enderecoEmpreendimento,
         municipioEmpreendimento: widget.formulario.municipioEmpreendimento,
         ufEmpreendimento: widget.formulario.ufEmpreendimento,
@@ -121,8 +126,8 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
         producoesOrnamentais: ProducaoOrnamentais().obterProducoes(producoesOrnamentaisController)
       );
       try{
-        final CadastroService cadastroService = CadastroService();
-        //cadastroService.cadastrarPessoaComFormulario(widget.pessoa, formulario);
+        final FormularioService formularioService = FormularioService();
+        formularioService.insertFormulario(formulario);
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Cadastro realizado com sucesso!')),);
       } catch(e){
