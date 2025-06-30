@@ -10,7 +10,7 @@ class ComercializacaoDao {
     final db = await AppDatabase().database;
     comercializacao.uuid = Uuid().v4();
     comercializacao.uuidFormulario = uuidFormulario;
-    return db.insert(table, Comercializacao().toMap());
+    return db.insert(table, comercializacao.toMap());
   }
 
   // DAO que atualiza uma entrada de uma comercializacao no banco de dados

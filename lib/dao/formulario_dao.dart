@@ -7,6 +7,7 @@ import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_ornamentais_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_ornamental_dao.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/comercializacao.dart';
 import 'package:projeto_integrador_mobile/models/form/formulario.dart';
 
 class FormularioDao {
@@ -16,8 +17,6 @@ class FormularioDao {
   Future<void> insertFormulario(Formulario formulario) async {
     final db = await AppDatabase().database;
       await db.insert(table, formulario.toMap());
-      String? uuidDoFormulario = formulario.uuid;
-      print('uuid do formulario: $uuidDoFormulario');
   }
 
   Future<void> deleteFormularioByUuid(String uuid) async {
@@ -95,14 +94,20 @@ class FormularioDao {
       formulario.producoes = await ProducaoDao().getProducoesByUuidFormulario(formulario.uuid);
       formulario.producoesOrnamentais = await ProducaoOrnamentaisDao().getProducoesOrnamentaisByUuidFormulario(formulario.uuid);
       formulario.producoesOrnamental = await ProducaoOrnamentalDao().getProducoesOrnamentalByUuidFormulario(formulario.uuid);
-      print(formulario.pessoa);
     }
 
     return formularios;
   }
 
   Future<void> test() async {
-    final db = await AppDatabase().database;
-
+    // final db = await AppDatabase().database;
+    // final result = await db.query('comercializacao');
+    // print(result);
+    // // List<Comercializacao> comercializacoes = result.map((map) => Comercializacao.fromMap(map)).toList();
+    // // for(var comercial in comercializacoes){
+    // //   print('tem pelo menos 1 comercial no banco $comercial');
+    // //   print(comercial.ufOrigem);
+    // //   print(comercial.quantidade);
+    // // }
   }
 }
