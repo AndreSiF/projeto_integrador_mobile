@@ -83,6 +83,49 @@ class FormularioService {
   Future<void> updateFormulario(Formulario formulario) async {
     try{
       await _formularioDao.updateFormulario(formulario);
+      print(formulario.pessoa?.nome);
+      _pessoaDao.updatePessoa(formulario.pessoa);
+      if(formulario.producoes != null){
+        for(var producao in formulario.producoes!) {
+          _producaoDao.updateProducao(producao);
+        }
+      }
+
+      if(formulario.producoesOrnamental != null){
+        for(var producaoOrnametal in formulario.producoesOrnamental!) {
+          _producaoOrnamentalDao.updateProducaoOrnamental(producaoOrnametal);
+        }
+      }
+
+      if(formulario.producoesOrnamentais != null){
+        for(var producaoOrnamentais in formulario.producoesOrnamentais!) {
+          _producaoOrnamentaisDao.updateProducaoOrnamentais(producaoOrnamentais);
+        }
+      }
+
+      if(formulario.aquisicoesFormaJovem != null){
+        for(var aquisicaoJovem in formulario.aquisicoesFormaJovem!) {
+          _aquisicaoJovemDao.updateAquisicaoJovem(aquisicaoJovem);
+        }
+      }
+
+      if(formulario.formasJovem != null){
+        for(var formaJovem in formulario.formasJovem!){
+          _formaJovemDao.updateFormaJovem(formaJovem);
+        }
+      }
+
+      if(formulario.aquisicoesRacao != null){
+        for(var aquisicaoRacao in formulario.aquisicoesRacao!) {
+          _aquisicaoRacaoDao.updateAquisicaoRacao(aquisicaoRacao);
+        }
+      }
+
+      if(formulario.comercializacaoEspecie != null){
+        for(var comercializacao in formulario.comercializacaoEspecie!) {
+          _comercializacaoDao.updateComercializacao(comercializacao);
+        }
+      }
     }
     catch(e){
       rethrow;

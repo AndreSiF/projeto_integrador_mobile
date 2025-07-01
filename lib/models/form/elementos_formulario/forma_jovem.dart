@@ -31,11 +31,15 @@ class FormaJovem {
 
     for (var campo in producoes) {
       // Obtendo os valores dos controladores
+      String? uuid = campo.uuid;
+      String? uuidFormulario = campo.uuidFormulario;
       String? especie = campo.especieController.text;
       double? milheiros = double.tryParse(campo.milheirosController.text);
 
       // Criando um objeto Producao e adicionando à lista
       listaFormasJovem.add(FormaJovem(
+        uuid: uuid,
+        uuidFormulario: uuidFormulario,
         especie: especie,
         milheiros: milheiros,
       ));

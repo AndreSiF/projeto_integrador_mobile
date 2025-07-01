@@ -157,14 +157,14 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
     _carController = TextEditingController(text: formulario.car ?? '');
     _oesaController = TextEditingController(text: formulario.oesa?.toString() ?? '');
     _atendimentosAnoController = TextEditingController(text: formulario.atendimentosAno?.toString() ?? '');
-    _hasRespTecnico = formulario.hasResponsavelTecnico ?? false;
-    _hasDAP = formulario.hasDap ?? false;
-    _hasLicencaAmb = formulario.hasLicencaAmbiental ?? false;
-    _hasOutorga = formulario.hasOutorga ?? false;
-    _hasCTF = formulario.hasCtf ?? false;
-    _hasCAR = formulario.hasCar ?? false;
-    _hasOESA = formulario.hasOesa ?? false;
-    _hasAssistenciaTecnica = formulario.hasAssistenciaTecnica ?? false;
+    _hasRespTecnico = formulario.hasResponsavelTecnico!;
+    _hasDAP = formulario.hasDap!;
+    _hasLicencaAmb = formulario.hasLicencaAmbiental!;
+    _hasOutorga = formulario.hasOutorga!;
+    _hasCTF = formulario.hasCtf!;
+    _hasCAR = formulario.hasCar!;
+    _hasOESA = formulario.hasOesa!;
+    _hasAssistenciaTecnica = formulario.hasAssistenciaTecnica!;
 
     _tipoViveiroController = TextEditingController(text: formulario.tipoViveiro ?? '');
     _areaViveiroController = TextEditingController(text: formulario.areaViveiro?.toString() ?? '');
@@ -176,10 +176,10 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
     producoesController = CamposProducao().obterCamposProducao(producoes) ?? [];
     formasJovensController = CamposFormaJovem().obterCamposFormaJovem(formasJovem) ?? [];
     producoesOrnamentalController = CamposProducaoOrnamental().obterCamposProducao(producoesOrnamental) ?? [];
-    _hasViveiro = formulario.hasViveiro ?? false;
-    _hasTanqueRede = formulario.hasTanqueRede ?? false;
-    _hasSistemaFechado = formulario.hasSistemaFechado ?? false;
-    _hasRaceway = formulario.hasRaceway ?? false;
+    _hasViveiro = formulario.hasViveiro!;
+    _hasTanqueRede = formulario.hasTanqueRede!;
+    _hasSistemaFechado = formulario.hasSistemaFechado!;
+    _hasRaceway = formulario.hasRaceway!;
 
     aquisicoesJovemController = CamposAquisicaoJov().obterCamposAquisicaoJovem(aquisicoesJovens) ?? [];
     aquisicoesRacaoController = CamposAquisicaoRacao().obterCamposAquisicaoRacao(aquisicoesRacao) ?? [];
@@ -234,14 +234,14 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
     _carController = TextEditingController(text: formulario.car ?? '');
     _oesaController = TextEditingController(text: formulario.oesa?.toString() ?? '');
     _atendimentosAnoController = TextEditingController(text: formulario.atendimentosAno?.toString() ?? '');
-    _hasRespTecnico = formulario.hasResponsavelTecnico ?? false;
-    _hasDAP = formulario.hasDap ?? false;
-    _hasLicencaAmb = formulario.hasLicencaAmbiental ?? false;
-    _hasOutorga = formulario.hasOutorga ?? false;
-    _hasCTF = formulario.hasCtf ?? false;
-    _hasCAR = formulario.hasCar ?? false;
-    _hasOESA = formulario.hasOesa ?? false;
-    _hasAssistenciaTecnica = formulario.hasAssistenciaTecnica ?? false;
+    _hasRespTecnico = formulario.hasResponsavelTecnico!;
+    _hasDAP = formulario.hasDap!;
+    _hasLicencaAmb = formulario.hasLicencaAmbiental!;
+    _hasOutorga = formulario.hasOutorga!;
+    _hasCTF = formulario.hasCtf!;
+    _hasCAR = formulario.hasCar!;
+    _hasOESA = formulario.hasOesa!;
+    _hasAssistenciaTecnica = formulario.hasAssistenciaTecnica!;
 
     _tipoViveiroController = TextEditingController(text: formulario.tipoViveiro ?? '');
     _areaViveiroController = TextEditingController(text: formulario.areaViveiro?.toString() ?? '');
@@ -253,10 +253,10 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
     producoesController = CamposProducao().obterCamposProducao(producoes) ?? [];
     formasJovensController = CamposFormaJovem().obterCamposFormaJovem(formasJovem) ?? [];
     producoesOrnamentalController = CamposProducaoOrnamental().obterCamposProducao(producoesOrnamental) ?? [];
-    _hasViveiro = formulario.hasViveiro ?? false;
-    _hasTanqueRede = formulario.hasTanqueRede ?? false;
-    _hasSistemaFechado = formulario.hasSistemaFechado ?? false;
-    _hasRaceway = formulario.hasRaceway ?? false;
+    _hasViveiro = formulario.hasViveiro!;
+    _hasTanqueRede = formulario.hasTanqueRede!;
+    _hasSistemaFechado = formulario.hasSistemaFechado!;
+    _hasRaceway = formulario.hasRaceway!;
 
     aquisicoesJovemController = CamposAquisicaoJov().obterCamposAquisicaoJovem(aquisicoesJovens) ?? [];
     aquisicoesRacaoController = CamposAquisicaoRacao().obterCamposAquisicaoRacao(aquisicoesRacao) ?? [];
@@ -312,6 +312,7 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
   void _salvarAlteracoes() async {
     final pessoaAtualizada = Pessoa(
       uuid: pessoa.uuid,
+      uuidFormulario: formulario.uuid,
       nome: _nomeController.text,
       cpf: _cpfController.text,
       telefone: _telefoneController.text,
@@ -399,6 +400,8 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
             icon: Icon(_editando ? Icons.close : Icons.edit),
             onPressed: () {
               if(_editando){
+                print(_hasRespTecnico);
+                print(formulario.hasResponsavelTecnico);
                 _restaurarCampos();
                 setState(() {
                   _editando = !_editando;
@@ -444,7 +447,7 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
             const SizedBox(height: 24),
             SwitchForm(
                 label: 'Possui Responsável Técnico',
-                value: formulario.hasResponsavelTecnico!,
+                value: _hasRespTecnico,
                 editando: _editando,
                 onChanged: (val) {
                   setState(() {
@@ -607,6 +610,7 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
                 onChanged: (val) {
                   setState(() {
                     _hasSistemaFechado = val;
+                    _tipoSistemaFechadoController.clear();
                     _areaSistemaFechadoController.clear();
                   });
                 }
@@ -646,7 +650,7 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
                     child: Column(
                       children: [
                         Campo(label: "[Espécie Digitada]", valor: producao.especieController.text, controller: producao.especieController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Produção (kg) Digitada]", valor: producao.producaoKgController.text, controller: producao.especieController, editando: _editando, isEnabled: true),
+                        Campo(label: "[Produção (kg) Digitada]", valor: producao.producaoKgController.text, controller: producao.producaoKgController, editando: _editando, isEnabled: true),
                         Campo(label: "[Unidades (se anfíbio ou réptil)]", valor: producao.unidadesController.text, controller: producao.unidadesController, editando: _editando, isEnabled: true),
                       ],
                     ),
@@ -787,6 +791,36 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
                 );
               },
             ),
+
+            const SizedBox(height: 24),
+            const Text('Produção Ornamentais', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: producoesOrnamentaisController.length,
+              itemBuilder: (context, index) {
+                final producaoOrnamentais = producoesOrnamentaisController[index];
+                return Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  elevation: 3,
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        Campo(label: "[Estado de Origem]", valor: producaoOrnamentais.ufOrigemController.text, controller: producaoOrnamentais.ufOrigemController, editando: _editando, isEnabled: true),
+                        Campo(label: "[Unidade Digitada]", valor: producaoOrnamentais.unidadeController.text, controller: producaoOrnamentais.unidadeController, editando: _editando, isEnabled: true),
+                        Campo(label: "[Quantidade Digitada]", valor: producaoOrnamentais.quantidadeController.text, controller: producaoOrnamentais.quantidadeController, editando: _editando, isEnabled: true),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+
+
             // Testa se o usuário pressionou o botão de editar, se pressionado ele cria
             // os botões 'Cancelar' e 'Salvar' no final da página
             if (_editando)

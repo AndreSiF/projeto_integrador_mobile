@@ -19,7 +19,7 @@ class ComercializacaoDao {
     await db.update(
       table,
       comercializacao!.toMap(),
-      where: 'uuid_aquisicao_jovem = ?',
+      where: 'uuid_comercializacao = ?',
       whereArgs: [comercializacao.uuid],
     );
   }

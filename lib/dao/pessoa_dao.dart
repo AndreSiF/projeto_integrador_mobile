@@ -39,11 +39,10 @@ class PessoaDao {
       return null;
     }
   }
-
-  // DAO que retonar todas as entradas de pessoas no banco de dados
-  Future<List<Pessoa>> getPessoas() async {
-    final db = await AppDatabase().database;
-    final List<Map<String, dynamic>> maps = await db.query(table);
-    return maps.map((map) => Pessoa.fromMap(map)).toList();
-  }
+  // // DAO que retonar todas as entradas de pessoas no banco de dados
+  // Future<List<Pessoa>> getPessoas() async {
+  //   final db = await AppDatabase().database;
+  //   final List<Map<String, dynamic>> maps = await db.query(table);
+  //   return maps.map((map) => Pessoa.fromMap(map)).toList();
+  // }
 }

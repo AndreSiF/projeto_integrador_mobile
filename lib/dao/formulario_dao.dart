@@ -35,48 +35,6 @@ class FormularioDao {
         where: 'uuid_formulario = ?',
         whereArgs: [formulario.uuid],
       );
-      PessoaDao().updatePessoa(formulario.pessoa);
-      if(formulario.producoes != null){
-        for(var producao in formulario.producoes!) {
-          ProducaoDao().updateProducao(producao);
-        }
-      }
-
-      if(formulario.producoesOrnamental != null){
-        for(var producaoOrnametal in formulario.producoesOrnamental!) {
-          ProducaoOrnamentalDao().updateProducaoOrnamental(producaoOrnametal);
-        }
-      }
-
-      if(formulario.producoesOrnamentais != null){
-        for(var producaoOrnamentais in formulario.producoesOrnamentais!) {
-          ProducaoOrnamentaisDao().updateProducaoOrnamentais(producaoOrnamentais);
-        }
-      }
-
-      if(formulario.aquisicoesFormaJovem != null){
-        for(var aquisicaoJovem in formulario.aquisicoesFormaJovem!) {
-          AquisicaoJovemDao().updateAquisicaoJovem(aquisicaoJovem);
-        }
-      }
-
-      if(formulario.formasJovem != null){
-        for(var formaJovem in formulario.formasJovem!){
-          FormaJovemDao().updateFormaJovem(formaJovem);
-        }
-      }
-
-      if(formulario.aquisicoesRacao != null){
-        for(var aquisicaoRacao in formulario.aquisicoesRacao!) {
-          AquisicaoRacaoDao().updateAquisicaoRacao(aquisicaoRacao);
-        }
-      }
-
-      if(formulario.comercializacaoEspecie != null){
-        for(var comercializacao in formulario.comercializacaoEspecie!) {
-          ComercializacaoDao().updateComercializacao(comercializacao);
-        }
-      }
   }
 
   Future<List<Formulario>> getFormularios() async {

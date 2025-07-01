@@ -49,7 +49,6 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
-        //TODO: ADD THE CONTROLLERS HERE
         pessoa: widget.pessoa,
         nomeResponsavelTecnico: _nomeRespTecnicoController.text,
         registroResponsavelTecnico: _numRespTecnicoController.text,
@@ -75,7 +74,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
         hasOesa: _hasOESA,
         hasAssistenciaTecnica: _hasAssistenciaTecnica,
       );
-
+      print(formulario.oesa);
       Navigator.push(context, MaterialPageRoute(builder: (_) => CultivoProducaoPage(pessoa: widget.pessoa, formulario: formulario)),);
     }
   }

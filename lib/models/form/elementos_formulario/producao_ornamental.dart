@@ -34,12 +34,16 @@ class ProducaoOrnamental {
 
     for (var campo in producoes) {
       // Obtendo os valores dos controladores
+      String? uuid = campo.uuid;
+      String? uuidFormulario = campo.uuidFormulario;
       String? especie = campo.especieController.text;
       double? producaoKg = double.tryParse(campo.producaoKgController.text);
       int? unidades = int.tryParse(campo.unidadesController.text);
 
       // Criando um objeto Producao e adicionando à lista
       listaProducoesOrnamental.add(ProducaoOrnamental(
+        uuid: uuid,
+        uuidFormulario: uuidFormulario,
         especie: especie,
         producaoKg: producaoKg,
         unidades: unidades,

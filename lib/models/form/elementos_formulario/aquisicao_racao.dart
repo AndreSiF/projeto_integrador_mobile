@@ -40,12 +40,16 @@ class AquisicaoRacao {
 
     for (var campo in producoes) {
       // Obtendo os valores dos controladores
+      String? uuid = campo.uuid;
+      String? uuidFormulario = campo.uuidFormulario;
       String? ufOrigem = campo.ufOrigemController.text;
       String? unidade = campo.unidadeController.text;
       double? quantidade = double.tryParse(campo.quantidadeController.text);
 
       // Criando um objeto Producao e adicionando à lista
       listaAquisicaoRacao.add(AquisicaoRacao(
+        uuid: uuid,
+        uuidFormulario: uuidFormulario,
         ufOrigem: ufOrigem,
         unidade: unidade,
         quantidade: quantidade,

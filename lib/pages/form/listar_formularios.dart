@@ -54,7 +54,7 @@ class _ListarFormularioPageState extends State<ListarFormulariosPage> {
                 final Pessoa? pessoa = item.pessoa;
                 if ((pessoa?.cnpj ?? '').isEmpty){
                   return ListTile(
-                    title: Text('Proprietário: ${pessoa?.nome}'),
+                    title: Text('Proprietário: ${pessoa?.nome} - ${pessoa?.email}'),
                     subtitle: Text('Endereço da fazenda: ${item.enderecoEmpreendimento}'),
                     onTap: () async {
                       await Navigator.push(

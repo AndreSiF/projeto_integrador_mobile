@@ -48,6 +48,8 @@ class Comercializacao {
 
     for (var campo in producoes) {
       // Obtendo os valores dos controladores
+      String? uuid = campo.uuid;
+      String? uuidFormulario = campo.uuidFormulario;
       String? ufOrigem = campo.ufOrigemController.text;
       String? especie = campo.especieController.text;
       double? producaoKg = double.tryParse(campo.producaoKgController.text);
@@ -56,6 +58,8 @@ class Comercializacao {
 
       // Criando um objeto Producao e adicionando à lista
       listaComercializacao.add(Comercializacao(
+        uuid: uuid,
+        uuidFormulario: uuidFormulario,
         ufOrigem: ufOrigem,
         especie: especie,
         producaoKg: producaoKg,

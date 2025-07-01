@@ -38,10 +38,3 @@ class AquisicaoJovemDao {
     });
   }
 }
-
-// // DAO que retonar todas as entradas de aquisições jovens no banco de dados
-// Future<List<AquisicaoJovem>> getAquisicoesJovem() async {
-//   final db = await AppDatabase().database;
-//   final List<Map<String, dynamic>> maps = await db.query(table);
-//   return maps.map((map) => AquisicaoJovem.fromMap(map)).toList();
-// }
