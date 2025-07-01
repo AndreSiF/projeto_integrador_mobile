@@ -65,6 +65,29 @@ class Pessoa {
     };
   }
 
+  Map<String, dynamic> toMapFiltered() {
+    return{
+      'uuid_formulario_pessoa': uuidFormulario,
+      'nome_pessoa': nome,
+      'cpf_pessoa': cpf,
+      'telefone_pessoa': telefone,
+      'email_pessoa': email,
+
+      'rgp_pessoa': rgp,
+      'endereco': endereco,
+      'uf': uf,
+      'municipio': municipio,
+
+      'razao_social': razaoSocial,
+      'cnpj': cnpj,
+      'cnae': cnae,
+      'responsavel_legal': responsavelLegal,
+      'rgp_responsavel_legal': rgpResponsavelLegal,
+      'telefone_responsavel_legal': telefoneResponsavelLegal,
+      'email_responsavel_legal': emailResponsavelLegal,
+    };
+  }
+
   factory Pessoa.fromMap(Map<String, dynamic> map) {
     return Pessoa(
       uuid: map['uuid_pessoa'] is String ? map['uuid_pessoa'] : null,

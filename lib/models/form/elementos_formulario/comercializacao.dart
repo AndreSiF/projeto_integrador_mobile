@@ -31,6 +31,17 @@ class Comercializacao {
     };
   }
 
+  Map<String, dynamic> toMapFiltered() {
+    return{
+      'uuid_formulario_comercializacao': uuidFormulario,
+      'uf_origem_comercializacao': ufOrigem,
+      'especie_comercializacao': especie,
+      'producao_kg_comercializacao': producaoKg,
+      'quantidade_comercializacao': quantidade,
+      'preco_medio_comercializacao': precoMedio,
+    };
+  }
+
   factory Comercializacao.fromMap(Map<String, dynamic> map) {
     return Comercializacao(
       uuid: map['uuid_comercializacao'] is String ? map['uuid_comercializacao'] : null,

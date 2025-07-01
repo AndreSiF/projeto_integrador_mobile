@@ -17,6 +17,14 @@ class FormaJovem {
     };
   }
 
+  Map<String, dynamic> toMapFiltered() {
+    return{
+      'uuid_formulario_forma_jovem': uuidFormulario,
+      'especie_forma_jovem': especie,
+      'milheiros_forma_jovem': milheiros,
+    };
+  }
+
   factory FormaJovem.fromMap(Map<String, dynamic> map) {
     return FormaJovem(
       uuid: map['uuid_forma_jovem'] is String ? map['uuid_forma_jovem'] : null,

@@ -95,6 +95,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
         pessoa: widget.pessoa,
+        enviado: false,
         nomeResponsavelTecnico: widget.formulario.nomeResponsavelTecnico,
         registroResponsavelTecnico: widget.formulario.registroResponsavelTecnico,
         telefoneResponsavelTecnico: widget.formulario.telefoneResponsavelTecnico,

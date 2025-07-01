@@ -25,6 +25,15 @@ class AquisicaoJovem {
     };
   }
 
+  Map<String, dynamic> toMapFiltered() {
+    return{
+      'uuid_formulario_aquisicao_jovem': uuidFormulario,
+      'uf_origem_aquisicao_jovem': ufOrigem,
+      'especie_aquisicao_jovem': especie,
+      'milheiros_aquisicao_jovem': milheiros,
+    };
+  }
+
   factory AquisicaoJovem.fromMap(Map<String, dynamic> map) {
     return AquisicaoJovem(
       uuid: map['uuid_aquisicao_jovem'] is String ? map['uuid_aquisicao_jovem'] : null,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:projeto_integrador_mobile/dao/aquisicao_jovem_dao.dart';
 import 'package:projeto_integrador_mobile/dao/aquisicao_racao_dao.dart';
 import 'package:projeto_integrador_mobile/dao/comercializacao_dao.dart';
@@ -8,6 +10,7 @@ import 'package:projeto_integrador_mobile/dao/producao_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_ornamentais_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_ornamental_dao.dart';
 import 'package:projeto_integrador_mobile/models/form/formulario.dart';
+import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
 class FormularioService {
@@ -20,6 +23,7 @@ class FormularioService {
   final FormaJovemDao _formaJovemDao = FormaJovemDao();
   final AquisicaoRacaoDao _aquisicaoRacaoDao = AquisicaoRacaoDao();
   final ComercializacaoDao _comercializacaoDao = ComercializacaoDao();
+  final String _baseUrl = "http://10.0.2.2:8080/api/formularios";
 
 
   Future<void> insertFormulario(Formulario formulario) async {
@@ -130,5 +134,19 @@ class FormularioService {
     catch(e){
       rethrow;
     }
+
+
+  }
+
+  Future<void> updateFormularioState(String? uuid) async{
+    await _formularioDao.updateFormularioState(uuid);
+  }
+
+  Future<bool> sendFormulario(Formulario formulario) async {
+    final response = await http.post(
+        Uri.parse(_baseUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(formulario.toMapFiltered()));
+    return response.statusCode == 200;
   }
 }

@@ -25,6 +25,15 @@ class AquisicaoRacao {
     };
   }
 
+  Map<String, dynamic> toMapFiltered() {
+    return{
+      'uuid_formulario_aquisicao_racao': uuidFormulario,
+      'uf_origem_aquisicao_racao': ufOrigem,
+      'unidade_aquisicao_racao': unidade,
+      'quantidade_aquisicao_racao': quantidade,
+    };
+  }
+
   factory AquisicaoRacao.fromMap(Map<String, dynamic> map) {
     return AquisicaoRacao(
       uuid: map['uuid_aquisicao_racao'] is String ? map['uuid_aquisicao_racao'] : null,

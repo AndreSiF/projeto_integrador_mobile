@@ -28,6 +28,7 @@ class AppDatabase {
         await db.execute('''
           CREATE TABLE formulario (
             uuid_formulario TEXT PRIMARY KEY,
+            enviado INTEGER,
             has_responsavel_tecnico INTEGER,
             nome_responsavel_tecnico TEXT,
             registro_responsavel_tecnico TEXT,

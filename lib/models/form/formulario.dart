@@ -10,6 +10,7 @@ import 'elementos_formulario/producao_ornamental.dart';
 
 class Formulario {
   String? uuid;
+  bool? enviado;
 
   // Pessoa
   Pessoa? pessoa;
@@ -94,6 +95,7 @@ class Formulario {
 
   Formulario({
     this.uuid,
+    this.enviado,
     this.pessoa,
     this.hasResponsavelTecnico,
     this.nomeResponsavelTecnico,
@@ -142,6 +144,7 @@ class Formulario {
   Map<String, dynamic> toMap(){
     return{
       'uuid_formulario': uuid,
+      'enviado': enviado != null ? (enviado! ? 1 : 0) : null,
       'has_responsavel_tecnico': hasResponsavelTecnico != null ? (hasResponsavelTecnico! ? 1 : 0) : null,
       'nome_responsavel_tecnico': nomeResponsavelTecnico,
       'registro_responsavel_tecnico': registroResponsavelTecnico,
@@ -183,6 +186,7 @@ class Formulario {
   factory Formulario.fromMap(Map<String, dynamic> map) {
     return Formulario(
       uuid: map['uuid_formulario'] as String?,
+      enviado: map['enviado'] == 1,
       hasResponsavelTecnico: map['has_responsavel_tecnico'] == 1,
       nomeResponsavelTecnico: map['nome_responsavel_tecnico'] is String ? map['nome_responsavel_tecnico'] : null,
       registroResponsavelTecnico: map['registro_responsavel_tecnico'] is String ? map['registro_responsavel_tecnico'] : null,
@@ -218,6 +222,54 @@ class Formulario {
       hasRaceway: map['has_raceway'] == 1,
       areaRaceway: _parseDouble(map['area_raceway']),
     );
+  }
+
+  Map<String, dynamic> toMapFiltered(){
+    return{
+      'has_responsavel_tecnico': hasResponsavelTecnico != null ? (hasResponsavelTecnico! ? 1 : 0) : null,
+      'nome_responsavel_tecnico': nomeResponsavelTecnico,
+      'registro_responsavel_tecnico': registroResponsavelTecnico,
+      'telefone_responsavel_tecnico': telefoneResponsavelTecnico,
+      'email_responsavel_tecnico': emailResponsavelTecnico,
+      'endereco_empreendimento': enderecoEmpreendimento,
+      'municipio_empreendimento': enderecoEmpreendimento,
+      'uf_empreendimento': ufEmpreendimento,
+      'latitude': latitude,
+      'longitude': longitude,
+      'has_dap': hasDap != null ? (hasDap! ? 1 : 0) : null,
+      'dap': dap,
+      'has_licenca_ambiental': hasLicencaAmbiental != null ? (hasLicencaAmbiental! ? 1 : 0) : null,
+      'licenca_ambiental': licencaAmbiental,
+      'has_outorga': hasOutorga != null ? (hasOutorga! ? 1 : 0) : null,
+      'outorga': outorga,
+      'has_ctf': hasCtf != null ? (hasCtf! ? 1 : 0) : null,
+      'ctf': ctf,
+      'has_car': hasCar != null ? (hasCar! ? 1 : 0) : null,
+      'car': car,
+      'has_oesa': hasOesa != null ? (hasOesa! ? 1 : 0) : null,
+      'oesa': oesa,
+      'has_assistencia_tecnica': hasAssistenciaTecnica != null ? (hasAssistenciaTecnica! ? 1 : 0) : null,
+      'atendimentos_ano': atendimentosAno,
+      'has_viveiro': hasViveiro != null ? (hasViveiro! ? 1 : 0) : null,
+      'tipo_viveiro': tipoViveiro,
+      'area_viveiro': areaViveiro,
+      'has_tanque_rede': hasTanqueRede != null ? (hasTanqueRede! ? 1 : 0) : null,
+      'area_tanque_rede': areaTanqueRede,
+      'has_sistema_fechado': hasSistemaFechado != null ? (hasSistemaFechado! ? 1 : 0) : null,
+      'tipo_sistema_fechado': tipoSistemaFechado,
+      'area_sistema_fechado': areaSistemaFechado,
+      'has_raceway': hasRaceway != null ? (hasRaceway! ? 1 : 0) : null,
+      'area_raceway': areaRaceway,
+      'area_forma_jovem': areaFormaJovem,
+      'producoes': producoes?.map((producao) => producao.toMap()).toList(),
+      'areaFormaJovem': areaFormaJovem,
+      'formasJovem': formasJovem?.map((forma) => forma.toMap()).toList(),
+      'producoesOrnamental': producoesOrnamental?.map((ornamental) => ornamental.toMap()).toList(),
+      'aquisicoesFormaJovem': aquisicoesFormaJovem?.map((aquisicao) => aquisicao.toMap()).toList(),
+      'aquisicoesRacao': aquisicoesRacao?.map((racao) => racao.toMap()).toList(),
+      'comercializacaoEspecie': comercializacaoEspecie?.map((comercializacao) => comercializacao.toMap()).toList(),
+      'producoesOrnamentais': producoesOrnamentais?.map((ornamentais) => ornamentais.toMap()).toList(),
+    };
   }
 }
 

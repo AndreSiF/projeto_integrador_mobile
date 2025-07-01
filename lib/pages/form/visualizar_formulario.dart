@@ -333,6 +333,7 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
 
     final formularioAtualizado = Formulario(
       uuid: formulario.uuid,
+      enviado: formulario.enviado,
       pessoa: pessoaAtualizada,
       hasResponsavelTecnico: _hasRespTecnico,
       nomeResponsavelTecnico: _nomeRespTecnicoController.text,
@@ -423,7 +424,7 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: [
+          children: <Widget>[
             // Dados da Pessoa
             const Text('Dados do Indivíduo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             Campo(label: 'Nome', valor: pessoa.nome, controller: _nomeController, editando: _editando, isEnabled: true),
@@ -845,7 +846,8 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
                           ),
                           minimumSize: Size(double.infinity, 50),
                         ),
-                        child: Text('Cancelar', style: TextStyle(color: Color(0xFF0D47A1)),
+                        child: Text('Cancelar', style: TextStyle(color: Color(
+                            0xFF0D47A1)),
                         ),
                       ),
                     ),
@@ -862,7 +864,8 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
                           ),
                           minimumSize: Size(double.infinity, 50),
                         ),
-                        child: Text('Salvar', style: TextStyle(color: Colors.white),),
+                        child: Text('Salvar', style: TextStyle(color: Colors
+                            .white),),
                       ),
                     ),
                   ],

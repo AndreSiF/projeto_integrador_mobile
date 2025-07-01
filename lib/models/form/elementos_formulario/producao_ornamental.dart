@@ -19,6 +19,15 @@ class ProducaoOrnamental {
     };
   }
 
+  Map<String, dynamic> toMapFiltered() {
+    return{
+      'uuid_formulario_producao_ornamental': uuidFormulario,
+      'especie_producao_ornamental': especie,
+      'producao_kg_producao_ornamental': producaoKg,
+      'unidades_producao_ornamental': unidades,
+    };
+  }
+
   factory ProducaoOrnamental.fromMap(Map<String, dynamic> map) {
     return ProducaoOrnamental(
       uuid: map['uuid_producao_ornamental'] is String ? map['uuid_producao_ornamental'] : null,

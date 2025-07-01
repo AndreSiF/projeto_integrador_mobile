@@ -28,6 +28,57 @@ class _ListarFormularioPageState extends State<ListarFormulariosPage> {
     });
   }
 
+  void _confirmarEnvio(Formulario formulario) async {
+    final confirmacao = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirmar envio'),
+        content: const Text('Tem certeza que deseja enviar esse formulário para o servidor? (O formulário não poderá mais ser editado após isso)'),
+        actions: [
+          TextButton(
+            child: const Text('Cancelar'),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          TextButton(
+            child: const Text('Enviar'),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmacao == true) {
+      _enviarFormulario(formulario);
+    }
+  }
+
+  void _enviarFormulario(Formulario formulario) async {
+    try{
+      _formularioService.updateFormularioState(formulario.uuid);
+      _formularioService.sendFormulario(formulario);
+      _carregarDados();
+    }
+    catch(e){
+      throw Exception('Erro ao enviar formulário ao servidor.');
+    }
+  }
+
+  void _formularioJaEnviado() async {
+    await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Formulário já enviado'),
+        content: const Text('Este formulário já foi enviado ao servidor.'),
+        actions: [
+          TextButton(
+            child: const Text('Ok'),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +95,6 @@ class _ListarFormularioPageState extends State<ListarFormulariosPage> {
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Nenhum dado encontrado.'));
           }
-
           return RefreshIndicator(
             onRefresh: _carregarDados,
             child: ListView.builder(
@@ -52,10 +102,26 @@ class _ListarFormularioPageState extends State<ListarFormulariosPage> {
               itemBuilder: (context, index) {
                 final item = snapshot.data![index];
                 final Pessoa? pessoa = item.pessoa;
-                if ((pessoa?.cnpj ?? '').isEmpty){
+                if((pessoa?.cnpj ?? '').isEmpty){
                   return ListTile(
-                    title: Text('Proprietário: ${pessoa?.nome} - ${pessoa?.email}'),
+                    title: Text('Proprietário: ${pessoa?.nome}'),
                     subtitle: Text('Endereço da fazenda: ${item.enderecoEmpreendimento}'),
+                    trailing: Tooltip(
+                      message: item.enviado! ? 'Desmarcar efetivado' : 'Efetivar',
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.check,
+                          color: item.enviado! ? Colors.grey : Colors.green,
+                        ),
+                        onPressed: () {
+                          if (!item.enviado!) {
+                            _confirmarEnvio(item);
+                          } else {
+                            _formularioJaEnviado();
+                          }
+                        },
+                      ),
+                    ),
                     onTap: () async {
                       await Navigator.push(
                         context,
@@ -65,22 +131,40 @@ class _ListarFormularioPageState extends State<ListarFormulariosPage> {
                       );
                       _carregarDados();
                     },
-
                   );
-                } else {
+                }
+                else{
                   return ListTile(
                     title: Text('Razão Social: ${pessoa?.razaoSocial}'),
                     subtitle: Text('Endereço da fazenda: ${item.enderecoEmpreendimento}'),
-                    onTap: () {
-                      Navigator.push(
+                    trailing: Tooltip(
+                      message: item.enviado! ? 'Desmarcar efetivado' : 'Efetivar',
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.check,
+                          color: item.enviado! ? Colors.grey : Colors.green,
+                        ),
+                        onPressed: () {
+                          if (!item.enviado!) {
+                            _confirmarEnvio(item);
+                          } else {
+                            _formularioJaEnviado();
+                          }
+                        },
+                      ),
+                    ),
+                    onTap: () async {
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => VisualizarFormularioPage(dados: item),
                         ),
                       );
+                      _carregarDados();
                     },
                   );
                 }
+
               },
             ),
           );

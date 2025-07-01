@@ -7,7 +7,6 @@ import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_ornamentais_dao.dart';
 import 'package:projeto_integrador_mobile/dao/producao_ornamental_dao.dart';
-import 'package:projeto_integrador_mobile/models/form/elementos_formulario/comercializacao.dart';
 import 'package:projeto_integrador_mobile/models/form/formulario.dart';
 
 class FormularioDao {
@@ -57,15 +56,13 @@ class FormularioDao {
     return formularios;
   }
 
-  Future<void> test() async {
-    // final db = await AppDatabase().database;
-    // final result = await db.query('comercializacao');
-    // print(result);
-    // // List<Comercializacao> comercializacoes = result.map((map) => Comercializacao.fromMap(map)).toList();
-    // // for(var comercial in comercializacoes){
-    // //   print('tem pelo menos 1 comercial no banco $comercial');
-    // //   print(comercial.ufOrigem);
-    // //   print(comercial.quantidade);
-    // // }
+  Future<void> updateFormularioState(String? uuid) async {
+    final db = await AppDatabase().database;
+    await db.update(
+      table,
+      {'enviado': 1},
+      where: 'uuid_formulario = ?',
+      whereArgs: [uuid],
+    );
   }
 }
