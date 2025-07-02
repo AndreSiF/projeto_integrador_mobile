@@ -8,12 +8,12 @@ import 'package:projeto_integrador_mobile/models/form/elementos_formulario/produ
 
 import 'elementos_formulario/producao_ornamental.dart';
 
-class FormularioN {
-  final int? id;
-  final String? uuid;
+class Formulario {
+  String? uuid;
+  bool? enviado;
 
   // Pessoa
-  final PessoaN? pessoa;
+  Pessoa? pessoa;
 
   // Responsável Técnico
   final bool? hasResponsavelTecnico;
@@ -65,36 +65,37 @@ class FormularioN {
   // Sistema Fechado
   final bool? hasSistemaFechado;
   final String? tipoSistemaFechado;
+  final double? areaSistemaFechado;
 
   // Raceway
   final bool? hasRaceway;
   final double? areaRaceway;
 
   // Produção
-  final List<Producao>? producoes;
+  List<Producao>? producoes;
 
   // Forma Jovem
   final double? areaFormaJovem;
-  final List<FormaJovem>? formasJovem;
+  List<FormaJovem>? formasJovem;
 
   // Ornamental
-  final List<ProducaoOrnamental>? producoesOrnamental;
+  List<ProducaoOrnamental>? producoesOrnamental;
 
   // Aquisição de formas jovens
-  final List<AquisicaoJovem>? aquisicoesFormaJovem;
+  List<AquisicaoJovem>? aquisicoesFormaJovem;
 
   // Aquisição de Ração
-  final List<AquisicaoRacao>? aquisicoesRacao;
+  List<AquisicaoRacao>? aquisicoesRacao;
 
   // Comercialização por espécie
-  final List<Comercializacao>? comercializacaoEspecie;
+  List<Comercializacao>? comercializacaoEspecie;
 
   // Produção de Ornamentais
-  final List<ProducaoOrnamentais>? producoesOrnamentais;
+  List<ProducaoOrnamentais>? producoesOrnamentais;
 
-  FormularioN({
-    this.id,
+  Formulario({
     this.uuid,
+    this.enviado,
     this.pessoa,
     this.hasResponsavelTecnico,
     this.nomeResponsavelTecnico,
@@ -127,6 +128,7 @@ class FormularioN {
     this.areaTanqueRede,
     this.hasSistemaFechado,
     this.tipoSistemaFechado,
+    this.areaSistemaFechado,
     this.areaRaceway,
     this.hasRaceway,
     this.producoes,
@@ -141,16 +143,15 @@ class FormularioN {
 
   Map<String, dynamic> toMap(){
     return{
-      'id_formulario': id,
       'uuid_formulario': uuid,
-      'pessoa': pessoa?.toMap(),
+      'enviado': enviado != null ? (enviado! ? 1 : 0) : null,
       'has_responsavel_tecnico': hasResponsavelTecnico != null ? (hasResponsavelTecnico! ? 1 : 0) : null,
       'nome_responsavel_tecnico': nomeResponsavelTecnico,
       'registro_responsavel_tecnico': registroResponsavelTecnico,
       'telefone_responsavel_tecnico': telefoneResponsavelTecnico,
       'email_responsavel_tecnico': emailResponsavelTecnico,
       'endereco_empreendimento': enderecoEmpreendimento,
-      'municipio_empreendimento': enderecoEmpreendimento,
+      'municipio_empreendimento': municipioEmpreendimento,
       'uf_empreendimento': ufEmpreendimento,
       'latitude': latitude,
       'longitude': longitude,
@@ -169,30 +170,23 @@ class FormularioN {
       'has_assistencia_tecnica': hasAssistenciaTecnica != null ? (hasAssistenciaTecnica! ? 1 : 0) : null,
       'atendimentos_ano': atendimentosAno,
       'has_viveiro': hasViveiro != null ? (hasViveiro! ? 1 : 0) : null,
-      'tipó_viveiro': tipoViveiro,
+      'tipo_viveiro': tipoViveiro,
       'area_viveiro': areaViveiro,
       'has_tanque_rede': hasTanqueRede != null ? (hasTanqueRede! ? 1 : 0) : null,
       'area_tanque_rede': areaTanqueRede,
       'has_sistema_fechado': hasSistemaFechado != null ? (hasSistemaFechado! ? 1 : 0) : null,
       'tipo_sistema_fechado': tipoSistemaFechado,
+      'area_sistema_fechado': areaSistemaFechado,
       'has_raceway': hasRaceway != null ? (hasRaceway! ? 1 : 0) : null,
       'area_raceway': areaRaceway,
-      'producoes': producoes?.map((p) => p.toMap()).toList(),
       'area_forma_jovem': areaFormaJovem,
-      'formas_jovem': formasJovem?.map((fj) => fj.toMap()).toList(),
-      'producoes_ornamental': producoesOrnamental?.map((po) => po.toMap()).toList(),
-      'aquisicoes_forma_jovem': aquisicoesFormaJovem?.map((afj) => afj.toMap()).toList(),
-      'aquisicoes_racao': aquisicoesRacao?.map((ar) => ar.toMap()).toList(),
-      'comercializacao_especie': comercializacaoEspecie?.map((ce) => ce.toMap()).toList(),
-      'producoes_ornamentais': producoesOrnamentais?.map((pos) => pos.toMap()).toList(),
     };
   }
 
-  factory FormularioN.fromMap(Map<String, dynamic> map) {
-    return FormularioN(
-      id: _parseInt(map['id_comercializacao']),
+  factory Formulario.fromMap(Map<String, dynamic> map) {
+    return Formulario(
       uuid: map['uuid_formulario'] as String?,
-      pessoa: map['pessoa'] != null ? PessoaN.fromMap(map['pessoa']) : null,
+      enviado: map['enviado'] == 1,
       hasResponsavelTecnico: map['has_responsavel_tecnico'] == 1,
       nomeResponsavelTecnico: map['nome_responsavel_tecnico'] is String ? map['nome_responsavel_tecnico'] : null,
       registroResponsavelTecnico: map['registro_responsavel_tecnico'] is String ? map['registro_responsavel_tecnico'] : null,
@@ -224,17 +218,59 @@ class FormularioN {
       areaTanqueRede: _parseDouble(map['area_tanque_rede']),
       hasSistemaFechado: map['has_sistema_fechado'] == 1,
       tipoSistemaFechado: map['tipo_sistema_fechado'] is String ? map['tipo_sistema_fechado'] : null,
+      areaSistemaFechado: _parseDouble(map['area_sistema_fechado']),
       hasRaceway: map['has_raceway'] == 1,
       areaRaceway: _parseDouble(map['area_raceway']),
-      producoes: map['producoes'] != null ? (map['producoes'] as List<dynamic>).map((item) => Producao.fromMap(item)).toList() : null,
-      areaFormaJovem: map['area_forma_jovem'] is double ? map['area_forma_jovem'] : null,
-      formasJovem: map['formas_jovem'] != null ? (map['formas_jovem'] as List<dynamic>).map((item) => FormaJovem.fromMap(item)).toList() : null,
-      producoesOrnamental: map['producoes_ornamental'] != null ? (map['producoes_ornamental'] as List<dynamic>).map((item) => ProducaoOrnamental.fromMap(item)).toList() : null,
-      aquisicoesFormaJovem: map['aquisicoes_forma_jovem'] != null ? (map['aquisicoes_forma_jovem'] as List<dynamic>).map((item) => AquisicaoJovem.fromMap(item)).toList() : null,
-      aquisicoesRacao: map['aquisicoes_racao'] != null ? (map['aquisicoes_racao'] as List<dynamic>).map((item) => AquisicaoRacao.fromMap(item)).toList() : null,
-      comercializacaoEspecie: map['comercializacao_especie'] != null ? (map['comercializacao_especie'] as List<dynamic>).map((item) => Comercializacao.fromMap(item)).toList() : null,
-      producoesOrnamentais: map['producoes_ornamentais'] != null ? (map['producoes_ornamentais'] as List<dynamic>).map((item) => ProducaoOrnamentais.fromMap(item)).toList() : null,
+      areaFormaJovem: _parseDouble(map['area_forma_jovem']),
     );
+  }
+
+  Map<String, dynamic> toMapFiltered(){
+    return{
+      'pessoa': pessoa?.toMapFiltered(),
+      'hasResponsavelTecnico': hasResponsavelTecnico,
+      'nomeResponsavelTecnico': nomeResponsavelTecnico,
+      'registroResponsavelTecnico': registroResponsavelTecnico,
+      'telefoneResponsavelTecnico': telefoneResponsavelTecnico,
+      'emailResponsavelTecnico': emailResponsavelTecnico,
+      'enderecoEmpreendimento': enderecoEmpreendimento,
+      'municipioEmpreendimento': municipioEmpreendimento,
+      'ufEmpreendimento': ufEmpreendimento,
+      'latitude': latitude,
+      'longitude': longitude,
+      'hasDap': hasDap,
+      'dap': dap,
+      'hasLicencaAmbiental': hasLicencaAmbiental,
+      'licencaAmbiental': licencaAmbiental,
+      'hasOutorga': hasOutorga,
+      'outorga': outorga,
+      'hasCtf': hasCtf,
+      'ctf': ctf,
+      'hasCar': hasCar,
+      'car': car,
+      'hasOesa': hasOesa,
+      'oesa': oesa,
+      'hasAssistenciaTecnica': hasAssistenciaTecnica,
+      'atendimentosAno': atendimentosAno,
+      'hasViveiro': hasViveiro,
+      'tipoViveiro': tipoViveiro,
+      'areaViveiro': areaViveiro,
+      'hasTanqueRede': hasTanqueRede,
+      'areaTanqueRede': areaTanqueRede,
+      'hasSistemaFechado': hasSistemaFechado,
+      'tipoSistemaFechado': tipoSistemaFechado,
+      'areaSistemaFechado': areaSistemaFechado,
+      'hasRaceway': hasRaceway,
+      'areaRaceway': areaRaceway,
+      'producoes': producoes?.map((producao) => producao.toMapFiltered()).toList(),
+      'areaFormaJovem': areaFormaJovem,
+      'formasJovem': formasJovem?.map((forma) => forma.toMapFiltered()).toList(),
+      'producoesOrnamental': producoesOrnamental?.map((ornamental) => ornamental.toMapFiltered()).toList(),
+      'aquisicoesFormaJovem': aquisicoesFormaJovem?.map((aquisicao) => aquisicao.toMapFiltered()).toList(),
+      'aquisicoesRacao': aquisicoesRacao?.map((racao) => racao.toMapFiltered()).toList(),
+      'comercializacaoEspecie': comercializacaoEspecie?.map((comercializacao) => comercializacao.toMapFiltered()).toList(),
+      'producoesOrnamentais': producoesOrnamentais?.map((ornamentais) => ornamentais.toMapFiltered()).toList(),
+    };
   }
 }
 
@@ -256,42 +292,4 @@ double? _parseDouble(dynamic value) {
   return null;
 }
 
-// CREATE TABLE formulario (
-// id_formulario INTEGER PRIMARY KEY AUTOINCREMENT,
-// uuid_formulario TEXT ,
-// pessoa TEXT,  -- Armazenar JSON ou criar uma tabela separada
-// has_responsavel_tecnico BOOL,
-// nome_responsavel_tecnico TEXT,
-// registro_responsavel_tecnico TEXT,
-// telefone_responsavel_tecnico TEXT,
-// email_responsavel_tecnico TEXT,
-// endereco_empreendimento TEXT,
-// municipio_empreendimento TEXT,
-// uf_empreendimento TEXT,
-// latitude REAL,
-// longitude REAL,
-// has_dap BOOL,
-// dap INTEGER,
-// has_licenca_ambiental BOOL,
-// licenca_ambiental INTEGER,
-// has_outorga BOOL,
-// outorga TEXT,
-// has_ctf BOOL,
-// ctf INTEGER,
-// has_car BOOL,
-// car TEXT,
-// has_oesa BOOL,
-// oesa INTEGER,
-// has_assistencia_tecnica BOOL,
-// atendimentos_ano INTEGER,
-// has_viveiro BOOL,
-// tipo_viveiro TEXT,
-// area_viveiro REAL,
-// has_tanque_rede BOOL,
-// area_tanque_rede REAL,
-// has_sistema_fechado BOOL,
-// tipo_sistema_fechado TEXT,
-// has_raceway BOOL,
-// area_raceway REAL,
-// area_forma_jovem REAL,
-// );
+

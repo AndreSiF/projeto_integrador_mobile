@@ -51,6 +51,10 @@ final oesaFormatter = MaskTextInputFormatter(
   filter: {"#": RegExp(r'[0-9]')},
 );
 
+final numberFormatter = MaskTextInputFormatter(
+  mask: '',
+  filter: { "#": RegExp(r'[0-9]') },
+);
 
 
 

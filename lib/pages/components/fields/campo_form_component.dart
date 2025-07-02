@@ -82,8 +82,18 @@ class CampoForm extends StatelessWidget{
             ),
             labelStyle: TextStyle(color: Color(0xFF6F6A7E)),
           ),
-          validator: (value) =>
-          value == null || value.isEmpty ? 'Campo obrigatório' : null,
+          validator: (value) {
+            if(value == null || value.isEmpty){
+              return 'Campo obrigatório';
+            }
+            if(inputType == InputType.EMAIL){
+              final emailRegex = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+              if(!emailRegex.hasMatch(value)){
+                return 'Endereço de Email inválido';
+              }
+            }
+          }
+          ,
         ),
       );
     }

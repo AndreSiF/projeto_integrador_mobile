@@ -1,47 +1,68 @@
 import 'package:projeto_integrador_mobile/core/database.dart';
-import 'package:projeto_integrador_mobile/models/form.dart';
+import 'package:projeto_integrador_mobile/dao/aquisicao_jovem_dao.dart';
+import 'package:projeto_integrador_mobile/dao/aquisicao_racao_dao.dart';
+import 'package:projeto_integrador_mobile/dao/comercializacao_dao.dart';
+import 'package:projeto_integrador_mobile/dao/forma_jovem_dao.dart';
+import 'package:projeto_integrador_mobile/dao/pessoa_dao.dart';
+import 'package:projeto_integrador_mobile/dao/producao_dao.dart';
+import 'package:projeto_integrador_mobile/dao/producao_ornamentais_dao.dart';
+import 'package:projeto_integrador_mobile/dao/producao_ornamental_dao.dart';
+import 'package:projeto_integrador_mobile/models/form/formulario.dart';
 
-class FormDao {
-  static const String table = 'form';
+class FormularioDao {
+  static const String table = 'formulario';
 
-  // DAO que insere um formulário no banco de dados
-  Future<int> insertForm(Formulario formulario) async {
+  // insere uma entrada formulário no banco de dados
+  Future<void> insertFormulario(Formulario formulario) async {
     final db = await AppDatabase().database;
-    return db.insert(table, formulario.toMap());
+      await db.insert(table, formulario.toMap());
   }
 
-  // DAO que deleta um formulário do banco de dados
-  Future<void> deleteForm(int id) async {
+  Future<void> deleteFormularioByUuid(String uuid) async {
     final db = await AppDatabase().database;
-    await db.delete(table, where: 'id_form = ?', whereArgs: [id]);
+    await db.delete(
+      table,
+      where: 'uuid_formulario = ?',
+      whereArgs: [uuid]);
   }
 
-  // DAO que retorna todas as entradas de formulários do banco de dados
-  Future<List<Formulario>> getForms() async {
+  Future<void> updateFormulario(Formulario formulario) async {
+    final db = await AppDatabase().database;
+      await db.update(
+        table,
+        formulario.toMap(),
+        where: 'uuid_formulario = ?',
+        whereArgs: [formulario.uuid],
+      );
+  }
+
+  Future<List<Formulario>> getFormularios() async {
+    List<Formulario> formularios;
     final db = await AppDatabase().database;
     final result = await db.query(table);
-    return result.map((map) => Formulario.fromMap(map)).toList();
+    formularios = result.map((map) => Formulario.fromMap(map)).toList();
+
+    for(var formulario in formularios){
+      formulario.pessoa = await PessoaDao().getPessoaByFormularioUuid(formulario.uuid);
+      formulario.aquisicoesFormaJovem = await AquisicaoJovemDao().getAquisicoesJovemByUuidFormulario(formulario.uuid);
+      formulario.aquisicoesRacao = await AquisicaoRacaoDao().getAquisicoesRacaoByUuidFormulario(formulario.uuid);
+      formulario.comercializacaoEspecie = await ComercializacaoDao().getComercializacoesByUuidFormulario(formulario.uuid);
+      formulario.formasJovem = await FormaJovemDao().getFormasJovemByUuidFormulario(formulario.uuid);
+      formulario.producoes = await ProducaoDao().getProducoesByUuidFormulario(formulario.uuid);
+      formulario.producoesOrnamentais = await ProducaoOrnamentaisDao().getProducoesOrnamentaisByUuidFormulario(formulario.uuid);
+      formulario.producoesOrnamental = await ProducaoOrnamentalDao().getProducoesOrnamentalByUuidFormulario(formulario.uuid);
+    }
+
+    return formularios;
   }
 
-  // DAO que atualiza uma entrada de formulário do banco de dados
-  Future<void> atualizarFormulario(Formulario formulario) async {
+  Future<void> updateFormularioState(String? uuid) async {
     final db = await AppDatabase().database;
     await db.update(
       table,
-      formulario.toMap(),
-      where: 'id_form = ?',
-      whereArgs: [formulario.idForm],
+      {'enviado': 1},
+      where: 'uuid_formulario = ?',
+      whereArgs: [uuid],
     );
   }
-
-  // DAO que retornar um formulário baseado no ID de uma pessoa
-  Future<List<Map<String, dynamic>>> getPessoaComFormulariosRaw() async {
-    final db = await AppDatabase().database;
-    return await db.rawQuery('''
-      SELECT p.*, f.*
-      FROM pessoa p
-      JOIN form f ON p.id_pessoa = f.id_pessoa
-    ''');
-  }
-
 }

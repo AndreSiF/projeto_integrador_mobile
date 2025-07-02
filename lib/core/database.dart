@@ -26,65 +26,138 @@ class AppDatabase {
       },
       onCreate: (db, version) async {
         await db.execute('''
-          CREATE TABLE pessoa (
-            id_pessoa INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT,
-            cpf TEXT,
-            telefone INTEGER,
-            email TEXT,
-            rgp INT,
-            uf TEXT,
-            municipio TEXT,
-            endereco TEXT,
-            razao_social TEXT,
-            cnpj TEXT,
-            cnae TEXT
+          CREATE TABLE formulario (
+            uuid_formulario TEXT PRIMARY KEY,
+            enviado INTEGER,
+            has_responsavel_tecnico INTEGER,
+            nome_responsavel_tecnico TEXT,
+            registro_responsavel_tecnico TEXT,
+            telefone_responsavel_tecnico TEXT,
+            email_responsavel_tecnico TEXT,
+            endereco_empreendimento TEXT,
+            municipio_empreendimento TEXT,
+            uf_empreendimento TEXT,
+            latitude REAL,
+            longitude REAL,
+            has_dap INTEGER,
+            dap INTEGER,
+            has_licenca_ambiental INTEGER,
+            licenca_ambiental INTEGER,
+            has_outorga INTEGER,
+            outorga TEXT,
+            has_ctf INTEGER,
+            ctf INTEGER,
+            has_car INTEGER,
+            car TEXT,
+            has_oesa INTEGER,
+            oesa INTEGER,
+            has_assistencia_tecnica INTEGER,
+            atendimentos_ano INTEGER,
+            has_viveiro INTEGER,
+            tipo_viveiro TEXT,
+            area_viveiro REAL,
+            has_tanque_rede INTEGER,
+            area_tanque_rede REAL,
+            has_sistema_fechado INTEGER,
+            tipo_sistema_fechado TEXT,
+            area_sistema_fechado REAL,
+            has_raceway INTEGER,
+            area_raceway REAL,
+            area_forma_jovem REAL 
           )
         ''');
         await db.execute('''
-          CREATE TABLE form (
-            id_form INTEGER PRIMARY KEY AUTOINCREMENT,
-            id_pessoa INTEGER NOT NULL,
-            endereco_empre TEXT,
-            municipio_empre TEXT,
-            uf_empre TEXT,
-            latitude REAL,
-            longitude REAL,
-            dap TEXT,
-            cad_ambiental TEXT,
-            outorga TEXT,
-            ctf TEXT,
-            car TEXT,
-            oesa TEXT,
-            atendimentos_ano INTEGER,
-            tipo_viveiro TEXT,
-            area_viveiro REAL,
-            area_taque_rede REAL,
-            tipo_sistema_fechado TEXT,
-            area_sistema_fechado REAL,
-            area_raceway REAL,
+          CREATE TABLE pessoa (
+            uuid_pessoa TEXT PRIMARY KEY,
+            uuid_formulario_pessoa TEXT,
+            nome_pessoa TEXT,
+            cpf_pessoa TEXT,
+            telefone_pessoa TEXT,
+            email_pessoa TEXT,
+            rgp_pessoa TEXT,
+            endereco TEXT,
+            uf TEXT,
+            municipio TEXT,
+            razao_social TEXT,
+            cnpj TEXT,
+            cnae TEXT,
+            responsavel_legal TEXT,
+            rgp_responsavel_legal TEXT,
+            telefone_responsavel_legal TEXT,
+            email_responsavel_legal TEXT,
+            FOREIGN KEY (uuid_formulario_pessoa) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE producao_ornamental (
+            uuid_producao_ornamental TEXT PRIMARY KEY,
+            uuid_formulario_producao_ornamental TEXT,
+            especie_producao_ornamental TEXT,
+            producao_kg_producao_ornamental REAL,
+            unidades_producao_ornamental INTEGER,
+            FOREIGN KEY (uuid_formulario_producao_ornamental) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE producao_ornamentais (
+            uuid_producao_ornamentais TEXT PRIMARY KEY,
+            uuid_formulario_producao_ornamentais TEXT,
+            uf_origem_producao_ornamentais TEXT,
+            unidades_producao_ornamentais INTEGER,
+            quantidade_producao_ornamentais REAL,
+            FOREIGN KEY (uuid_formulario_producao_ornamentais) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE producao (
+            uuid_producao TEXT PRIMARY KEY,
+            uuid_formulario_producao TEXT,
             especie_producao TEXT,
-            peso_producao REAL,
+            producao_kg_producao REAL,
             unidades_producao INTEGER,
-            area_jovem_producao REAL,
-            especie_area_jov TEXT,
-            milheiros_area_jov INTEGER,
-            especie_ornamental TEXT,
-            peso_ornamental REAL,
-            unidades_ornamental INTEGER,
-            uf_aquisicao_jov TEXT,
-            especie_aqui_jov TEXT,
-            milheiros_aqui_jov INTEGER,
-            origem_racao TEXT,
-            unidades_racao INTEGER,
-            quantidade_racao REAL,
-            uf_origem_comercial_especie TEXT,
-            especie_comercial TEXT,
-            prod_comercial REAL,
-            quantidade_comercial INTEGER,
-            preco_medio REAL,
-            FOREIGN KEY (id_pessoa) REFERENCES pessoa(id_pessoa) ON DELETE CASCADE
-          );
+            FOREIGN KEY (uuid_formulario_producao) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE forma_jovem (
+            uuid_forma_jovem TEXT PRIMARY KEY,
+            uuid_formulario_forma_jovem TEXT,
+            especie_forma_jovem TEXT,
+            milheiros_forma_jovem REAL,
+            FOREIGN KEY (uuid_formulario_forma_jovem) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE comercializacao (
+            uuid_comercializacao TEXT PRIMARY KEY,
+            uuid_formulario_comercializacao TEXT,
+            uf_origem_comercializacao TEXT,
+            especie_comercializacao TEXT,
+            producao_kg_comercializacao REAL,
+            quantidade_comercializacao INTEGER,
+            preco_medio_comercializacao REAL,
+            FOREIGN KEY (uuid_formulario_comercializacao) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE aquisicao_racao (
+            uuid_aquisicao_racao TEXT PRIMARY KEY,
+            uuid_formulario_aquisicao_racao TEXT,
+            uf_origem_aquisicao_racao TEXT,
+            unidade_aquisicao_racao TEXT,
+            quantidade_aquisicao_racao REAL,
+            FOREIGN KEY (uuid_formulario_aquisicao_racao) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE aquisicao_jovem (
+            uuid_aquisicao_jovem TEXT PRIMARY KEY,
+            uuid_formulario_aquisicao_jovem TEXT,
+            uf_origem_aquisicao_jovem TEXT,
+            especie_aquisicao_jovem TEXT,
+            milheiros_aquisicao_jovem REAL,
+            FOREIGN KEY (uuid_formulario_aquisicao_jovem) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
+          )
         ''');
       },
     );

@@ -1,16 +1,16 @@
+import 'package:projeto_integrador_mobile/models/campos/campos_producao.dart';
+
 class Producao {
-  final int? id;
-  final String? uuid;
-  final String? uuidFormulario;
+  String? uuid;
+  String? uuidFormulario;
   final String? especie;
   final double? producaoKg;
   final int? unidades;
 
-  Producao({this.id, this.uuid, this.uuidFormulario, this.especie, this.producaoKg, this.unidades});
+  Producao({this.uuid, this.uuidFormulario, this.especie, this.producaoKg, this.unidades});
 
   Map<String, dynamic> toMap() {
     return {
-      'id_producao': id,
       'uuid_producao': uuid,
       'uuid_formulario_producao': uuidFormulario,
       'especie_producao': especie,
@@ -19,9 +19,16 @@ class Producao {
     };
   }
 
+  Map<String, dynamic> toMapFiltered() {
+    return {
+      'especie': especie,
+      'producaoKg': producaoKg,
+      'unidades': unidades,
+    };
+  }
+
   factory Producao.fromMap(Map<String, dynamic> map) {
     return Producao(
-      id: _parseInt(map['id_producao']),
       uuid: map['uuid_producao'] is String ? map['uuid_producao'] : null,
       uuidFormulario: map['uuid_formulario_producao'] is String ? map['uuid_formulario_producao'] : null,
       especie: map['especie_producao'] is String ? map['especie_producao'] : null,
@@ -29,6 +36,31 @@ class Producao {
       unidades: _parseInt(map['unidades_producao']),
     );
   }
+
+  List<Producao> obterProducoes(List<CamposProducao> producoes) {
+    List<Producao> listaProducoes = [];
+
+    for (var campo in producoes) {
+      // Obtendo os valores dos controladores
+      String? uuid = campo.uuid;
+      String? uuidFormulario = campo.uuidFormulario;
+      String? especie = campo.especieController.text;
+      double? producaoKg = double.tryParse(campo.producaoKgController.text);
+      int? unidades = int.tryParse(campo.unidadesController.text);
+
+      // Criando um objeto Producao e adicionando à lista
+      listaProducoes.add(Producao(
+        uuid: uuid,
+        uuidFormulario: uuidFormulario,
+        especie: especie,
+        producaoKg: producaoKg,
+        unidades: unidades,
+      ));
+    }
+
+    return listaProducoes;
+  }
+
 }
 
 int? _parseInt(dynamic value) {
@@ -49,14 +81,4 @@ double? _parseDouble(dynamic value) {
   return null;
 }
 
-// await db.execute('''
-//           CREATE TABLE producao (
-//             id_producao INTEGER PRIMARY KEY AUTOINCREMENT,
-//             uuid_producao TEXT,
-//             uuid_formulario_producao TEXT,
-//             especie_producao TEXT,
-//             producao_kg_producao REAL,
-//             unidades_producao INTEGER,
-//             FOREIGN KEY (uuid_formulario_producao) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
-//           )
-//         ''');
+

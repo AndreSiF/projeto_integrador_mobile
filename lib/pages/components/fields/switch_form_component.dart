@@ -4,12 +4,14 @@ class SwitchForm extends StatelessWidget {
   final String label;
   final bool value;
   final ValueChanged<bool> onChanged;
+  final bool editando;
 
   const SwitchForm({
     super.key,
     required this.label,
     required this.value,
     required this.onChanged,
+    required this.editando,
   });
 
   @override
@@ -26,11 +28,13 @@ class SwitchForm extends StatelessWidget {
         ),
         Switch(
           value: value,
-          onChanged: onChanged,
+          onChanged: editando ? onChanged : null,
           activeColor: Colors.white70,
           activeTrackColor: Colors.blueAccent,
-          inactiveThumbColor: Colors.grey.shade700,
-          inactiveTrackColor: Colors.grey.shade300,
+          inactiveThumbColor:
+          editando ? Colors.grey.shade700 : Colors.grey.shade400,
+          inactiveTrackColor:
+          editando ? Colors.grey.shade300 : Colors.grey.shade200,
         ),
       ],
     );

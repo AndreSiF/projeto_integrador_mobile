@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-
 // Classe usada para criar campos pro frontend de visualização de formulários do banco
 // Também libera as caixas de texto quando o usuário aperta no botão de editar
-// TODO: Criar uma classe para campos do próprio formulário
 class Campo extends StatelessWidget {
   final String label;
   final String? valor;
   final bool editando;
   final TextEditingController? controller;
+  final bool isEnabled;
 
   const Campo({
     super.key,
     required this.label,
     required this.valor,
-    this.editando = false,
-    this.controller,
+    required this.editando,
+    required this.controller,
+    required this.isEnabled,
   });
 
   @override
@@ -26,7 +26,7 @@ class Campo extends StatelessWidget {
         child: TextFormField(
           controller: controller,
           decoration: InputDecoration(
-            labelText: label,
+            labelText: isEnabled ? label : '...',
             border: const OutlineInputBorder(),
           ),
         ),
@@ -39,7 +39,7 @@ class Campo extends StatelessWidget {
           initialValue: texto,
           readOnly: true,
           decoration: InputDecoration(
-            labelText: label,
+            labelText: isEnabled ? label : '...',
             border: const OutlineInputBorder(),
           ),
         ),

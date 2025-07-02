@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:projeto_integrador_mobile/pages/form/listar_pessoas_formularios_page.dart';
+import 'package:projeto_integrador_mobile/pages/form/listar_formularios.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_fis_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/pessoa_jur_page.dart';
 
@@ -93,7 +93,8 @@ class IdentificacaoAquicultorPage extends StatelessWidget {
               SizedBox(height: 24),
               Center(
                 child: TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListaPessoasComFormulariosPage())),
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListarFormulariosPage())),
+                  //onPressed: FormularioDao().test,
                   child: Text(
                     'Voltar para o início',
                     style: TextStyle(color: Color(0xFF0D47A1)),

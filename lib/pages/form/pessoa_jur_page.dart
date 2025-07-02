@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_empre_page.dart';
@@ -34,9 +34,9 @@ class _CnpjPageState extends State<CnpjPage> {
         razaoSocial: _razaoController.text,
         cnpj: _cnpjController.text,
         cnae: _cnaeController.text,
-        //telefone: int.parse(_telefoneRespController.text),
+        telefone: _telefoneRespController.text,
         email: _emailRespController.text,
-        //rgp: int.parse(_rgpRespController.text),
+        rgp: _rgpRespController.text,
         endereco: _enderecoController.text,
         uf: _ufController.text,
         municipio: _municipioController.text,

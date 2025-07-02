@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador_mobile/models/form.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/formulario.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/switch_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/components/masks.dart';
@@ -49,21 +49,33 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
   void _proximo() {
     if (_formKey.currentState!.validate()) {
       final formulario = Formulario(
-        //TODO: ADD THE CONTROLLERS HERE
-        enderecoEmpre: _enderecoEmpreController.text,
-        municipioEmpre: _municipioEmpreController.text,
-        ufEmpre: _ufEmpreController.text,
-        //latitude: double.tryParse(_latitudeController.text),
-        //longitude: double.tryParse(_longitudeController.text),
-        //dap: int.tryParse(_dapController.text),
-        //cadAmbiental: int.tryParse(_cadAmbientalController.text),
-        //outorga: int.tryParse(_numOutorgaController.text),
+        pessoa: widget.pessoa,
+        nomeResponsavelTecnico: _nomeRespTecnicoController.text,
+        registroResponsavelTecnico: _numRespTecnicoController.text,
+        telefoneResponsavelTecnico: _telefoneRespTecnicoController.text,
+        emailResponsavelTecnico: _emailRespTecnicoController.text,
+        enderecoEmpreendimento: _enderecoEmpreController.text,
+        municipioEmpreendimento: _municipioEmpreController.text,
+        ufEmpreendimento: _ufEmpreController.text,
+        latitude: _latitudeController.text,
+        longitude: _longitudeController.text,
+        dap: int.tryParse(_dapController.text),
+        licencaAmbiental: int.tryParse(_cadAmbientalController.text),
+        outorga: _numOutorgaController.text,
         ctf: int.tryParse(_ctfController.text),
-        //car: int.tryParse(_carController.text),
+        car: _carController.text,
         oesa: int.tryParse(_oesaController.text),
         atendimentosAno: int.tryParse(_atendAnoController.text),
+        hasResponsavelTecnico: _hasRespTecnico,
+        hasCar: _hasCAR,
+        hasDap: _hasDAP,
+        hasLicencaAmbiental: _hasLicencaAmb,
+        hasOutorga: _hasOutorga,
+        hasCtf: _hasCTF,
+        hasOesa: _hasOESA,
+        hasAssistenciaTecnica: _hasAssistenciaTecnica,
       );
-
+      print(formulario.oesa);
       Navigator.push(context, MaterialPageRoute(builder: (_) => CultivoProducaoPage(pessoa: widget.pessoa, formulario: formulario)),);
     }
   }
@@ -111,6 +123,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui responsável técnico',
                       value: _hasRespTecnico,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasRespTecnico = val;
@@ -143,6 +156,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Documento de\nAptidão ao PRONAF-DAP',
                       value: _hasDAP,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasDAP = val;
@@ -155,6 +169,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Licença Ambiental',
                       value: _hasLicencaAmb,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasLicencaAmb = val;
@@ -167,6 +182,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: "Possui Outorga de uso d'água",
                       value: _hasOutorga,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasOutorga = val;
@@ -179,6 +195,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Cadastro Técnico\nFederal - CTF',
                       value: _hasCTF,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasCTF = val;
@@ -191,6 +208,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Cadastro Ambiental\nRural - CAR',
                       value: _hasCAR,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasCAR = val;
@@ -203,6 +221,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Cadastro na OESA',
                       value: _hasOESA,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasOESA = val;
@@ -215,6 +234,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                   SwitchForm(
                       label: 'Possui Assistência Técnica',
                       value: _hasAssistenciaTecnica,
+                      editando: true,
                       onChanged: (val) {
                         setState(() {
                           _hasAssistenciaTecnica = val;
@@ -222,7 +242,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
                         });
                       }
                   ),
-                  CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: true, isEnabled: _hasAssistenciaTecnica, mask: null, lenght: 3, inputType: InputType.INTEGER),
+                  CampoForm(label: "N° de Atendimentos ao Ano", value: "", controller: _atendAnoController, required: true, isEnabled: _hasAssistenciaTecnica, mask: [numberFormatter], lenght: 3, inputType: InputType.INTEGER),
 
                   Row(
                     children: [

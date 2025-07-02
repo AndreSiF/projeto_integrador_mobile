@@ -1,7 +1,8 @@
+import 'package:projeto_integrador_mobile/models/campos/campos_comercializacao.dart';
+
 class Comercializacao {
-  final int? id;
-  final String? uuid;
-  final String? uuidFormulario;
+  String? uuid;
+  String? uuidFormulario;
   final String? ufOrigem;
   final String? especie;
   final double? producaoKg;
@@ -9,7 +10,6 @@ class Comercializacao {
   final double? precoMedio;
 
   Comercializacao({
-    this.id,
     this.uuid,
     this.uuidFormulario,
     this.ufOrigem,
@@ -21,7 +21,6 @@ class Comercializacao {
 
   Map<String, dynamic> toMap() {
     return{
-      'id_comercializacao': id,
       'uuid_comercializacao': uuid,
       'uuid_formulario_comercializacao': uuidFormulario,
       'uf_origem_comercializacao': ufOrigem,
@@ -32,9 +31,18 @@ class Comercializacao {
     };
   }
 
+  Map<String, dynamic> toMapFiltered() {
+    return{
+      'ufOrigem': ufOrigem,
+      'especie': especie,
+      'producaoKg': producaoKg,
+      'quantidade': quantidade,
+      'precoMedio': precoMedio,
+    };
+  }
+
   factory Comercializacao.fromMap(Map<String, dynamic> map) {
     return Comercializacao(
-      id: _parseInt(map['id_comercializacao']),
       uuid: map['uuid_comercializacao'] is String ? map['uuid_comercializacao'] : null,
       uuidFormulario: map['uuid_formulario_comercializacao'] is String ? map['uuid_formulario_comercializacao'] : null,
       ufOrigem: map['uf_origem_comercializacao'] is String ? map['uf_origem_comercializacao'] : null,
@@ -43,6 +51,34 @@ class Comercializacao {
       quantidade: _parseInt(map['quantidade_comercializacao']),
       precoMedio: _parseDouble(map['preco_medio_comercializacao']),
     );
+  }
+
+  List<Comercializacao> obterComercializacoes(List<CamposComercializacao> producoes) {
+    List<Comercializacao> listaComercializacao = [];
+
+    for (var campo in producoes) {
+      // Obtendo os valores dos controladores
+      String? uuid = campo.uuid;
+      String? uuidFormulario = campo.uuidFormulario;
+      String? ufOrigem = campo.ufOrigemController.text;
+      String? especie = campo.especieController.text;
+      double? producaoKg = double.tryParse(campo.producaoKgController.text);
+      int? quantidade = int.tryParse(campo.quantidadeController.text);
+      double? precoMedio = double.tryParse(campo.precoMedioController.text);
+
+      // Criando um objeto Producao e adicionando à lista
+      listaComercializacao.add(Comercializacao(
+        uuid: uuid,
+        uuidFormulario: uuidFormulario,
+        ufOrigem: ufOrigem,
+        especie: especie,
+        producaoKg: producaoKg,
+        quantidade: quantidade,
+        precoMedio: precoMedio,
+      ));
+    }
+
+    return listaComercializacao;
   }
 }
 
@@ -64,16 +100,4 @@ double? _parseDouble(dynamic value) {
   return null;
 }
 
-// await db.execute('''
-//           CREATE TABLE comercializacao (
-//             id_comercializacao INTEGER PRIMARY KEY AUTOINCREMENT,
-//             uuid_comercializacao TEXT,
-//             uuid_formulario_comercializacao TEXT,
-//             uf_origem_comercializacao TEXT,
-//             especie_comercializacao TEXT,
-//             producao_kg_comercializacao REAL,
-//             quantidade_comercializacao INTEGER,
-//             preco_medio_comercializacao REAL,
-//             FOREIGN KEY (uuid_formulario_comercializacao) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
-//           )
-//         ''');
+

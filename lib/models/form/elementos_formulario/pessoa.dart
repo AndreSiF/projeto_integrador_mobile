@@ -1,7 +1,6 @@
-class PessoaN {
-  final int? id;
-  final String? uuid;
-  final String? uuidFormulario;
+class Pessoa {
+  String? uuid;
+  String? uuidFormulario;
   final String? nome;
   final String? cpf;
   final String? telefone;
@@ -20,8 +19,7 @@ class PessoaN {
   final String? telefoneResponsavelLegal;
   final String? emailResponsavelLegal;
 
-  PessoaN({
-    this.id,
+  Pessoa({
     this.uuid,
     this.uuidFormulario,
     this.nome,
@@ -45,7 +43,6 @@ class PessoaN {
 
   Map<String, dynamic> toMap() {
     return{
-      'id_pessoa': id,
       'uuid_pessoa': uuid,
       'uuid_formulario_pessoa': uuidFormulario,
       'nome_pessoa': nome,
@@ -54,7 +51,7 @@ class PessoaN {
       'email_pessoa': email,
 
       'rgp_pessoa': rgp,
-      'endereco:': endereco,
+      'endereco': endereco,
       'uf': uf,
       'municipio': municipio,
 
@@ -68,9 +65,30 @@ class PessoaN {
     };
   }
 
-  factory PessoaN.fromMap(Map<String, dynamic> map) {
-    return PessoaN(
-      id: _parseInt(map['id_pessoa']),
+  Map<String, dynamic> toMapFiltered() {
+    return{
+      'nome': nome,
+      'cpf': cpf,
+      'telefone': telefone,
+      'email': email,
+
+      'rgp': rgp,
+      'endereco': endereco,
+      'uf': uf,
+      'municipio': municipio,
+
+      'razaoSocial': razaoSocial,
+      'cnpj': cnpj,
+      'cnae': cnae,
+      'responsavelLegal': responsavelLegal,
+      'rgpResponsavelLegal': rgpResponsavelLegal,
+      'telefoneResponsavelLegal': telefoneResponsavelLegal,
+      'emailResponsavelLegal': emailResponsavelLegal,
+    };
+  }
+
+  factory Pessoa.fromMap(Map<String, dynamic> map) {
+    return Pessoa(
       uuid: map['uuid_pessoa'] is String ? map['uuid_pessoa'] : null,
       uuidFormulario: map['uuid_formulario_pessoa'] is String ? map['uuid_formulario_pessoa'] : null,
       nome: map['nome_pessoa'] is String ? map['nome_pessoa'] : null,
@@ -92,35 +110,4 @@ class PessoaN {
   }
 }
 
-int? _parseInt(dynamic value) {
-  if (value is int) {
-    return value;
-  } else if (value is String) {
-    return value.isNotEmpty ? int.tryParse(value) : null;
-  }
-  return null;
-}
 
-// await db.execute('''
-//           CREATE TABLE pessoa (
-//             id_pessoa INTEGER PRIMARY KEY AUTOINCREMENT,
-//             uuid_pessoa TEXT,
-//             uuid_formulario_pessoa TEXT,
-//             nome_pessoa TEXT,
-//             cpf_pessoa TEXT,
-//             telefone_pessoa TEXT,
-//             email_pessoa TEXT,
-//             rgp_pessoa TEXT,
-//             endereco TEXT,
-//             uf TEXT,
-//             municipio TEXT,
-//             razao_social TEXT,
-//             cnpj TEXT,
-//             cnae TEXT,
-//             responsavel_legal TEXT,
-//             rgp_responsavel_legal TEXT,
-//             telefone_responsavel_legal TEXT,
-//             email_responsavel_legal TEXT,
-//             FOREIGN KEY (uuid_formulario_pessoa) REFERENCES formulario(uuid_formulario) ON DELETE CASCADE
-//           )
-//         ''');

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto_integrador_mobile/models/pessoa.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/pessoa.dart';
 import 'package:projeto_integrador_mobile/pages/components/fields/campo_form_component.dart';
 import 'package:projeto_integrador_mobile/pages/components/masks.dart';
 import 'package:projeto_integrador_mobile/pages/form/ident_aqui_page.dart';
@@ -30,9 +30,9 @@ class _CpfPageState extends State<CpfPage> {
       final pessoa = Pessoa(
         nome: _nomeController.text,
         cpf: _cpfController.text,
-        //telefone: int.parse(_telefoneController.text),
+        telefone: _telefoneController.text,
         email: _emailController.text,
-        //rgp: int.parse(_rgpController.text),
+        rgp: _rgpController.text,
         endereco: _enderecoController.text,
         uf: _ufController.text,
         municipio: _municipioController.text,

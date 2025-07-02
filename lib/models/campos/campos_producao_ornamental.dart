@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
-import 'package:projeto_integrador_mobile/models/form/elementos_formulario/producao.dart';
+import 'package:projeto_integrador_mobile/models/form/elementos_formulario/producao_ornamental.dart';
 
-class CamposProducao{
+class CamposProducaoOrnamental{
   String? uuid;
   String? uuidFormulario;
   final TextEditingController especieController = TextEditingController();
   final TextEditingController producaoKgController = TextEditingController();
   final TextEditingController unidadesController = TextEditingController();
 
-  List<CamposProducao>? obterCamposProducao(List<Producao>? producoes) {
+  List<CamposProducaoOrnamental>? obterCamposProducao(List<ProducaoOrnamental>? producoes) {
     return producoes?.map((producao) {
-      final campos = CamposProducao();
+      final campos = CamposProducaoOrnamental();
 
       campos.uuid = producao.uuid ?? '';
       campos.uuidFormulario = producao.uuidFormulario ?? '';
