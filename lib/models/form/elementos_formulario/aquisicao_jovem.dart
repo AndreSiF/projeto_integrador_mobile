@@ -27,10 +27,9 @@ class AquisicaoJovem {
 
   Map<String, dynamic> toMapFiltered() {
     return{
-      'uuid_formulario_aquisicao_jovem': uuidFormulario,
-      'uf_origem_aquisicao_jovem': ufOrigem,
-      'especie_aquisicao_jovem': especie,
-      'milheiros_aquisicao_jovem': milheiros,
+      'ufOrigem': ufOrigem,
+      'especie': especie,
+      'milheiros': milheiros,
     };
   }
 

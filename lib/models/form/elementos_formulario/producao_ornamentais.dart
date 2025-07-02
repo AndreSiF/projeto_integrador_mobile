@@ -26,10 +26,9 @@ class ProducaoOrnamentais {
   }
   Map<String, dynamic> toMapFiltered() {
     return{
-      'uuid_formulario_producao_ornamentais': uuidFormulario,
-      'uf_origem_producao_ornamentais': ufOrigem,
-      'unidades_producao_ornamentais': unidades,
-      'quantidade_producao_ornamentais': quantidade,
+      'ufOrigem': ufOrigem,
+      'unidades': unidades,
+      'quantidade': quantidade,
     };
   }
 

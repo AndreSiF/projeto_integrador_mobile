@@ -132,6 +132,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
         hasTanqueRede: widget.formulario.hasTanqueRede,
         hasSistemaFechado: widget.formulario.hasSistemaFechado,
         hasRaceway: widget.formulario.hasRaceway,
+        areaFormaJovem: widget.formulario.areaFormaJovem,
         aquisicoesFormaJovem: AquisicaoJovem().obterAquisicoesJovem(aquisicoesJovemController),
         aquisicoesRacao: AquisicaoRacao().obterRacoes(aquisicoesRacaoController),
         comercializacaoEspecie: Comercializacao().obterComercializacoes(comercializacoesEspecieController),

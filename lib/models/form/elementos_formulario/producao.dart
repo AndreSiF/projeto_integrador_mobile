@@ -21,11 +21,9 @@ class Producao {
 
   Map<String, dynamic> toMapFiltered() {
     return {
-      'uuid_producao': uuid,
-      'uuid_formulario_producao': uuidFormulario,
-      'especie_producao': especie,
-      'producao_kg_producao': producaoKg,
-      'unidades_producao': unidades,
+      'especie': especie,
+      'producaoKg': producaoKg,
+      'unidades': unidades,
     };
   }
 

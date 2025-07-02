@@ -114,6 +114,7 @@ class _CultivoProducaoPageState extends State<CultivoProducaoPage> {
         tipoSistemaFechado: _tipoSisFechadoController.text,
         areaSistemaFechado: double.tryParse(_areaSisFechadoController.text),
         areaRaceway: double.tryParse(_areaRacewayController.text),
+        areaFormaJovem: double.tryParse(_areaJovProdController.text),
         hasResponsavelTecnico: widget.formulario.hasResponsavelTecnico,
         hasDap: widget.formulario.hasDap,
         hasLicencaAmbiental: widget.formulario.hasLicencaAmbiental,

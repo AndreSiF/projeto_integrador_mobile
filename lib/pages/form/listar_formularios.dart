@@ -107,16 +107,17 @@ class _ListarFormularioPageState extends State<ListarFormulariosPage> {
                     title: Text('Proprietário: ${pessoa?.nome}'),
                     subtitle: Text('Endereço da fazenda: ${item.enderecoEmpreendimento}'),
                     trailing: Tooltip(
-                      message: item.enviado! ? 'Desmarcar efetivado' : 'Efetivar',
+                      message: item.enviado! ? 'Já enviado' : 'Enviar',
                       child: IconButton(
                         icon: Icon(
-                          Icons.check,
-                          color: item.enviado! ? Colors.grey : Colors.green,
+                          Icons.check_circle,
+                          color: item.enviado! ? Colors.green : Colors.grey,
                         ),
                         onPressed: () {
                           if (!item.enviado!) {
                             _confirmarEnvio(item);
                           } else {
+                            _formularioService.updateFormularioState(item.uuid);
                             _formularioJaEnviado();
                           }
                         },
@@ -138,11 +139,11 @@ class _ListarFormularioPageState extends State<ListarFormulariosPage> {
                     title: Text('Razão Social: ${pessoa?.razaoSocial}'),
                     subtitle: Text('Endereço da fazenda: ${item.enderecoEmpreendimento}'),
                     trailing: Tooltip(
-                      message: item.enviado! ? 'Desmarcar efetivado' : 'Efetivar',
+                      message: item.enviado! ? 'Já enviado' : 'Enviar',
                       child: IconButton(
                         icon: Icon(
-                          Icons.check,
-                          color: item.enviado! ? Colors.grey : Colors.green,
+                          Icons.check_circle,
+                          color: item.enviado! ? Colors.green : Colors.grey,
                         ),
                         onPressed: () {
                           if (!item.enviado!) {

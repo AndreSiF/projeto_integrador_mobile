@@ -33,12 +33,11 @@ class Comercializacao {
 
   Map<String, dynamic> toMapFiltered() {
     return{
-      'uuid_formulario_comercializacao': uuidFormulario,
-      'uf_origem_comercializacao': ufOrigem,
-      'especie_comercializacao': especie,
-      'producao_kg_comercializacao': producaoKg,
-      'quantidade_comercializacao': quantidade,
-      'preco_medio_comercializacao': precoMedio,
+      'ufOrigem': ufOrigem,
+      'especie': especie,
+      'producaoKg': producaoKg,
+      'quantidade': quantidade,
+      'precoMedio': precoMedio,
     };
   }
 

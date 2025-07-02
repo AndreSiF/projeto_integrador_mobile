@@ -67,24 +67,23 @@ class Pessoa {
 
   Map<String, dynamic> toMapFiltered() {
     return{
-      'uuid_formulario_pessoa': uuidFormulario,
-      'nome_pessoa': nome,
-      'cpf_pessoa': cpf,
-      'telefone_pessoa': telefone,
-      'email_pessoa': email,
+      'nome': nome,
+      'cpf': cpf,
+      'telefone': telefone,
+      'email': email,
 
-      'rgp_pessoa': rgp,
+      'rgp': rgp,
       'endereco': endereco,
       'uf': uf,
       'municipio': municipio,
 
-      'razao_social': razaoSocial,
+      'razaoSocial': razaoSocial,
       'cnpj': cnpj,
       'cnae': cnae,
-      'responsavel_legal': responsavelLegal,
-      'rgp_responsavel_legal': rgpResponsavelLegal,
-      'telefone_responsavel_legal': telefoneResponsavelLegal,
-      'email_responsavel_legal': emailResponsavelLegal,
+      'responsavelLegal': responsavelLegal,
+      'rgpResponsavelLegal': rgpResponsavelLegal,
+      'telefoneResponsavelLegal': telefoneResponsavelLegal,
+      'emailResponsavelLegal': emailResponsavelLegal,
     };
   }
 

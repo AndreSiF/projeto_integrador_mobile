@@ -19,9 +19,8 @@ class FormaJovem {
 
   Map<String, dynamic> toMapFiltered() {
     return{
-      'uuid_formulario_forma_jovem': uuidFormulario,
-      'especie_forma_jovem': especie,
-      'milheiros_forma_jovem': milheiros,
+      'especie': especie,
+      'milheiros': milheiros,
     };
   }
 

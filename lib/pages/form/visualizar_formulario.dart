@@ -391,489 +391,509 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Detalhes do Formulário'),
+  void _formularioJaEnviado() async {
+    await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Formulário já enviado'),
+        content: const Text('Este formulário já foi enviado ao servidor e não pode mais ser editado.'),
         actions: [
-          IconButton(
-            icon: Icon(_editando ? Icons.close : Icons.edit),
-            onPressed: () {
-              if(_editando){
-                print(_hasRespTecnico);
-                print(formulario.hasResponsavelTecnico);
-                _restaurarCampos();
-                setState(() {
-                  _editando = !_editando;
-                });
-              }
-              else{
-                setState(() {
-                  _editando = !_editando;
-                });
-              }
-            },
+          TextButton(
+            child: const Text('Ok'),
+            onPressed: () => Navigator.of(context).pop(true),
           ),
-          IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: _confirmarExclusao
-          )
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: <Widget>[
-            // Dados da Pessoa
-            const Text('Dados do Indivíduo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Nome', valor: pessoa.nome, controller: _nomeController, editando: _editando, isEnabled: true),
-            Campo(label: 'CPF', valor: pessoa.cpf, controller: _cpfController, editando: _editando, isEnabled: true),
-            Campo(label: 'Telefone', valor: pessoa.telefone, controller: _telefoneController, editando: _editando, isEnabled: true),
-            Campo(label: 'Email', valor: pessoa.email, controller: _emailController, editando: _editando, isEnabled: true),
-            Campo(label: 'RGP', valor: pessoa.rgp, controller: _rgpController, editando: _editando, isEnabled: true),
-            Campo(label: 'UF', valor: pessoa.uf, controller: _ufController, editando: _editando, isEnabled: true),
-            Campo(label: 'Município', valor: pessoa.municipio, controller: _municipioController, editando: _editando, isEnabled: true),
-            Campo(label: 'Endereço', valor: pessoa.endereco, controller: _enderecoController, editando: _editando, isEnabled: true),
-            Campo(label: 'Razão Social', valor: pessoa.razaoSocial, controller: _razaoSocialController, editando: _editando, isEnabled: true),
-            Campo(label: 'CNPJ', valor: pessoa.cnpj, controller: _cnpjController, editando: _editando, isEnabled: true),
-            Campo(label: 'CNAE', valor: pessoa.cnae, controller: _cnaeController, editando: _editando, isEnabled: true),
-            Campo(label: 'Responsável Técnico', valor: pessoa.responsavelLegal, controller: _respController, editando: _editando, isEnabled: true),
-            Campo(label: 'CPF do Responsável Técnico', valor: pessoa.cpfResponsavelLegal, controller: _cpfRespController, editando: _editando, isEnabled: true),
-            Campo(label: 'Telefone do Responsável Técnico', valor: pessoa.telefoneResponsavelLegal, controller: _telefoneRespController, editando: _editando, isEnabled: true),
-            Campo(label: 'RGP do Responsável Técnico', valor: pessoa.rgpResponsavelLegal, controller: _rgpRespController, editando: _editando, isEnabled: true),
-            Campo(label: 'E-mail do Responsável Técnico', valor: pessoa.emailResponsavelLegal, controller: _emailRespController, editando: _editando, isEnabled: true),
+    );
+  }
 
-            // Dados da Fazenda
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Possui Responsável Técnico',
-                value: _hasRespTecnico,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                  _hasRespTecnico = val;
-                  _nomeRespTecnicoController.clear();
-                  _numRespTecnicoController.clear();
-                  _telefoneRespTecnicoController.clear();
-                  _emailRespTecnicoController.clear();
-                  });
-                },
-            ),
-            Campo(label: 'Nome do Responsável Técnico', valor: formulario.nomeResponsavelTecnico, controller: _nomeRespTecnicoController, editando: _editando, isEnabled: _hasRespTecnico),
-            Campo(label: 'Registro do Responsável Técnico', valor: formulario.registroResponsavelTecnico, controller: _numRespTecnicoController, editando: _editando, isEnabled: _hasRespTecnico),
-            Campo(label: 'Telefone do Responsável Técnico', valor: formulario.telefoneResponsavelTecnico, controller: _telefoneRespTecnicoController, editando: _editando, isEnabled: _hasRespTecnico),
-            Campo(label: 'E-mail do Responsável Técnico', valor: formulario.emailResponsavelTecnico, controller: _emailRespTecnicoController, editando: _editando, isEnabled: _hasRespTecnico),
-
-            const Text('Empreendimento', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Endereço', valor: formulario.enderecoEmpreendimento, controller: _enderecoEmpreController, editando: _editando, isEnabled: true),
-            Campo(label: 'Município', valor: formulario.municipioEmpreendimento, controller: _municipioEmpreController, editando: _editando, isEnabled: true),
-            Campo(label: 'UF', valor: formulario.ufEmpreendimento, controller: _ufEmpreController, editando: _editando, isEnabled: true),
-
-            const SizedBox(height: 24),
-            const Text('Coordenadas Geográficas', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Campo(label: 'Latitude', valor: formulario.latitude, controller: _latitudeController, editando: _editando, isEnabled: true),
-            Campo(label: 'Longitude', valor: formulario.longitude, controller: _longitudeController, editando: _editando, isEnabled: true),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Possui Documento de\nAptidão ao PRONAF-DAP',
-                value: _hasDAP,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasDAP = val;
-                    _dapController.clear();
-                  });
+  @override
+  Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Detalhes do Formulário'),
+          actions: [
+            IconButton(
+              icon: Icon(_editando ? Icons.close : Icons.edit),
+              onPressed: () {
+                if(!widget.dados.enviado!){
+                  if(_editando){
+                    _restaurarCampos();
+                    setState(() {
+                      _editando = !_editando;
+                    });
+                  }
+                  else{
+                    setState(() {
+                      _editando = !_editando;
+                    });
+                  }
                 }
-            ),
-            Campo(label: 'N° DAP', valor: formulario.dap?.toString(), controller: _dapController, editando: _editando, isEnabled: _hasDAP),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Possui Licença Ambiental',
-                value: _hasLicencaAmb,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasLicencaAmb = val;
-                    _cadAmbientalController.clear();
-                  });
+                else{
+                  _formularioJaEnviado();
                 }
-            ),
-            Campo(label: 'N° do Cadastro', valor: formulario.licencaAmbiental?.toString(), controller: _cadAmbientalController, editando: _editando, isEnabled: _hasLicencaAmb),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: "Possui Outorga de uso d'água",
-                value: _hasOutorga,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasOutorga = val;
-                    _numOutorgaController.clear();
-                  });
-                }
-            ),
-            Campo(label: 'N° da Outorga', valor: formulario.outorga?.toString(), controller: _numOutorgaController, editando: _editando, isEnabled: _hasOutorga),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Possui Cadastro Técnico\nFederal - CTF',
-                value: _hasCTF,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasCTF = val;
-                    _ctfController.clear();
-                  });
-                }
-            ),
-            Campo(label: 'CTF', valor: formulario.ctf?.toString(), controller: _ctfController, editando: _editando, isEnabled: _hasCTF),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Possui Cadastro Ambiental\nRural - CAR',
-                value: _hasCAR,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasCAR = val;
-                    _carController.clear();
-                  });
-                }
-            ),
-            Campo(label: 'CAR', valor: formulario.car?.toString(), controller: _carController, editando: _editando, isEnabled: _hasCAR),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Possui Cadastro na OESA',
-                value: _hasOESA,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasOESA = val;
-                    _oesaController.clear();
-                  });
-                }
-            ),
-            Campo(label: 'OESA', valor: formulario.oesa?.toString(), controller: _oesaController, editando: _editando, isEnabled: _hasOESA),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Possui Assistência Técnica',
-                value: _hasAssistenciaTecnica,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasAssistenciaTecnica = val;
-                    _atendimentosAnoController.clear();
-                  });
-                }
-            ),
-            Campo(label: 'Atendimentos no Ano', valor: formulario.atendimentosAno?.toString(), controller: _atendimentosAnoController, editando: _editando, isEnabled: _hasAssistenciaTecnica),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Viveiro',
-                value: _hasViveiro,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasViveiro = val;
-                    _tipoViveiroController.clear();
-                    _areaViveiroController.clear();
-                  });
-                }
-            ),
-            Campo(label: 'Tipo Viveiro', valor: formulario.tipoViveiro, controller: _tipoViveiroController, editando: _editando, isEnabled: _hasViveiro),
-            Campo(label: 'Área Viveiro', valor: formulario.areaViveiro?.toString(), controller: _areaViveiroController, editando: _editando, isEnabled: _hasViveiro),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Tanque Rede',
-                value: _hasTanqueRede,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasTanqueRede = val;
-                    _areaTanqueRedeController.clear();
-                  });
-                }
-            ),
-            Campo(label: 'Área Taque Rede', valor: formulario.areaTanqueRede?.toString(), controller: _areaTanqueRedeController, editando: _editando, isEnabled: _hasTanqueRede),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Sistema Fechado',
-                value: _hasSistemaFechado,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasSistemaFechado = val;
-                    _tipoSistemaFechadoController.clear();
-                    _areaSistemaFechadoController.clear();
-                  });
-                }
-            ),
-            Campo(label: 'Tipo Sistema Fechado', valor: formulario.tipoSistemaFechado, controller: _tipoSistemaFechadoController, editando: _editando, isEnabled: _hasSistemaFechado),
-            Campo(label: 'Área Sistema Fechado', valor: formulario.areaSistemaFechado?.toString(), controller: _areaSistemaFechadoController, editando: _editando, isEnabled: _hasSistemaFechado),
-
-            const SizedBox(height: 24),
-            SwitchForm(
-                label: 'Raceway',
-                value: _hasRaceway,
-                editando: _editando,
-                onChanged: (val) {
-                  setState(() {
-                    _hasRaceway = val;
-                    _areaRacewayController.clear();
-                  });
-                }
-            ),
-            Campo(label: 'Área Raceway', valor: formulario.areaRaceway?.toString(), controller: _areaRacewayController, editando: _editando, isEnabled: _hasRaceway),
-
-            const SizedBox(height: 24),
-            const Text('Produção', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: producoesController.length,
-              itemBuilder: (context, index) {
-                final producao = producoesController[index];
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 3,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Campo(label: "[Espécie Digitada]", valor: producao.especieController.text, controller: producao.especieController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Produção (kg) Digitada]", valor: producao.producaoKgController.text, controller: producao.producaoKgController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Unidades (se anfíbio ou réptil)]", valor: producao.unidadesController.text, controller: producao.unidadesController, editando: _editando, isEnabled: true),
-                      ],
-                    ),
-                  ),
-                );
               },
             ),
-
-            const SizedBox(height: 24),
-            const Text('Forma Jovem', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: formasJovensController.length,
-              itemBuilder: (context, index) {
-                final formaJovem = formasJovensController[index];
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 3,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Campo(label: "[Espécie Digitada]", valor: formaJovem.especieController.text, controller: formaJovem.especieController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Milheiros Digitado]", valor: formaJovem.milheirosController.text, controller: formaJovem.milheirosController, editando: _editando, isEnabled: true),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-
-            const SizedBox(height: 24),
-            const Text('Produção Ornamental', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: producoesOrnamentalController.length,
-              itemBuilder: (context, index) {
-                final producaoOrnamental = producoesOrnamentalController[index];
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 3,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Campo(label: "[Espécie Digitada]", valor: producaoOrnamental.especieController.text, controller: producaoOrnamental.especieController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Produção (kg) Digitada]", valor: producaoOrnamental.producaoKgController.text, controller: producaoOrnamental.producaoKgController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Unidades Digitada]", valor: producaoOrnamental.unidadesController.text, controller: producaoOrnamental.unidadesController, editando: _editando, isEnabled: true),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 24),
-            const Text('Aquisição de Formas Jovem', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: aquisicoesJovemController.length,
-              itemBuilder: (context, index) {
-                final aquisicaoJovem = aquisicoesJovemController[index];
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 3,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Campo(label: "[Estado de Origem]", valor: aquisicaoJovem.ufOrigemController.text, controller: aquisicaoJovem.ufOrigemController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Espécie Digitada]", valor: aquisicaoJovem.especieController.text, controller: aquisicaoJovem.especieController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Milheiros Digitados]", valor: aquisicaoJovem.milheirosController.text, controller: aquisicaoJovem.milheirosController, editando: _editando, isEnabled: true),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 24),
-            const Text('Aquisição de Ração', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: aquisicoesRacaoController.length,
-              itemBuilder: (context, index) {
-                final aquisicaoRacao = aquisicoesRacaoController[index];
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 3,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Campo(label: "[Estado de Origem]", valor: aquisicaoRacao.ufOrigemController.text, controller: aquisicaoRacao.ufOrigemController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Unidade Digitada]", valor: aquisicaoRacao.unidadeController.text, controller: aquisicaoRacao.unidadeController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Quantidade Digitada]", valor: aquisicaoRacao.quantidadeController.text, controller: aquisicaoRacao.quantidadeController, editando: _editando, isEnabled: true),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: 24),
-            const Text('Comercialização por Espécie', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: comercializacoesEspecieController.length,
-              itemBuilder: (context, index) {
-                final comercializacao = comercializacoesEspecieController[index];
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 3,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Campo(label: "[Estado de Origem]", valor: comercializacao.ufOrigemController.text, controller: comercializacao.ufOrigemController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Espécie Digitada]", valor: comercializacao.especieController.text, controller: comercializacao.especieController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Produção (kg) Digitada]", valor: comercializacao.producaoKgController.text, controller: comercializacao.producaoKgController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Quantidade Digitada]", valor: comercializacao.quantidadeController.text, controller: comercializacao.quantidadeController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Preço Médio]", valor: comercializacao.precoMedioController.text, controller: comercializacao.precoMedioController, editando: _editando, isEnabled: true),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-
-            const SizedBox(height: 24),
-            const Text('Produção Ornamentais', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: producoesOrnamentaisController.length,
-              itemBuilder: (context, index) {
-                final producaoOrnamentais = producoesOrnamentaisController[index];
-                return Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 3,
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Campo(label: "[Estado de Origem]", valor: producaoOrnamentais.ufOrigemController.text, controller: producaoOrnamentais.ufOrigemController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Unidade Digitada]", valor: producaoOrnamentais.unidadeController.text, controller: producaoOrnamentais.unidadeController, editando: _editando, isEnabled: true),
-                        Campo(label: "[Quantidade Digitada]", valor: producaoOrnamentais.quantidadeController.text, controller: producaoOrnamentais.quantidadeController, editando: _editando, isEnabled: true),
-                        const SizedBox(height: 8),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-
-
-            // Testa se o usuário pressionou o botão de editar, se pressionado ele cria
-            // os botões 'Cancelar' e 'Salvar' no final da página
-            if (_editando)
-              Padding(
-                padding: const EdgeInsets.only(top: 24.0),
-                child:
-                // Botão "Cancelar"
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          _restaurarCampos();
-                          setState(() {
-                            _editando = false;
-                          });
-                        },
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Color(0xFF0D47A1)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          minimumSize: Size(double.infinity, 50),
-                        ),
-                        child: Text('Cancelar', style: TextStyle(color: Color(
-                            0xFF0D47A1)),
-                        ),
-                      ),
-                    ),
-
-                    // Botão "Salvar"
-                    SizedBox(width: 16),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: _salvarAlteracoes,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF4CAF50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          minimumSize: Size(double.infinity, 50),
-                        ),
-                        child: Text('Salvar', style: TextStyle(color: Colors
-                            .white),),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: _confirmarExclusao
+            )
           ],
         ),
-      ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: <Widget>[
+              // Dados da Pessoa
+              const Text('Dados do Indivíduo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Campo(label: 'Nome', valor: pessoa.nome, controller: _nomeController, editando: _editando, isEnabled: true),
+              Campo(label: 'CPF', valor: pessoa.cpf, controller: _cpfController, editando: _editando, isEnabled: true),
+              Campo(label: 'Telefone', valor: pessoa.telefone, controller: _telefoneController, editando: _editando, isEnabled: true),
+              Campo(label: 'Email', valor: pessoa.email, controller: _emailController, editando: _editando, isEnabled: true),
+              Campo(label: 'RGP', valor: pessoa.rgp, controller: _rgpController, editando: _editando, isEnabled: true),
+              Campo(label: 'UF', valor: pessoa.uf, controller: _ufController, editando: _editando, isEnabled: true),
+              Campo(label: 'Município', valor: pessoa.municipio, controller: _municipioController, editando: _editando, isEnabled: true),
+              Campo(label: 'Endereço', valor: pessoa.endereco, controller: _enderecoController, editando: _editando, isEnabled: true),
+              Campo(label: 'Razão Social', valor: pessoa.razaoSocial, controller: _razaoSocialController, editando: _editando, isEnabled: true),
+              Campo(label: 'CNPJ', valor: pessoa.cnpj, controller: _cnpjController, editando: _editando, isEnabled: true),
+              Campo(label: 'CNAE', valor: pessoa.cnae, controller: _cnaeController, editando: _editando, isEnabled: true),
+              Campo(label: 'Responsável Técnico', valor: pessoa.responsavelLegal, controller: _respController, editando: _editando, isEnabled: true),
+              Campo(label: 'CPF do Responsável Técnico', valor: pessoa.cpfResponsavelLegal, controller: _cpfRespController, editando: _editando, isEnabled: true),
+              Campo(label: 'Telefone do Responsável Técnico', valor: pessoa.telefoneResponsavelLegal, controller: _telefoneRespController, editando: _editando, isEnabled: true),
+              Campo(label: 'RGP do Responsável Técnico', valor: pessoa.rgpResponsavelLegal, controller: _rgpRespController, editando: _editando, isEnabled: true),
+              Campo(label: 'E-mail do Responsável Técnico', valor: pessoa.emailResponsavelLegal, controller: _emailRespController, editando: _editando, isEnabled: true),
+
+              // Dados da Fazenda
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Possui Responsável Técnico',
+                  value: _hasRespTecnico,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                    _hasRespTecnico = val;
+                    _nomeRespTecnicoController.clear();
+                    _numRespTecnicoController.clear();
+                    _telefoneRespTecnicoController.clear();
+                    _emailRespTecnicoController.clear();
+                    });
+                  },
+              ),
+              Campo(label: 'Nome do Responsável Técnico', valor: formulario.nomeResponsavelTecnico, controller: _nomeRespTecnicoController, editando: _editando, isEnabled: _hasRespTecnico),
+              Campo(label: 'Registro do Responsável Técnico', valor: formulario.registroResponsavelTecnico, controller: _numRespTecnicoController, editando: _editando, isEnabled: _hasRespTecnico),
+              Campo(label: 'Telefone do Responsável Técnico', valor: formulario.telefoneResponsavelTecnico, controller: _telefoneRespTecnicoController, editando: _editando, isEnabled: _hasRespTecnico),
+              Campo(label: 'E-mail do Responsável Técnico', valor: formulario.emailResponsavelTecnico, controller: _emailRespTecnicoController, editando: _editando, isEnabled: _hasRespTecnico),
+
+              const Text('Empreendimento', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Campo(label: 'Endereço', valor: formulario.enderecoEmpreendimento, controller: _enderecoEmpreController, editando: _editando, isEnabled: true),
+              Campo(label: 'Município', valor: formulario.municipioEmpreendimento, controller: _municipioEmpreController, editando: _editando, isEnabled: true),
+              Campo(label: 'UF', valor: formulario.ufEmpreendimento, controller: _ufEmpreController, editando: _editando, isEnabled: true),
+
+              const SizedBox(height: 24),
+              const Text('Coordenadas Geográficas', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Campo(label: 'Latitude', valor: formulario.latitude, controller: _latitudeController, editando: _editando, isEnabled: true),
+              Campo(label: 'Longitude', valor: formulario.longitude, controller: _longitudeController, editando: _editando, isEnabled: true),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Possui Documento de\nAptidão ao PRONAF-DAP',
+                  value: _hasDAP,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasDAP = val;
+                      _dapController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'N° DAP', valor: formulario.dap?.toString(), controller: _dapController, editando: _editando, isEnabled: _hasDAP),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Possui Licença Ambiental',
+                  value: _hasLicencaAmb,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasLicencaAmb = val;
+                      _cadAmbientalController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'N° do Cadastro', valor: formulario.licencaAmbiental?.toString(), controller: _cadAmbientalController, editando: _editando, isEnabled: _hasLicencaAmb),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: "Possui Outorga de uso d'água",
+                  value: _hasOutorga,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasOutorga = val;
+                      _numOutorgaController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'N° da Outorga', valor: formulario.outorga?.toString(), controller: _numOutorgaController, editando: _editando, isEnabled: _hasOutorga),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Possui Cadastro Técnico\nFederal - CTF',
+                  value: _hasCTF,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasCTF = val;
+                      _ctfController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'CTF', valor: formulario.ctf?.toString(), controller: _ctfController, editando: _editando, isEnabled: _hasCTF),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Possui Cadastro Ambiental\nRural - CAR',
+                  value: _hasCAR,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasCAR = val;
+                      _carController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'CAR', valor: formulario.car?.toString(), controller: _carController, editando: _editando, isEnabled: _hasCAR),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Possui Cadastro na OESA',
+                  value: _hasOESA,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasOESA = val;
+                      _oesaController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'OESA', valor: formulario.oesa?.toString(), controller: _oesaController, editando: _editando, isEnabled: _hasOESA),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Possui Assistência Técnica',
+                  value: _hasAssistenciaTecnica,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasAssistenciaTecnica = val;
+                      _atendimentosAnoController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'Atendimentos no Ano', valor: formulario.atendimentosAno?.toString(), controller: _atendimentosAnoController, editando: _editando, isEnabled: _hasAssistenciaTecnica),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Viveiro',
+                  value: _hasViveiro,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasViveiro = val;
+                      _tipoViveiroController.clear();
+                      _areaViveiroController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'Tipo Viveiro', valor: formulario.tipoViveiro, controller: _tipoViveiroController, editando: _editando, isEnabled: _hasViveiro),
+              Campo(label: 'Área Viveiro', valor: formulario.areaViveiro?.toString(), controller: _areaViveiroController, editando: _editando, isEnabled: _hasViveiro),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Tanque Rede',
+                  value: _hasTanqueRede,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasTanqueRede = val;
+                      _areaTanqueRedeController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'Área Taque Rede', valor: formulario.areaTanqueRede?.toString(), controller: _areaTanqueRedeController, editando: _editando, isEnabled: _hasTanqueRede),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Sistema Fechado',
+                  value: _hasSistemaFechado,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasSistemaFechado = val;
+                      _tipoSistemaFechadoController.clear();
+                      _areaSistemaFechadoController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'Tipo Sistema Fechado', valor: formulario.tipoSistemaFechado, controller: _tipoSistemaFechadoController, editando: _editando, isEnabled: _hasSistemaFechado),
+              Campo(label: 'Área Sistema Fechado', valor: formulario.areaSistemaFechado?.toString(), controller: _areaSistemaFechadoController, editando: _editando, isEnabled: _hasSistemaFechado),
+
+              const SizedBox(height: 24),
+              SwitchForm(
+                  label: 'Raceway',
+                  value: _hasRaceway,
+                  editando: _editando,
+                  onChanged: (val) {
+                    setState(() {
+                      _hasRaceway = val;
+                      _areaRacewayController.clear();
+                    });
+                  }
+              ),
+              Campo(label: 'Área Raceway', valor: formulario.areaRaceway?.toString(), controller: _areaRacewayController, editando: _editando, isEnabled: _hasRaceway),
+
+              const SizedBox(height: 24),
+              const Text('Produção', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: producoesController.length,
+                itemBuilder: (context, index) {
+                  final producao = producoesController[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Campo(label: "[Espécie Digitada]", valor: producao.especieController.text, controller: producao.especieController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Produção (kg) Digitada]", valor: producao.producaoKgController.text, controller: producao.producaoKgController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Unidades (se anfíbio ou réptil)]", valor: producao.unidadesController.text, controller: producao.unidadesController, editando: _editando, isEnabled: true),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 24),
+              const Text('Forma Jovem', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Campo(label: 'Área Forma Jovem', valor: _areaJovemProducaoController.text, controller: _areaJovemProducaoController, editando: _editando, isEnabled: true),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: formasJovensController.length,
+                itemBuilder: (context, index) {
+                  final formaJovem = formasJovensController[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Campo(label: "[Espécie Digitada]", valor: formaJovem.especieController.text, controller: formaJovem.especieController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Milheiros Digitado]", valor: formaJovem.milheirosController.text, controller: formaJovem.milheirosController, editando: _editando, isEnabled: true),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 24),
+              const Text('Produção Ornamental', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: producoesOrnamentalController.length,
+                itemBuilder: (context, index) {
+                  final producaoOrnamental = producoesOrnamentalController[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Campo(label: "[Espécie Digitada]", valor: producaoOrnamental.especieController.text, controller: producaoOrnamental.especieController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Produção (kg) Digitada]", valor: producaoOrnamental.producaoKgController.text, controller: producaoOrnamental.producaoKgController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Unidades Digitada]", valor: producaoOrnamental.unidadesController.text, controller: producaoOrnamental.unidadesController, editando: _editando, isEnabled: true),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              const Text('Aquisição de Formas Jovem', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: aquisicoesJovemController.length,
+                itemBuilder: (context, index) {
+                  final aquisicaoJovem = aquisicoesJovemController[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Campo(label: "[Estado de Origem]", valor: aquisicaoJovem.ufOrigemController.text, controller: aquisicaoJovem.ufOrigemController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Espécie Digitada]", valor: aquisicaoJovem.especieController.text, controller: aquisicaoJovem.especieController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Milheiros Digitados]", valor: aquisicaoJovem.milheirosController.text, controller: aquisicaoJovem.milheirosController, editando: _editando, isEnabled: true),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              const Text('Aquisição de Ração', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: aquisicoesRacaoController.length,
+                itemBuilder: (context, index) {
+                  final aquisicaoRacao = aquisicoesRacaoController[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Campo(label: "[Estado de Origem]", valor: aquisicaoRacao.ufOrigemController.text, controller: aquisicaoRacao.ufOrigemController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Unidade Digitada]", valor: aquisicaoRacao.unidadeController.text, controller: aquisicaoRacao.unidadeController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Quantidade Digitada]", valor: aquisicaoRacao.quantidadeController.text, controller: aquisicaoRacao.quantidadeController, editando: _editando, isEnabled: true),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              const Text('Comercialização por Espécie', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: comercializacoesEspecieController.length,
+                itemBuilder: (context, index) {
+                  final comercializacao = comercializacoesEspecieController[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Campo(label: "[Estado de Origem]", valor: comercializacao.ufOrigemController.text, controller: comercializacao.ufOrigemController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Espécie Digitada]", valor: comercializacao.especieController.text, controller: comercializacao.especieController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Produção (kg) Digitada]", valor: comercializacao.producaoKgController.text, controller: comercializacao.producaoKgController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Quantidade Digitada]", valor: comercializacao.quantidadeController.text, controller: comercializacao.quantidadeController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Preço Médio]", valor: comercializacao.precoMedioController.text, controller: comercializacao.precoMedioController, editando: _editando, isEnabled: true),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 24),
+              const Text('Produção Ornamentais', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: producoesOrnamentaisController.length,
+                itemBuilder: (context, index) {
+                  final producaoOrnamentais = producoesOrnamentaisController[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          Campo(label: "[Estado de Origem]", valor: producaoOrnamentais.ufOrigemController.text, controller: producaoOrnamentais.ufOrigemController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Unidade Digitada]", valor: producaoOrnamentais.unidadeController.text, controller: producaoOrnamentais.unidadeController, editando: _editando, isEnabled: true),
+                          Campo(label: "[Quantidade Digitada]", valor: producaoOrnamentais.quantidadeController.text, controller: producaoOrnamentais.quantidadeController, editando: _editando, isEnabled: true),
+                          const SizedBox(height: 8),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+
+
+              // Testa se o usuário pressionou o botão de editar, se pressionado ele cria
+              // os botões 'Cancelar' e 'Salvar' no final da página
+              if (_editando)
+                Padding(
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child:
+                  // Botão "Cancelar"
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            _restaurarCampos();
+                            setState(() {
+                              _editando = false;
+                            });
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: Color(0xFF0D47A1)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            minimumSize: Size(double.infinity, 50),
+                          ),
+                          child: Text('Cancelar', style: TextStyle(color: Color(
+                              0xFF0D47A1)),
+                          ),
+                        ),
+                      ),
+
+                      // Botão "Salvar"
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: _salvarAlteracoes,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF4CAF50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            minimumSize: Size(double.infinity, 50),
+                          ),
+                          child: Text('Salvar', style: TextStyle(color: Colors
+                              .white),),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
     );
   }
 }
