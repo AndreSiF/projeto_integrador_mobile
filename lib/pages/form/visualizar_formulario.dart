@@ -270,7 +270,7 @@ class _VisualizarFormularioPageState extends State<VisualizarFormularioPage> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirmar exclusão'),
-        content: const Text('Tem certeza que deseja excluir este formulário?'),
+        content: const Text('Tem certeza que deseja excluir este formulário? (ISSO NÃO IRÁ REMOVER O FORMULÁRIO DO SERVIDOR CASO ELE JÁ TENHA SIDO ENVIADO)'),
         actions: [
           TextButton(
             child: const Text('Cancelar'),

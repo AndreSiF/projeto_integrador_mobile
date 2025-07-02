@@ -126,6 +126,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
         hasLicencaAmbiental: widget.formulario.hasLicencaAmbiental,
         hasOutorga: widget.formulario.hasOutorga,
         hasCtf: widget.formulario.hasCtf,
+        hasCar: widget.formulario.hasCar,
         hasOesa: widget.formulario.hasOesa,
         hasAssistenciaTecnica: widget.formulario.hasAssistenciaTecnica,
         hasViveiro: widget.formulario.hasViveiro,
@@ -285,7 +286,7 @@ class _InformacoesComerciaisPageState extends State<InformacoesComerciaisPage> {
                               CampoForm(label: "[Estado de Origem do Fornecedor]", value: "", controller: comercializacaoEspecie.ufOrigemController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.TEXT),
                               CampoForm(label: "[Espécie Digitada]", value: "", controller: comercializacaoEspecie.especieController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.TEXT),
                               CampoForm(label: "[Produção Comercializada (kg)]", value: "", controller: comercializacaoEspecie.producaoKgController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
-                              CampoForm(label: "[Quantidade Digitada]", value: "", controller: comercializacaoEspecie.quantidadeController, required: true, isEnabled: true, mask: null, lenght: 2, inputType: InputType.INTEGER),
+                              CampoForm(label: "[Quantidade Digitada]", value: "", controller: comercializacaoEspecie.quantidadeController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.INTEGER),
                               CampoForm(label: "[Preço Médio]", value: "", controller: comercializacaoEspecie.precoMedioController, required: true, isEnabled: true, mask: null, lenght: null, inputType: InputType.DECIMAL),
                               const SizedBox(height: 8),
                               Align(

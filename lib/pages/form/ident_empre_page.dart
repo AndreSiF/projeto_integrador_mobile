@@ -67,6 +67,7 @@ class _IdentEmprePageState extends State<IdentEmprePage> {
         oesa: int.tryParse(_oesaController.text),
         atendimentosAno: int.tryParse(_atendAnoController.text),
         hasResponsavelTecnico: _hasRespTecnico,
+        hasCar: _hasCAR,
         hasDap: _hasDAP,
         hasLicencaAmbiental: _hasLicencaAmb,
         hasOutorga: _hasOutorga,
